@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- External JS file -->
+    <script src="js/main.js" defer></script>
+
+    <title>High5!</title>
+</head>
+<body>
+    <!-- Form to create a new post -->
+    <form id="postForm" action="#">
+        <input type="text" id="activityDate" placeholder="Date" required>
+        <input type="text" id="activityTime" placeholder="Time" required>
+        <input type="text" id="activityDesc" placeholder="Description" required>
+        <input type="text" id="activityCategory" placeholder="Category" required>
+
+        <button type="submit">Create Post</button>
+    </form>
+
+    <br><br>
+    <!-- Table to show all posts -->
+    <table>
+        <caption>All Posts</caption>
+        <thead>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Description</th>
+            <th>Category</th>
+        </thead>
+        <tbody id="tableBody">
+        </tbody>
+    </table>
+</body>
+</html>
