@@ -8,14 +8,12 @@
 //**************************************************************
 //      Root Scope Variable Declarations
 //**************************************************************
-const postForm= document.getElementById("postForm");
-const activityDate= document.getElementById("activityDate");
-const activityTime= document.getElementById("activityTime");
-const activityDesc= document.getElementById("activityDesc");
-const activityCategory= document.getElementById("activityCategory");
-const tableBody= document.getElementById("tableBody");
-
-
+const postForm = document.getElementById("postForm");
+const activityDate = document.getElementById("activityDate");
+const activityTime = document.getElementById("activityTime");
+const activityDesc = document.getElementById("activityDesc");
+const activityCategory = document.getElementById("activityCategory");
+const tableBody = document.getElementById("tableBody");
 
 // Array to store posts
 let postArray = [];
@@ -71,10 +69,33 @@ const showPosts = () => {
                 <td>${postArray[i].time}</td>
                 <td>${postArray[i].description}</td>
                 <td>${postArray[i].category}</td>
+                <td><button class="deleteBtn" id="deleteBtn${i}">Delete</button></td>
             </tr>
         `;
+
+        // TODO: Check if event listener for button can be added in this loop
     }
+
+    // Add event listener to all delete buttons
+    addDeleteBtnListeners();
 };
+
+const addDeleteBtnListeners = () => {
+    let deleteBtns = document.getElementsByClassName('deleteBtn');
+    
+    for(let i = 0; i < deleteBtns.length; i++) {
+        deleteBtns[i].addEventListener('click', (event) => {
+            // Get array index of post to delete
+            let index = event.target.id.split('deleteBtn')[1];
+
+            // Delete post
+            postArray.splice(parseInt(index), 1);
+
+            // Show all posts
+            showPosts();
+        })
+    }
+}
 
 // Clear all inputs
 const clearInputs = () => {
@@ -90,7 +111,11 @@ const clearInputs = () => {
 //**************************************************************
 
 // On page load
-document.addEventListener('DOMContentLoaded', showPosts);
+document.addEventListener('DOMContentLoaded', () => {
+    // Show all posts
+    showPosts();
+
+});
 
 // When post form is submitted
 postForm.addEventListener('submit', (event) => {
