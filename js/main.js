@@ -8,6 +8,14 @@
 //**************************************************************
 //      Root Scope Variable Declarations
 //**************************************************************
+const postForm= document.getElementById("postForm");
+const activityDate= document.getElementById("activityDate");
+const activityTime= document.getElementById("activityTime");
+const activityDesc= document.getElementById("activityDesc");
+const activityCategory= document.getElementById("activityCategory");
+const tableBody= document.getElementById("tableBody");
+
+
 
 // Array to store posts
 let postArray = [];
