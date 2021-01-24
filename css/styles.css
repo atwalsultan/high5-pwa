@@ -1,0 +1,23 @@
+#updateOverlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 10;
+    background-color: rgba(0, 0, 0, 0.4);
+    display: none
+}
+
+.modal {
+    border: 1px solid black;
+    margin: 20% auto;
+    padding: 20px;
+    width: 70%;
+    box-shadow: 0 5px 8px 0 rgba(0,0,0,0.2), 0 7px 20px 0 rgba(0,0,0,0.17);
+    background-color: white;
+}
+
+.closeBtn:hover {
+    cursor: pointer;
+}
