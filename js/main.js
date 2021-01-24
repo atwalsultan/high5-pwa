@@ -15,6 +15,18 @@ const activityDesc = document.getElementById("activityDesc");
 const activityCategory = document.getElementById("activityCategory");
 const tableBody = document.getElementById("tableBody");
 
+const updateOverlay = document.getElementById('updateOverlay');
+const deleteOverlay = document.getElementById('deleteOverlay');
+const closeBtns = document.querySelectorAll('.closeBtn');
+const updateForm = document.getElementById('updateForm');
+const updateDate = document.getElementById('updateDate');
+const updateTime = document.getElementById('updateTime');
+const updateDesc = document.getElementById('updateDesc');
+const updateCategory = document.getElementById('updateCategory');
+const confirmDelete = document.getElementById('confirmDelete');
+let updateIndex;
+let deleteIndex;
+
 // Array to store posts
 let postArray = [];
 
@@ -43,22 +55,6 @@ class Post {
 //      Function Declarations
 //**************************************************************
 
-// Create and store new post
-const createPost = () => {
-    let date = activityDate.value;
-    let time = activityTime.value;
-    let description = activityDesc.value;
-    let category = activityCategory.value;
-
-    let newPost = new Post(date, time, description, category);
-    newPost.storePost();
-
-    //Refresh posts table
-    showPosts();
-
-    console.log(postArray);
-}
-
 // Show all posts
 const showPosts = () => {
     tableBody.innerHTML = ''
@@ -69,31 +65,97 @@ const showPosts = () => {
                 <td>${postArray[i].time}</td>
                 <td>${postArray[i].description}</td>
                 <td>${postArray[i].category}</td>
-                <td><button class="deleteBtn" id="deleteBtn${i}">Delete</button></td>
+                <td>
+                    <button class="deleteBtn" id="deleteBtn${i}">Delete</button>
+                    <button class="updateBtn" id="updateBtn${i}">Update</button>
+                </td>
             </tr>
         `;
 
         // TODO: Check if event listener for button can be added in this loop
     }
 
-    // Add event listener to all delete buttons
-    addDeleteBtnListeners();
+    // Add event listener to all buttons
+    addBtnListeners();
 };
 
-const addDeleteBtnListeners = () => {
+// Create and store new post
+const createPost = (event) => {
+    // Prevent form from actually submitting
+    event.preventDefault();
+
+    // Get values from DOM
+    let date = activityDate.value;
+    let time = activityTime.value;
+    let description = activityDesc.value;
+    let category = activityCategory.value;
+
+    // Create and store new post
+    let newPost = new Post(date, time, description, category);
+    newPost.storePost();
+
+    //Refresh posts table
+    showPosts();
+
+    // Clear inputs
+    clearInputs();
+}
+
+// Update post
+const updatePost = (event) => {
+    // Prevent form from actually submitting
+    event.preventDefault();
+
+    // Get values from DOM
+    postArray[updateIndex].date = updateDate.value;
+    postArray[updateIndex].time = updateTime.value;
+    postArray[updateIndex].description = updateDesc.value;
+    postArray[updateIndex].category = updateCategory.value;
+
+    // Refresh to display changes
+    showPosts();
+
+    // Close update modal
+    closeModals();
+}
+
+// Delete post
+const deletePost = () => {
+    postArray.splice(deleteIndex, 1);
+
+    // Show all posts
+    showPosts();
+
+    // Close modal
+    closeModals();
+}
+
+const addBtnListeners = () => {
     let deleteBtns = document.getElementsByClassName('deleteBtn');
+    let updateBtns = document.getElementsByClassName('updateBtn');
     
     for(let i = 0; i < deleteBtns.length; i++) {
         deleteBtns[i].addEventListener('click', (event) => {
             // Get array index of post to delete
-            let index = event.target.id.split('deleteBtn')[1];
+            deleteIndex = parseInt(event.target.id.split('deleteBtn')[1]);
 
-            // Delete post
-            postArray.splice(parseInt(index), 1);
+            // Show confirmation modal
+            deleteOverlay.style.display = 'block';
+        });
 
-            // Show all posts
-            showPosts();
-        })
+        updateBtns[i].addEventListener('click', (event) => {
+            // Get array index of post to update
+            updateIndex = parseInt(event.target.id.split('updateBtn')[1]);
+
+            // Show update form
+            updateOverlay.style.display = 'block';
+
+            // Populate form with existing data
+            updateDate.value = postArray[updateIndex].date;
+            updateTime.value = postArray[updateIndex].time;
+            updateDesc.value = postArray[updateIndex].description;
+            updateCategory.value = postArray[updateIndex].category;
+        });
     }
 }
 
@@ -105,26 +167,43 @@ const clearInputs = () => {
     activityCategory.value = '';
 }
 
+// Close modals
+const closeModals = () => {
+    // Modal for update action
+    updateOverlay.style.display = 'none';
+
+    // Modal for delte action
+    deleteOverlay.style.display = 'none';
+}
+
+// Hide modals on clicking outside
+const outsideClick = (event) => {
+    if(event.target === updateOverlay || event.target === deleteOverlay) {
+        closeModals();
+    }
+}
+
 
 //**************************************************************
 //      Event Listeners
 //**************************************************************
 
 // On page load
-document.addEventListener('DOMContentLoaded', () => {
-    // Show all posts
-    showPosts();
-
-});
+document.addEventListener('DOMContentLoaded', showPosts);
 
 // When post form is submitted
-postForm.addEventListener('submit', (event) => {
-    // Prevent form from actually submitting
-    event.preventDefault();
+postForm.addEventListener('submit', createPost);
 
-    // Create and store new post
-    createPost();
+// When update form is submitted
+updateForm.addEventListener('submit', updatePost);
 
-    // Clear inputs
-    clearInputs();
-});
+// Delete button on confirmation modal
+confirmDelete.addEventListener('click', deletePost);
+
+// When close button is clicked on a modal
+for(let i = 0; i<closeBtns.length; i++) {
+    closeBtns[i].addEventListener('click', closeModals);
+}
+
+// On clicking outside a modal
+window.addEventListener('click', outsideClick);
