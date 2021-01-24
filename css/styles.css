@@ -1,4 +1,4 @@
-#updateOverlay {
+#updateOverlay, #deleteOverlay {
     position: fixed;
     top: 0;
     left: 0;

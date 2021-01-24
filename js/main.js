@@ -16,12 +16,14 @@ const activityCategory = document.getElementById("activityCategory");
 const tableBody = document.getElementById("tableBody");
 
 const updateOverlay = document.getElementById('updateOverlay');
-const closeBtn = document.querySelector('.closeBtn');
+const deleteOverlay = document.getElementById('deleteOverlay');
+const closeBtns = document.querySelectorAll('.closeBtn');
 const updateForm = document.getElementById('updateForm');
 const updateDate = document.getElementById('updateDate');
 const updateTime = document.getElementById('updateTime');
 const updateDesc = document.getElementById('updateDesc');
 const updateCategory = document.getElementById('updateCategory');
+const confirmDelete = document.getElementById('confirmDelete');
 let updateIndex;
 let deleteIndex;
 
@@ -117,6 +119,17 @@ const updatePost = (event) => {
     closeModals();
 }
 
+// Delete post
+const deletePost = () => {
+    postArray.splice(deleteIndex, 1);
+
+    // Show all posts
+    showPosts();
+
+    // Close modal
+    closeModals();
+}
+
 const addBtnListeners = () => {
     let deleteBtns = document.getElementsByClassName('deleteBtn');
     let updateBtns = document.getElementsByClassName('updateBtn');
@@ -126,11 +139,8 @@ const addBtnListeners = () => {
             // Get array index of post to delete
             deleteIndex = parseInt(event.target.id.split('deleteBtn')[1]);
 
-            // Delete post
-            postArray.splice(deleteIndex, 1);
-
-            // Show all posts
-            showPosts();
+            // Show confirmation modal
+            deleteOverlay.style.display = 'block';
         });
 
         updateBtns[i].addEventListener('click', (event) => {
@@ -159,14 +169,17 @@ const clearInputs = () => {
 
 // Close modals
 const closeModals = () => {
-    // Update modal
+    // Modal for update action
     updateOverlay.style.display = 'none';
+
+    // Modal for delte action
+    deleteOverlay.style.display = 'none';
 }
 
 // Hide modals on clicking outside
 const outsideClick = (event) => {
-    if(event.target === updateOverlay){
-        updateOverlay.style.display = 'none';
+    if(event.target === updateOverlay || event.target === deleteOverlay) {
+        closeModals();
     }
 }
 
@@ -184,8 +197,13 @@ postForm.addEventListener('submit', createPost);
 // When update form is submitted
 updateForm.addEventListener('submit', updatePost);
 
+// Delete button on confirmation modal
+confirmDelete.addEventListener('click', deletePost);
+
 // When close button is clicked on a modal
-closeBtn.addEventListener('click', closeModals);
+for(let i = 0; i<closeBtns.length; i++) {
+    closeBtns[i].addEventListener('click', closeModals);
+}
 
 // On clicking outside a modal
 window.addEventListener('click', outsideClick);
