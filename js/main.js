@@ -14,7 +14,6 @@ const activityTime = document.getElementById("activityTime");
 const activityDesc = document.getElementById("activityDesc");
 const activityCategory = document.getElementById("activityCategory");
 const tableBody = document.getElementById("tableBody");
-
 const updateOverlay = document.getElementById('updateOverlay');
 const deleteOverlay = document.getElementById('deleteOverlay');
 const closeBtns = document.querySelectorAll('.closeBtn');
@@ -24,6 +23,7 @@ const updateTime = document.getElementById('updateTime');
 const updateDesc = document.getElementById('updateDesc');
 const updateCategory = document.getElementById('updateCategory');
 const confirmDelete = document.getElementById('confirmDelete');
+
 let updateIndex;
 let deleteIndex;
 
@@ -36,12 +36,13 @@ let postArray = [];
 //**************************************************************
 
 class Post {
-    constructor(date, time, description, category) {
-        this.postID
+    constructor(date, time, description, category, dateObj) {
         this.date = date;
         this.time = time;
         this.description = description;
         this.category = category;
+        this.dateObj = dateObj;
+        this.lastUpdated = dateObj;
     }
 
     // Store post in array
@@ -77,6 +78,12 @@ const showPosts = () => {
 
     // Add event listener to all buttons
     addBtnListeners();
+
+    // Clear all inputs
+    clearInputs();
+
+    // Close any modals if open
+    closeModals();
 };
 
 // Create and store new post
@@ -85,20 +92,19 @@ const createPost = (event) => {
     event.preventDefault();
 
     // Get values from DOM
-    let date = activityDate.value;
-    let time = activityTime.value;
+    let date;
+    let time;
+    activityDate.value === "" ? date = "Unspecified" : date = activityDate.value;
+    activityTime.value === "" ? time = "Unspecified" : time = activityTime.value;
     let description = activityDesc.value;
     let category = activityCategory.value;
 
     // Create and store new post
-    let newPost = new Post(date, time, description, category);
+    let newPost = new Post(date, time, description, category, new Date());
     newPost.storePost();
 
     //Refresh posts table
     showPosts();
-
-    // Clear inputs
-    clearInputs();
 }
 
 // Update post
@@ -106,17 +112,15 @@ const updatePost = (event) => {
     // Prevent form from actually submitting
     event.preventDefault();
 
-    // Get values from DOM
-    postArray[updateIndex].date = updateDate.value;
-    postArray[updateIndex].time = updateTime.value;
+    // Get values from DOM and update
+    updateDate.value === "" ? postArray[updateIndex].date = "Unspecified" : postArray[updateIndex].date = updateDate.value;
+    updateTime.value === "" ? postArray[updateIndex].time = "Unspecified" : postArray[updateIndex].time = updateTime.value;
     postArray[updateIndex].description = updateDesc.value;
     postArray[updateIndex].category = updateCategory.value;
+    postArray[updateIndex].lastUpdated = new Date();
 
     // Refresh to display changes
     showPosts();
-
-    // Close update modal
-    closeModals();
 }
 
 // Delete post
@@ -125,9 +129,6 @@ const deletePost = () => {
 
     // Show all posts
     showPosts();
-
-    // Close modal
-    closeModals();
 }
 
 const addBtnListeners = () => {
@@ -161,10 +162,17 @@ const addBtnListeners = () => {
 
 // Clear all inputs
 const clearInputs = () => {
+    // Create post form
     activityDate.value = '';
     activityTime.value = '';
     activityDesc.value = '';
-    activityCategory.value = '';
+    activityCategory.value = 'Category A';
+
+    // Update post form
+    updateDate.value = '';
+    updateTime.value = '';
+    updateDesc.value = '';
+    updateCategory.value = 'Category A';
 }
 
 // Close modals
