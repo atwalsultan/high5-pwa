@@ -15,10 +15,16 @@
 <body>
     <!-- Form to create a new post -->
     <form id="postForm">
-        <input type="date" id="activityDate" placeholder="Date" required>
-        <input type="time" id="activityTime" placeholder="Time" required>
-        <input type="text" id="activityDesc" placeholder="Description" required>
-        <input type="text" id="activityCategory" placeholder="Category" required>
+        <input type="date" id="activityDate" placeholder="Date">
+        <input type="time" id="activityTime" placeholder="Time">
+        <input type="text" id="activityDesc" placeholder="Description"  maxlength="300" size="50" required>
+        <select name="activityCategory" id="activityCategory">
+            <option value="Category A">Category A</option>
+            <option value="Category B">Category B</option>
+            <option value="Category C">Category C</option>
+            <option value="Category D">Category D</option>
+        </select>
+        <!-- <input type="text" id="activityCategory" placeholder="Category" required> -->
 
         <button type="submit">Create Post</button>
     </form>
@@ -48,7 +54,13 @@
                 <input type="date" id="updateDate" placeholder="Date">
                 <input type="time" id="updateTime" placeholder="Time">
                 <input type="text" id="updateDesc" placeholder="Description">
-                <input type="text" id="updateCategory" placeholder="Category">
+                <select name="updateCategory" id="updateCategory">
+                    <option value="Category A">Category A</option>
+                    <option value="Category B">Category B</option>
+                    <option value="Category C">Category C</option>
+                    <option value="Category D">Category D</option>
+                </select>
+                <!-- <input type="text" id="updateCategory" placeholder="Category"> -->
                 <button type="submit">Update</button>
             </form>
         </div>
