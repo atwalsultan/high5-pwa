@@ -24,11 +24,13 @@ const updateDesc = document.getElementById('updateDesc');
 const updateCategory = document.getElementById('updateCategory');
 const confirmDelete = document.getElementById('confirmDelete');
 
+// Array to store posts
+let postArray = [];
+
 let updateIndex;
 let deleteIndex;
 
-// Array to store posts
-let postArray = [];
+let userPos;
 
 
 //**************************************************************
@@ -36,13 +38,15 @@ let postArray = [];
 //**************************************************************
 
 class Post {
-    constructor(date, time, description, category, dateObj) {
+    constructor(date, time, description, category, dateObj, latitude, longitude) {
         this.date = date;
         this.time = time;
         this.description = description;
         this.category = category;
         this.dateObj = dateObj;
         this.lastUpdated = dateObj;
+        this.latitude = latitude,
+        this.longitude = longitude
     }
 
     // Store post in array
@@ -94,13 +98,17 @@ const createPost = (event) => {
     // Get values from DOM
     let date;
     let time;
+    let latitude;
+    let longitude;
     activityDate.value === "" ? date = "Unspecified" : date = activityDate.value;
     activityTime.value === "" ? time = "Unspecified" : time = activityTime.value;
     let description = activityDesc.value;
     let category = activityCategory.value;
+    userPos ? latitude = userPos.coords.latitude : latitude = "";
+    userPos ? longitude = userPos.coords.longitude : longitude = "";
 
     // Create and store new post
-    let newPost = new Post(date, time, description, category, new Date());
+    let newPost = new Post(date, time, description, category, new Date(), latitude, longitude);
     newPost.storePost();
 
     //Refresh posts table
@@ -118,6 +126,10 @@ const updatePost = (event) => {
     postArray[updateIndex].description = updateDesc.value;
     postArray[updateIndex].category = updateCategory.value;
     postArray[updateIndex].lastUpdated = new Date();
+    if(userPos) {
+        postArray[updateIndex].latitude = userPos.coords.latitude;
+        postArray[updateIndex].longitude = userPos.coords.longitude;
+    }
 
     // Refresh to display changes
     showPosts();
@@ -191,13 +203,30 @@ const outsideClick = (event) => {
     }
 }
 
+const getUserPosition = () => {
+    if('geolocation' in navigator) {
+        navigator.geolocation.watchPosition(position => {
+            userPos = position;
+            console.log(userPos);
+        }, undefined, {maximumAge: 120000});
+    }
+    
+    else {
+        console.log('Geolocation not available');
+    }
+}
+
 
 //**************************************************************
 //      Event Listeners
 //**************************************************************
 
 // On page load
-document.addEventListener('DOMContentLoaded', showPosts);
+document.addEventListener('DOMContentLoaded', () => {
+    getUserPosition();
+
+    showPosts();
+});
 
 // When post form is submitted
 postForm.addEventListener('submit', createPost);
