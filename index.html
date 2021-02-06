@@ -13,21 +13,8 @@
     <title>High5!</title>
 </head>
 <body>
-    <!-- Form to create a new post -->
-    <form id="postForm">
-        <input type="date" id="activityDate" placeholder="Date">
-        <input type="time" id="activityTime" placeholder="Time">
-        <input type="text" id="activityDesc" placeholder="Description"  maxlength="300" size="50" required>
-        <select name="activityCategory" id="activityCategory">
-            <option value="Category A">Category A</option>
-            <option value="Category B">Category B</option>
-            <option value="Category C">Category C</option>
-            <option value="Category D">Category D</option>
-        </select>
 
-        <button type="submit">Create Post</button>
-    </form>
-
+    <button id="createBtn" >New Post</button>
     <br><br>
     <!-- Table to show all posts -->
     <table>
@@ -42,6 +29,29 @@
         <tbody id="tableBody">
         </tbody>
     </table>
+
+    <div id="createOverlay">
+        <div class="modal">
+            <span class="closeBtn">&times;</span>
+
+            <p>Update Post</p>
+
+            <!-- Form to create a new post -->
+            <form id="postForm">
+                <input type="date" id="activityDate" placeholder="Date">
+                <input type="time" id="activityTime" placeholder="Time">
+                <input type="text" id="activityDesc" placeholder="Description"  maxlength="300" required>
+                <select name="activityCategory" id="activityCategory">
+                    <option value="Category A">Category A</option>
+                    <option value="Category B">Category B</option>
+                    <option value="Category C">Category C</option>
+                    <option value="Category D">Category D</option>
+                </select>
+
+                <button type="submit">Create Post</button>
+            </form>
+        </div>
+    </div>
 
     <div id="updateOverlay">
         <div class="modal">

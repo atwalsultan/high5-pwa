@@ -23,6 +23,8 @@ const updateTime = document.getElementById('updateTime');
 const updateDesc = document.getElementById('updateDesc');
 const updateCategory = document.getElementById('updateCategory');
 const confirmDelete = document.getElementById('confirmDelete');
+const createBtn = document.getElementById('createBtn');
+const createOverlay = document.getElementById('createOverlay');
 
 // Array to store posts
 let postArray = [];
@@ -189,6 +191,9 @@ const clearInputs = () => {
 
 // Close modals
 const closeModals = () => {
+    // Modal for create action
+    createOverlay.style.display = 'none';
+
     // Modal for update action
     updateOverlay.style.display = 'none';
 
@@ -198,7 +203,7 @@ const closeModals = () => {
 
 // Hide modals on clicking outside
 const outsideClick = (event) => {
-    if(event.target === updateOverlay || event.target === deleteOverlay) {
+    if(event.target === updateOverlay || event.target === deleteOverlay || event.target === createOverlay) {
         closeModals();
     }
 }
@@ -244,3 +249,8 @@ for(let i = 0; i<closeBtns.length; i++) {
 
 // On clicking outside a modal
 window.addEventListener('click', outsideClick);
+
+// When new post button is clicked
+createBtn.addEventListener('click', () => {
+    createOverlay.style.display = 'block'
+});
