@@ -10,31 +10,29 @@
     <!-- External JS file -->
     <script src="js/main.js" defer></script>
 
+    <!-- Firebase -->
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
+
+    <!-- TODO: Add SDKs for Firebase products that you want to use
+    https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-analytics.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-firestore.js"></script>
+
     <title>High5!</title>
 </head>
 <body>
 
     <button id="createBtn" >New Post</button>
-    <br><br>
-    <!-- Table to show all posts -->
-    <table>
-        <caption>All Posts</caption>
-        <thead>
-            <th>Date</th>
-            <th>Time</th>
-            <th>Description</th>
-            <th>Category</th>
-            <th>Action</th>
-        </thead>
-        <tbody id="tableBody">
-        </tbody>
-    </table>
+
+    <ul id="post-list"></ul>
 
     <div id="createOverlay">
         <div class="modal">
             <span class="closeBtn">&times;</span>
 
-            <p>Update Post</p>
+            <p>Create New Post</p>
 
             <!-- Form to create a new post -->
             <form id="postForm">
@@ -82,5 +80,25 @@
             <button id="confirmDelete">Delete Post</button>
         </div>
     </div>
+
+    <script>
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        var firebaseConfig = {
+            apiKey: "AIzaSyAT7B0jOp4FLAnq0doLimgfqRDSwH0lqsE",
+            authDomain: "high5-pwa.firebaseapp.com",
+            projectId: "high5-pwa",
+            storageBucket: "high5-pwa.appspot.com",
+            messagingSenderId: "439071465334",
+            appId: "1:439071465334:web:dfdef51006c530402ee457",
+            measurementId: "G-E65E2LDF9F"
+        };
+        // Initialize Firebase
+        firebase.initializeApp(firebaseConfig);
+        firebase.analytics();
+
+        const db = firebase.firestore();
+        db.settings({timestampsInSnapshots: true});
+    </script>
 </body>
 </html>

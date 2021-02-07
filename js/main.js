@@ -8,212 +8,203 @@
 //**************************************************************
 //      Root Scope Variable Declarations
 //**************************************************************
+// Create functionality
 const postForm = document.getElementById("postForm");
 const activityDate = document.getElementById("activityDate");
 const activityTime = document.getElementById("activityTime");
 const activityDesc = document.getElementById("activityDesc");
 const activityCategory = document.getElementById("activityCategory");
-const tableBody = document.getElementById("tableBody");
-const updateOverlay = document.getElementById('updateOverlay');
-const deleteOverlay = document.getElementById('deleteOverlay');
-const closeBtns = document.querySelectorAll('.closeBtn');
+const createBtn = document.getElementById('createBtn');
+const createOverlay = document.getElementById('createOverlay');
+
+// Read functionality
+const postList = document.getElementById('post-list');
+
+// Update functionality
+let updateIndex;
 const updateForm = document.getElementById('updateForm');
 const updateDate = document.getElementById('updateDate');
 const updateTime = document.getElementById('updateTime');
 const updateDesc = document.getElementById('updateDesc');
 const updateCategory = document.getElementById('updateCategory');
-const confirmDelete = document.getElementById('confirmDelete');
-const createBtn = document.getElementById('createBtn');
-const createOverlay = document.getElementById('createOverlay');
+const updateOverlay = document.getElementById('updateOverlay');
 
-// Array to store posts
-let postArray = [];
-
-let updateIndex;
+// Delete functionality
 let deleteIndex;
+const confirmDelete = document.getElementById('confirmDelete');
+const deleteOverlay = document.getElementById('deleteOverlay');
 
+// 'X' buttons to close modals
+const closeBtns = document.querySelectorAll('.closeBtn');
+
+// To store user's position object
 let userPos;
-
-
-//**************************************************************
-//      Class Declarations
-//**************************************************************
-
-class Post {
-    constructor(date, time, description, category, dateObj, latitude, longitude) {
-        this.date = date;
-        this.time = time;
-        this.description = description;
-        this.category = category;
-        this.dateObj = dateObj;
-        this.lastUpdated = dateObj;
-        this.latitude = latitude,
-        this.longitude = longitude
-    }
-
-    // Store post in array
-    storePost() {
-        postArray.push(this);
-    }
-};
-
 
 //**************************************************************
 //      Function Declarations
 //**************************************************************
-
-// Show all posts
-const showPosts = () => {
-    tableBody.innerHTML = ''
-    for(let i = 0; i < postArray.length; i++) {
-        tableBody.innerHTML += `
-            <tr>
-                <td>${postArray[i].date}</td>
-                <td>${postArray[i].time}</td>
-                <td>${postArray[i].description}</td>
-                <td>${postArray[i].category}</td>
-                <td>
-                    <button class="deleteBtn" id="deleteBtn${i}">Delete</button>
-                    <button class="updateBtn" id="updateBtn${i}">Update</button>
-                </td>
-            </tr>
-        `;
-
-        // TODO: Check if event listener for button can be added in this loop
-    }
-
-    // Add event listener to all buttons
-    addBtnListeners();
-
-    // Clear all inputs
-    clearInputs();
-
-    // Close any modals if open
-    closeModals();
-};
 
 // Create and store new post
 const createPost = (event) => {
     // Prevent form from actually submitting
     event.preventDefault();
 
-    // Get values from DOM
     let date;
     let time;
     let latitude;
     let longitude;
-    activityDate.value === "" ? date = "Unspecified" : date = activityDate.value;
-    activityTime.value === "" ? time = "Unspecified" : time = activityTime.value;
+
+    // Get values from DOM
+    activityDate.value === "" ? date = "Unspecified" : date = activityDate.value; // date = 'Unspedified' if user leaves it empty
+    activityTime.value === "" ? time = "Unspecified" : time = activityTime.value; // time = 'Unspedified' if user leaves it empty
     let description = activityDesc.value;
     let category = activityCategory.value;
-    userPos ? latitude = userPos.coords.latitude : latitude = "";
-    userPos ? longitude = userPos.coords.longitude : longitude = "";
+    userPos ? latitude = userPos.coords.latitude : latitude = ""; // latitude = '' if the user position is not available
+    userPos ? longitude = userPos.coords.longitude : longitude = ""; // longitude = '' if the user position is not available
 
-    // Create and store new post
-    let newPost = new Post(date, time, description, category, new Date(), latitude, longitude);
-    newPost.storePost();
+    // Add post as document to collection
+    db.collection('posts').add({
+        date: date,
+        time: time,
+        category: category,
+        description: description,
+        latitude: latitude,
+        longitude: longitude
+    });
 
-    //Refresh posts table
-    showPosts();
+    // Clear inputs and close modal
+    closeModals();
 }
+
+const addButtonListeners = (updateBtn, deleteBtn, doc) => {
+    updateBtn.addEventListener('click', (event) => {
+        // Get array index of post to update
+        updateIndex = event.target.parentElement.getAttribute('id'); //doc.id??
+
+        // Show update form
+        updateOverlay.style.display = 'block';
+
+        // Populate form with existing post data
+        updateDate.value = doc.data().date;
+        updateTime.value = doc.data().time;
+        updateDesc.value = doc.data().description;
+        updateCategory.value = doc.data().category;
+    })
+
+    deleteBtn.addEventListener('click', (event) => {
+        // Get array index of post to delete
+        deleteIndex = event.target.parentElement.getAttribute('id'); //doc.id??
+
+        // Show confirmation modal
+        deleteOverlay.style.display = 'block';
+    });
+}
+
+// Create elements and render post
+const renderPost = (doc) => {
+    // Create elements to be rendered
+    let li = document.createElement('li');
+    let date = document.createElement('p');
+    let time = document.createElement('p');
+    let category = document.createElement('p');
+    let description = document.createElement('p');
+    let updateBtn = document.createElement('button');
+    let deleteBtn = document.createElement('button');
+
+    // Set unique ID for each list item
+    li.setAttribute('id', doc.id);
+
+    // Contents for each element
+    date.textContent = doc.data().date;
+    time.textContent = doc.data().time;
+    category.textContent = doc.data().category;
+    description.textContent = doc.data().description;
+    updateBtn.textContent = `Update`;
+    deleteBtn.textContent = `Delete`;
+
+    // Add event listeners to buttons
+    addButtonListeners(updateBtn, deleteBtn, doc);
+
+    // Append post data to list item element
+    li.appendChild(date);
+    li.appendChild(time);
+    li.appendChild(category);
+    li.appendChild(description);
+    li.appendChild(updateBtn);
+    li.appendChild(deleteBtn);
+
+    // Prepend list item to list
+    postList.prepend(li);
+};
 
 // Update post
 const updatePost = (event) => {
     // Prevent form from actually submitting
     event.preventDefault();
 
-    // Get values from DOM and update
-    updateDate.value === "" ? postArray[updateIndex].date = "Unspecified" : postArray[updateIndex].date = updateDate.value;
-    updateTime.value === "" ? postArray[updateIndex].time = "Unspecified" : postArray[updateIndex].time = updateTime.value;
-    postArray[updateIndex].description = updateDesc.value;
-    postArray[updateIndex].category = updateCategory.value;
-    postArray[updateIndex].lastUpdated = new Date();
-    if(userPos) {
-        postArray[updateIndex].latitude = userPos.coords.latitude;
-        postArray[updateIndex].longitude = userPos.coords.longitude;
+    let updateObj = {};
+
+    // Populating update object
+    updateDate.value === "" ? updateObj.date = 'Unspecified' : updateObj.date = updateDate.value; // date = 'Unspedified' if user leaves it empty
+    updateTime.value === "" ? updateObj.time = 'Unspecified' : updateObj.time = updateTime.value; // time = 'Unspedified' if user leaves it empty
+    updateObj.category = updateCategory.value;
+    updateObj.description = updateDesc.value;
+    if(userPos) { // TODO: Add a checkbox in DOM to choose if users want to update the position or use the pre-existing position?
+        updateObj.latitude = userPos.coords.latitude;
+        updateObj.longitude = userPos.coords.longitude;
     }
 
-    // Refresh to display changes
-    showPosts();
+    // Updating document in collection
+    db.collection('posts').doc(updateIndex).update(updateObj);
+
+    // Clear form and close modal
+    closeModals();
 }
 
 // Delete post
 const deletePost = () => {
-    postArray.splice(deleteIndex, 1);
+    // Delete document from collection
+    db.collection('posts').doc(deleteIndex).delete();
 
-    // Show all posts
-    showPosts();
-}
-
-const addBtnListeners = () => {
-    let deleteBtns = document.getElementsByClassName('deleteBtn');
-    let updateBtns = document.getElementsByClassName('updateBtn');
-    
-    for(let i = 0; i < deleteBtns.length; i++) {
-        deleteBtns[i].addEventListener('click', (event) => {
-            // Get array index of post to delete
-            deleteIndex = parseInt(event.target.id.split('deleteBtn')[1]);
-
-            // Show confirmation modal
-            deleteOverlay.style.display = 'block';
-        });
-
-        updateBtns[i].addEventListener('click', (event) => {
-            // Get array index of post to update
-            updateIndex = parseInt(event.target.id.split('updateBtn')[1]);
-
-            // Show update form
-            updateOverlay.style.display = 'block';
-
-            // Populate form with existing data
-            updateDate.value = postArray[updateIndex].date;
-            updateTime.value = postArray[updateIndex].time;
-            updateDesc.value = postArray[updateIndex].description;
-            updateCategory.value = postArray[updateIndex].category;
-        });
-    }
-}
-
-// Clear all inputs
-const clearInputs = () => {
-    // Create post form
-    activityDate.value = '';
-    activityTime.value = '';
-    activityDesc.value = '';
-    activityCategory.value = 'Category A';
-
-    // Update post form
-    updateDate.value = '';
-    updateTime.value = '';
-    updateDesc.value = '';
-    updateCategory.value = 'Category A';
+    // Close modal
+    closeModals();
 }
 
 // Close modals
 const closeModals = () => {
-    // Modal for create action
+
+    // Clear inputs
+    activityDate.value = '';
+    activityTime.value = '';
+    activityDesc.value = '';
+    activityCategory.value = 'Category A';
+    updateDate.value = '';
+    updateTime.value = '';
+    updateDesc.value = '';
+    updateCategory.value = 'Category A';
+
+    // Close modals
     createOverlay.style.display = 'none';
-
-    // Modal for update action
     updateOverlay.style.display = 'none';
-
-    // Modal for delte action
     deleteOverlay.style.display = 'none';
 }
 
-// Hide modals on clicking outside
+// Close modals on clicking outside
 const outsideClick = (event) => {
     if(event.target === updateOverlay || event.target === deleteOverlay || event.target === createOverlay) {
+
+        // Clear form and close modal
         closeModals();
     }
 }
 
+// Get user's position
 const getUserPosition = () => {
     if('geolocation' in navigator) {
         navigator.geolocation.watchPosition(position => {
             userPos = position;
             console.log(userPos);
-        }, undefined, {maximumAge: 120000});
+        }, undefined, {maximumAge: 60000}); // New position every minute
     }
     
     else {
@@ -221,36 +212,57 @@ const getUserPosition = () => {
     }
 }
 
-
 //**************************************************************
 //      Event Listeners
 //**************************************************************
 
 // On page load
 document.addEventListener('DOMContentLoaded', () => {
+    // Get user's position
     getUserPosition();
 
-    showPosts();
+    // Real time listener
+    db.collection('posts').onSnapshot((snapshot) => {
+        let changes = snapshot.docChanges();
+        changes.forEach((change) => {
+            // Create functionality
+            if(change.type === 'added') {
+                renderPost(change.doc);
+            }
+            // Update functionality
+            else if (change.type === 'modified') {
+                let li = document.getElementById(change.doc.id);
+                postList.removeChild(li);
+                renderPost(change.doc);
+            }
+            // Delete functionality
+            else if (change.type === 'removed') {
+                // Add updated post to the top 
+                let li = document.getElementById(change.doc.id);
+                postList.removeChild(li);
+            }
+        });
+    })
 });
 
-// When post form is submitted
+// Create form submission
 postForm.addEventListener('submit', createPost);
 
-// When update form is submitted
+// Update form submission
 updateForm.addEventListener('submit', updatePost);
 
 // Delete button on confirmation modal
 confirmDelete.addEventListener('click', deletePost);
 
-// When close button is clicked on a modal
+// 'X' button on modals
 for(let i = 0; i<closeBtns.length; i++) {
     closeBtns[i].addEventListener('click', closeModals);
 }
 
-// On clicking outside a modal
+// Click outside modal
 window.addEventListener('click', outsideClick);
 
-// When new post button is clicked
+// New post button
 createBtn.addEventListener('click', () => {
     createOverlay.style.display = 'block'
 });
