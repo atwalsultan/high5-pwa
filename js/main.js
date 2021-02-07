@@ -315,9 +315,16 @@ createBtn.addEventListener('click', () => {
     createOverlay.style.display = 'block'
 });
 
-// Firestore sandbox
-db.collection('posts').get().then((snapshot) => {
-    snapshot.docs.forEach((doc) => {
-        renderPost(doc);
+// Real time listener
+db.collection('posts').onSnapshot(snapshot => {
+    let changes = snapshot.docChanges();
+    changes.forEach(change => {
+        if(change.type === 'added') {
+            renderPost(change.doc);
+        }
+        else if (change.type === 'removed') {
+            let li = document.getElementById(change.doc.id);
+            postList.removeChild(li);
+        }
     });
-});
+})
