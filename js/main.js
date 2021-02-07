@@ -26,6 +26,8 @@ const confirmDelete = document.getElementById('confirmDelete');
 const createBtn = document.getElementById('createBtn');
 const createOverlay = document.getElementById('createOverlay');
 
+const postList = document.getElementById('post-list');
+
 // Array to store posts
 let postArray = [];
 
@@ -109,12 +111,21 @@ const createPost = (event) => {
     userPos ? latitude = userPos.coords.latitude : latitude = "";
     userPos ? longitude = userPos.coords.longitude : longitude = "";
 
+    db.collection('posts').add({
+        date: date,
+        time: time,
+        category: category,
+        description: description,
+        latitude: latitude,
+        longitude: longitude
+    });
+
     // Create and store new post
-    let newPost = new Post(date, time, description, category, new Date(), latitude, longitude);
-    newPost.storePost();
+    // let newPost = new Post(date, time, description, category, new Date(), latitude, longitude);
+    // newPost.storePost();
 
     //Refresh posts table
-    showPosts();
+    // showPosts();
 }
 
 // Update post
@@ -221,6 +232,40 @@ const getUserPosition = () => {
     }
 }
 
+// Create elements and render posts
+const renderPost = (doc) => {
+    // Create elements to be rendered
+    let li = document.createElement('li');
+
+    let date = document.createElement('p');
+    let time = document.createElement('p');
+    let category = document.createElement('p');
+    let description = document.createElement('p');
+    
+    let updateBtn = document.createElement('button');
+    let deleteBtn = document.createElement('button');
+
+    // Set unique ID for each list item
+    li.setAttribute('id', doc.id);
+
+    date.textContent = doc.data().date;
+    time.textContent = doc.data().time;
+    category.textContent = doc.data().category;
+    description.textContent = doc.data().description;
+    updateBtn.textContent = `Update`;
+    deleteBtn.textContent = `Delete`;
+
+    // Append post data to list item element
+    li.appendChild(date);
+    li.appendChild(time);
+    li.appendChild(category);
+    li.appendChild(description);
+    li.appendChild(updateBtn);
+    li.appendChild(deleteBtn);
+
+    // Append list item to list
+    postList.appendChild(li);
+};
 
 //**************************************************************
 //      Event Listeners
@@ -253,4 +298,11 @@ window.addEventListener('click', outsideClick);
 // When new post button is clicked
 createBtn.addEventListener('click', () => {
     createOverlay.style.display = 'block'
+});
+
+// Firestore sandbox
+db.collection('posts').get().then((snapshot) => {
+    snapshot.docs.forEach((doc) => {
+        renderPost(doc);
+    });
 });
