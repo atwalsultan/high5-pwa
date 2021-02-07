@@ -120,6 +120,8 @@ const createPost = (event) => {
         longitude: longitude
     });
 
+    closeModals();
+
     // Create and store new post
     // let newPost = new Post(date, time, description, category, new Date(), latitude, longitude);
     // newPost.storePost();
@@ -150,10 +152,14 @@ const updatePost = (event) => {
 
 // Delete post
 const deletePost = () => {
-    postArray.splice(deleteIndex, 1);
+    db.collection('posts').doc(deleteIndex).delete();
+
+    closeModals();
+
+    // postArray.splice(deleteIndex, 1);
 
     // Show all posts
-    showPosts();
+    // showPosts();
 }
 
 const addBtnListeners = () => {
@@ -254,6 +260,15 @@ const renderPost = (doc) => {
     description.textContent = doc.data().description;
     updateBtn.textContent = `Update`;
     deleteBtn.textContent = `Delete`;
+
+    // Add event listeners to buttons
+    deleteBtn.addEventListener('click', (event) => {
+        // Get array index of post to delete
+        deleteIndex = event.target.parentElement.getAttribute('id');
+
+        // Show confirmation modal
+        deleteOverlay.style.display = 'block';
+    })
 
     // Append post data to list item element
     li.appendChild(date);
