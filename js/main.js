@@ -32,6 +32,8 @@ const closeBtns = document.querySelectorAll('.closeBtn');
 // To store user's position object
 let userPos;
 
+let logoutBtn = document.getElementById('logoutBtn');
+
 //**************************************************************
 //      Function Declarations
 //**************************************************************
@@ -250,4 +252,13 @@ window.addEventListener('click', outsideClick);
 // New post button
 createBtn.addEventListener('click', () => {
     createOverlay.style.display = 'block'
+});
+
+// Log the user out or show error message
+logoutBtn.addEventListener('click', () => {
+    auth.signOut().then(() => {
+        window.location.href = `../index.html`;
+    }).catch((error) => {
+        console.log(error.message);
+    });
 });
