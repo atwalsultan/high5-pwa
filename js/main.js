@@ -111,8 +111,6 @@ const renderPost = (doc) => {
     let time = document.createElement('p');
     let category = document.createElement('p');
     let description = document.createElement('p');
-    let updateBtn = document.createElement('button');
-    let deleteBtn = document.createElement('button');
 
     // Set unique ID for each list item
     li.setAttribute('id', doc.id);
@@ -122,19 +120,27 @@ const renderPost = (doc) => {
     time.textContent = doc.data().time;
     category.textContent = doc.data().category;
     description.textContent = doc.data().description;
-    updateBtn.textContent = `Update`;
-    deleteBtn.textContent = `Delete`;
-
-    // Add event listeners to buttons
-    addButtonListeners(updateBtn, deleteBtn, doc);
 
     // Append post data to list item element
     li.appendChild(date);
     li.appendChild(time);
     li.appendChild(category);
     li.appendChild(description);
-    li.appendChild(updateBtn);
-    li.appendChild(deleteBtn);
+
+    // Add 'Update' and 'Delete' buttons only for posts owned by the user
+    if(auth.currentUser.uid === doc.data().uid) {
+        let updateBtn = document.createElement('button');
+        let deleteBtn = document.createElement('button');
+
+        updateBtn.textContent = `Update`;
+        deleteBtn.textContent = `Delete`;
+
+        // Add event listeners to buttons
+        addButtonListeners(updateBtn, deleteBtn, doc);
+
+        li.appendChild(updateBtn);
+        li.appendChild(deleteBtn);
+    }
 
     // Prepend list item to list
     postList.prepend(li);
@@ -178,7 +184,7 @@ const deletePost = () => {
     db.collection('posts').doc(deleteId).delete().then(() => {
 
         // Show message
-        
+
     }).catch((err) => {
 
         // Show message
