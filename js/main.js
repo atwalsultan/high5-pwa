@@ -65,6 +65,14 @@ const createPost = (event) => {
         coordinates: new firebase.firestore.GeoPoint(latitude, longitude),
         uid: auth.currentUser.uid,
         timestamp: new firebase.firestore.FieldValue.serverTimestamp()
+    }).then(() => {
+
+        // Show message
+
+    }).catch((err) => {
+
+        // Show message
+        console.log(err.message);
     });
 
     // Clear form and close modal
@@ -150,7 +158,15 @@ const updatePost = (event) => {
     }
 
     // Updating document in collection
-    db.collection('posts').doc(updateId).update(updateObj);
+    db.collection('posts').doc(updateId).update(updateObj).then(() => {
+
+        // Show message
+
+    }).catch((err) => {
+
+        // Show message
+        console.log(err.message);
+    });
 
     // Clear form and close modal
     closeModals();
@@ -159,7 +175,15 @@ const updatePost = (event) => {
 // Delete post
 const deletePost = () => {
     // Delete document from collection
-    db.collection('posts').doc(deleteId).delete();
+    db.collection('posts').doc(deleteId).delete().then(() => {
+
+        // Show message
+        
+    }).catch((err) => {
+
+        // Show message
+        console.log(err.message);
+    });
 
     // Close modal
     closeModals();
@@ -231,6 +255,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 postList.removeChild(li);
             }
         });
+    }, (err) => {
+        // Show message
+        console.log(err.message);
     })
 });
 

@@ -118,7 +118,7 @@
       const auth = firebase.auth();
       db.settings({ timestampsInSnapshots: true });
 
-      // Check if user is logged in
+      // Check if user is logged out
       auth.onAuthStateChanged((user) => {
         if(user) {
           // console.log(user);
