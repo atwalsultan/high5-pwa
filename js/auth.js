@@ -26,8 +26,9 @@ signupForm.addEventListener('submit', (e) => {
     auth.createUserWithEmailAndPassword(email, password).then((cred) => {
         // Clear form
 
-        // Redirect to home page
-        window.location.href = `../pages/home.html`;
+        // Show success message
+        console.log(`Your account has been created. You can now log in`);
+        
     }).catch((error) => {
         console.log(error.message);
     });

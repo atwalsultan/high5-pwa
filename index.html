@@ -52,6 +52,13 @@
       const db = firebase.firestore();
       const auth = firebase.auth();
       db.settings({ timestampsInSnapshots: true });
+
+      // Check if user is logged in
+      auth.onAuthStateChanged((user) => {
+        if(user) {
+          window.location.href = `/pages/home.html`;
+        }
+      });
     </script>
   </body>
 </html>
