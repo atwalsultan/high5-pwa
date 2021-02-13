@@ -26,9 +26,6 @@ signupForm.addEventListener('submit', (e) => {
     auth.createUserWithEmailAndPassword(email, password).then((cred) => {
         // Clear form
 
-        // Show success message
-        console.log(`Your account has been created. You can now log in`);
-        
     }).catch((error) => {
         console.log(error.message);
     });

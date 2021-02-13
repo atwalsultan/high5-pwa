@@ -62,7 +62,9 @@ const createPost = (event) => {
         time: time,
         category: category,
         description: description,
-        coordinates: new firebase.firestore.GeoPoint(latitude, longitude)
+        coordinates: new firebase.firestore.GeoPoint(latitude, longitude),
+        uid: auth.currentUser.uid,
+        timestamp: new firebase.firestore.FieldValue.serverTimestamp()
     });
 
     // Clear form and close modal
