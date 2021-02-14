@@ -64,7 +64,8 @@ const createPost = (event) => {
         description: description,
         coordinates: new firebase.firestore.GeoPoint(latitude, longitude),
         uid: auth.currentUser.uid,
-        timestamp: new firebase.firestore.FieldValue.serverTimestamp()
+        timestamp: new firebase.firestore.FieldValue.serverTimestamp(),
+        updated: new firebase.firestore.FieldValue.serverTimestamp()
     }).then(() => {
 
         // Show message
@@ -162,6 +163,7 @@ const updatePost = (event) => {
         updateObj.latitude = userPos.coords.latitude;
         updateObj.longitude = userPos.coords.longitude;
     }
+    updateObj.updated = new firebase.firestore.FieldValue.serverTimestamp();
 
     // Updating document in collection
     db.collection('posts').doc(updateId).update(updateObj).then(() => {
@@ -241,7 +243,7 @@ document.addEventListener('DOMContentLoaded', () => {
     getUserPosition();
 
     // Real time listener
-    db.collection('posts').onSnapshot((snapshot) => {
+    db.collection('posts').orderBy("updated", "asc").onSnapshot((snapshot) => {
         let changes = snapshot.docChanges();
         changes.forEach((change) => {
             // Create functionality
