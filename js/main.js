@@ -160,8 +160,7 @@ const updatePost = (event) => {
     updateObj.category = updateForm.updateCategory.value;
     updateObj.description = updateForm.updateDesc.value;
     if(userPos) { // TODO: Add a checkbox in DOM to choose if users want to update the position or use the pre-existing position?
-        updateObj.latitude = userPos.coords.latitude;
-        updateObj.longitude = userPos.coords.longitude;
+        updateObj.coordinates = new firebase.firestore.GeoPoint(userPos.coords.latitude, userPos.coords.longitude)
     }
     updateObj.updated = new firebase.firestore.FieldValue.serverTimestamp();
 
@@ -293,9 +292,8 @@ createBtn.addEventListener('click', () => {
 
 // Log the user out or show error message
 logoutBtn.addEventListener('click', () => {
-    auth.signOut().then(() => {
-        window.location.href = `../index.html`;
-    }).catch((error) => {
+    auth.signOut().catch((error) => {
+        // Show message
         console.log(error.message);
     });
 });

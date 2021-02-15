@@ -23,10 +23,8 @@ signupForm.addEventListener('submit', (e) => {
     let password = signupForm.signupPassword.value;
 
     // Sign up the user or show error message
-    auth.createUserWithEmailAndPassword(email, password).then((cred) => {
-        // Clear form
-
-    }).catch((error) => {
+    auth.createUserWithEmailAndPassword(email, password).catch((error) => {
+        // Show message
         console.log(error.message);
     });
 });
@@ -40,12 +38,8 @@ loginForm.addEventListener('submit', (e) => {
     let password = loginForm.loginPassword.value;
 
     // Sign up the user or show error message
-    auth.signInWithEmailAndPassword(email, password).then((cred) => {
-        // Clear form
-
-        // Redirect to home page
-        window.location.href = `../pages/home.html`;
-    }).catch((error) => {
+    auth.signInWithEmailAndPassword(email, password).catch((error) => {
+        // Show message
         console.log(error.message);
     });
 });
