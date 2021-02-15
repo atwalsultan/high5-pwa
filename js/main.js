@@ -32,6 +32,8 @@ const closeBtns = document.querySelectorAll('.closeBtn');
 // To store user's position object
 let userPos;
 
+let logoutBtn = document.getElementById('logoutBtn');
+
 //**************************************************************
 //      Function Declarations
 //**************************************************************
@@ -60,7 +62,17 @@ const createPost = (event) => {
         time: time,
         category: category,
         description: description,
-        coordinates: new firebase.firestore.GeoPoint(latitude, longitude)
+        coordinates: new firebase.firestore.GeoPoint(latitude, longitude),
+        uid: auth.currentUser.uid,
+        timestamp: new firebase.firestore.FieldValue.serverTimestamp()
+    }).then(() => {
+
+        // Show message
+
+    }).catch((err) => {
+
+        // Show message
+        console.log(err.message);
     });
 
     // Clear form and close modal
@@ -99,8 +111,6 @@ const renderPost = (doc) => {
     let time = document.createElement('p');
     let category = document.createElement('p');
     let description = document.createElement('p');
-    let updateBtn = document.createElement('button');
-    let deleteBtn = document.createElement('button');
 
     // Set unique ID for each list item
     li.setAttribute('id', doc.id);
@@ -110,19 +120,27 @@ const renderPost = (doc) => {
     time.textContent = doc.data().time;
     category.textContent = doc.data().category;
     description.textContent = doc.data().description;
-    updateBtn.textContent = `Update`;
-    deleteBtn.textContent = `Delete`;
-
-    // Add event listeners to buttons
-    addButtonListeners(updateBtn, deleteBtn, doc);
 
     // Append post data to list item element
     li.appendChild(date);
     li.appendChild(time);
     li.appendChild(category);
     li.appendChild(description);
-    li.appendChild(updateBtn);
-    li.appendChild(deleteBtn);
+
+    // Add 'Update' and 'Delete' buttons only for posts owned by the user
+    if(auth.currentUser.uid === doc.data().uid) {
+        let updateBtn = document.createElement('button');
+        let deleteBtn = document.createElement('button');
+
+        updateBtn.textContent = `Update`;
+        deleteBtn.textContent = `Delete`;
+
+        // Add event listeners to buttons
+        addButtonListeners(updateBtn, deleteBtn, doc);
+
+        li.appendChild(updateBtn);
+        li.appendChild(deleteBtn);
+    }
 
     // Prepend list item to list
     postList.prepend(li);
@@ -146,7 +164,15 @@ const updatePost = (event) => {
     }
 
     // Updating document in collection
-    db.collection('posts').doc(updateId).update(updateObj);
+    db.collection('posts').doc(updateId).update(updateObj).then(() => {
+
+        // Show message
+
+    }).catch((err) => {
+
+        // Show message
+        console.log(err.message);
+    });
 
     // Clear form and close modal
     closeModals();
@@ -155,7 +181,15 @@ const updatePost = (event) => {
 // Delete post
 const deletePost = () => {
     // Delete document from collection
-    db.collection('posts').doc(deleteId).delete();
+    db.collection('posts').doc(deleteId).delete().then(() => {
+
+        // Show message
+
+    }).catch((err) => {
+
+        // Show message
+        console.log(err.message);
+    });
 
     // Close modal
     closeModals();
@@ -227,6 +261,9 @@ document.addEventListener('DOMContentLoaded', () => {
                 postList.removeChild(li);
             }
         });
+    }, (err) => {
+        // Show message
+        console.log(err.message);
     })
 });
 
@@ -250,4 +287,13 @@ window.addEventListener('click', outsideClick);
 // New post button
 createBtn.addEventListener('click', () => {
     createOverlay.style.display = 'block'
+});
+
+// Log the user out or show error message
+logoutBtn.addEventListener('click', () => {
+    auth.signOut().then(() => {
+        window.location.href = `../index.html`;
+    }).catch((error) => {
+        console.log(error.message);
+    });
 });
