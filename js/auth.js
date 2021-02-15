@@ -4,42 +4,32 @@
 //**************************************************************
 //**************************************************************
 
+// Your web app's Firebase configuration
+// For Firebase JS SDK v7.20.0 and later, measurementId is optional
+var firebaseConfig = {
+apiKey: "AIzaSyAT7B0jOp4FLAnq0doLimgfqRDSwH0lqsE",
+authDomain: "high5-pwa.firebaseapp.com",
+projectId: "high5-pwa",
+storageBucket: "high5-pwa.appspot.com",
+messagingSenderId: "439071465334",
+appId: "1:439071465334:web:dfdef51006c530402ee457",
+measurementId: "G-E65E2LDF9F",
+};
 
-//**************************************************************
-//      Root Scope Variable Declarations
-//**************************************************************
-let signupForm = document.getElementById('signupForm');
-let loginForm = document.getElementById('loginForm');
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+firebase.analytics();
 
-//**************************************************************
-//      Event Listeners
-//**************************************************************
-signupForm.addEventListener('submit', (e) => {
-    // Prevent form from actually submitting
-    e.preventDefault();
+const db = firebase.firestore();
+const auth = firebase.auth();
+db.settings({ timestampsInSnapshots: true });
 
-    // Get email and password from DOM
-    let email = signupForm.signupEmail.value;
-    let password = signupForm.signupPassword.value;
-
-    // Sign up the user or show error message
-    auth.createUserWithEmailAndPassword(email, password).catch((error) => {
-        // Show message
-        console.log(error.message);
-    });
-});
-
-loginForm.addEventListener('submit', (e) => {
-    // Prevent form from actually submitting
-    e.preventDefault();
-    
-    // Get email and password from DOM
-    let email = loginForm.loginEmail.value;
-    let password = loginForm.loginPassword.value;
-
-    // Sign up the user or show error message
-    auth.signInWithEmailAndPassword(email, password).catch((error) => {
-        // Show message
-        console.log(error.message);
-    });
-});
+// Check auth state of user
+auth.onAuthStateChanged((user) => {
+    if(user && (window.location.href.includes('index.html'))) {
+      window.location.replace(`/pages/home.html`);
+    }
+    else if(!user && !(window.location.href.includes('index.html'))) {
+      window.location.replace(`../index.html`);
+    }
+  });
