@@ -4,17 +4,17 @@
 //**************************************************************
 //**************************************************************
 
-
 //**************************************************************
 //      Root Scope Variable Declarations
 //**************************************************************
+
 // Create functionality
 const postForm = document.getElementById("postForm");
 const createBtn = document.getElementById('createBtn');
 const createOverlay = document.getElementById('createOverlay');
 
 // Read functionality
-const postList = document.getElementById('post-list');
+const postList = document.getElementById('postList');
 
 // Update functionality
 let updateId;
@@ -32,11 +32,32 @@ const closeBtns = document.querySelectorAll('.closeBtn');
 // To store user's position object
 let userPos;
 
-let logoutBtn = document.getElementById('logoutBtn');
+// Filter
+const filterForm = document.getElementById('filterForm');
+
+// Radius of the Earth in kms
+const R = 6371;
+
+// Logout button
+const logoutBtn = document.getElementById('logoutBtn');
 
 //**************************************************************
 //      Function Declarations
 //**************************************************************
+
+// Get user's position
+const getUserPosition = () => {
+    if('geolocation' in navigator) {
+        navigator.geolocation.watchPosition(position => {
+            userPos = position;
+            // console.log(userPos);
+        }, undefined, {maximumAge: 60000}); // New position every minute
+    }
+    
+    else {
+        console.log('Geolocation not available');
+    }
+}
 
 // Create and store new post
 const createPost = (event) => {
@@ -64,7 +85,8 @@ const createPost = (event) => {
         description: description,
         coordinates: new firebase.firestore.GeoPoint(latitude, longitude),
         uid: auth.currentUser.uid,
-        timestamp: new firebase.firestore.FieldValue.serverTimestamp()
+        timestamp: new firebase.firestore.FieldValue.serverTimestamp(),
+        updated: new firebase.firestore.FieldValue.serverTimestamp()
     }).then(() => {
 
         // Show message
@@ -103,6 +125,21 @@ const addButtonListeners = (updateBtn, deleteBtn, doc) => {
     });
 }
 
+const toRad = (degrees) => {
+    return degrees * (Math.PI / 180);
+}
+
+const calculateDistance = (lat1, lon1, lat2, lon2) => {
+    let dLat = toRad(lat2 - lat1);
+    let dLon = toRad(lon2 - lon1);
+
+    let a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLon/2) * Math.sin(dLon/2);
+
+    let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+
+    return (R * c).toFixed(1);
+};
+
 // Create elements and render post
 const renderPost = (doc) => {
     // Create elements to be rendered
@@ -115,6 +152,9 @@ const renderPost = (doc) => {
     // Set unique ID for each list item
     li.setAttribute('id', doc.id);
 
+    // Set class names
+    category.setAttribute('class', 'category');
+
     // Contents for each element
     date.textContent = doc.data().date;
     time.textContent = doc.data().time;
@@ -126,6 +166,18 @@ const renderPost = (doc) => {
     li.appendChild(time);
     li.appendChild(category);
     li.appendChild(description);
+
+    // Display distance if user's position is available
+    if(userPos) {
+        // Calculate distance
+        let km = calculateDistance(doc.data().coordinates.latitude, doc.data().coordinates.longitude, userPos.coords.latitude, userPos.coords.longitude);
+
+        // Create element
+        let distance = document.createElement('p');
+        distance.setAttribute('class', 'distance');
+        distance.textContent = km;
+        li.appendChild(distance);
+    }
 
     // Add 'Update' and 'Delete' buttons only for posts owned by the user
     if(auth.currentUser.uid === doc.data().uid) {
@@ -159,9 +211,9 @@ const updatePost = (event) => {
     updateObj.category = updateForm.updateCategory.value;
     updateObj.description = updateForm.updateDesc.value;
     if(userPos) { // TODO: Add a checkbox in DOM to choose if users want to update the position or use the pre-existing position?
-        updateObj.latitude = userPos.coords.latitude;
-        updateObj.longitude = userPos.coords.longitude;
+        updateObj.coordinates = new firebase.firestore.GeoPoint(userPos.coords.latitude, userPos.coords.longitude)
     }
+    updateObj.updated = new firebase.firestore.FieldValue.serverTimestamp();
 
     // Updating document in collection
     db.collection('posts').doc(updateId).update(updateObj).then(() => {
@@ -217,18 +269,46 @@ const outsideClick = (event) => {
     }
 }
 
-// Get user's position
-const getUserPosition = () => {
-    if('geolocation' in navigator) {
-        navigator.geolocation.watchPosition(position => {
-            userPos = position;
-            console.log(userPos);
-        }, undefined, {maximumAge: 60000}); // New position every minute
-    }
-    
-    else {
-        console.log('Geolocation not available');
-    }
+// Log the user out or show error message 
+const logUserOut = () => {
+    auth.signOut().catch((error) => {
+        // Show message
+        console.log(error.message);
+    });
+}
+
+// Filter by category or distance
+const filter = (event) => {
+    // Prevent form from actually submitting
+    event.preventDefault();
+
+    // Categories
+    let filterCategories = [];
+
+    // Get filter categories
+    filterForm.querySelectorAll('input[type="checkbox"]:checked').forEach(category => {
+        filterCategories.push(category.value);
+    });
+
+    // Distance
+    let distance = parseInt(filterForm.distance.value);
+
+    // Filter by category or distance
+    document.querySelectorAll('#postList li').forEach((post) => {
+        // Get category and distance of post
+        let postCategory = post.querySelector('.category').textContent;
+        let postDistance = parseFloat(post.getElementsByClassName('distance')[0].textContent);
+
+        // Hide or show post as necessary
+        if(!filterCategories.includes(postCategory) || postDistance > distance) {
+            post.style.display = 'none';
+        }
+        else {
+            post.style.display = 'list-item';
+        }
+    });
+
+    // console.log(distance);
 }
 
 //**************************************************************
@@ -240,8 +320,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Get user's position
     getUserPosition();
 
-    // Real time listener
-    db.collection('posts').onSnapshot((snapshot) => {
+    // Firestore real time listener
+    db.collection('posts').orderBy("updated", "asc").onSnapshot((snapshot) => {
         let changes = snapshot.docChanges();
         changes.forEach((change) => {
             // Create functionality
@@ -290,10 +370,7 @@ createBtn.addEventListener('click', () => {
 });
 
 // Log the user out or show error message
-logoutBtn.addEventListener('click', () => {
-    auth.signOut().then(() => {
-        window.location.href = `../index.html`;
-    }).catch((error) => {
-        console.log(error.message);
-    });
-});
+logoutBtn.addEventListener('click', logUserOut);
+
+// Filter by category or distance
+filterForm.addEventListener('submit', filter);

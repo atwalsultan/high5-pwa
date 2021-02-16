@@ -17,6 +17,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-auth.js"></script>
 
     <!-- External JS file -->
+    <script src="../js/auth.js"></script>
     <script src="../js/main.js" defer></script>
 
     <title>High5!</title>
@@ -25,8 +26,29 @@
     <button id="createBtn">New Post</button>
     <button id="logoutBtn">Log Out</button>
 
+    <!-- Category filter -->
+    <fieldset>
+      <legend>Filters</legend>
+      <form id="filterForm">
+        <!-- Category -->
+        <input type="checkbox" id="categoryA" value="Category A" checked>
+        <label for="categoryA">Category A</label>
+        <input type="checkbox" id="categoryB" value="Category B" checked>
+        <label for="categoryB">Category B</label>
+        <input type="checkbox" id="categoryC" value="Category C" checked>
+        <label for="categoryC">Category C</label>
+        <input type="checkbox" id="categoryD" value="Category D" checked>
+        <label for="categoryD">Category D</label>
+
+        <!-- Distance -->
+        <label for="distance">Show posts created within (km): </label>
+        <input type="number" min="0" id="distance" placeholder="Infinite">
+        <button type="submit">Apply</button>
+      </form>
+    </fieldset>
+
     <!-- Read markup just a <ul> -->
-    <ul id="post-list"></ul>
+    <ul id="postList"></ul>
 
     <!-- Create markup  -->
 
@@ -95,38 +117,5 @@
         <button id="confirmDelete">Delete Post</button>
       </div>
     </div>
-
-    <!-- Firebase Injection via script tag placed at bottom -->
-    <script>
-      // Your web app's Firebase configuration
-      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-      var firebaseConfig = {
-        apiKey: "AIzaSyAT7B0jOp4FLAnq0doLimgfqRDSwH0lqsE",
-        authDomain: "high5-pwa.firebaseapp.com",
-        projectId: "high5-pwa",
-        storageBucket: "high5-pwa.appspot.com",
-        messagingSenderId: "439071465334",
-        appId: "1:439071465334:web:dfdef51006c530402ee457",
-        measurementId: "G-E65E2LDF9F",
-      };
-
-      // Initialize Firebase
-      firebase.initializeApp(firebaseConfig);
-      firebase.analytics();
-
-      const db = firebase.firestore();
-      const auth = firebase.auth();
-      db.settings({ timestampsInSnapshots: true });
-
-      // Check if user is logged out
-      auth.onAuthStateChanged((user) => {
-        if(user) {
-          // console.log(user);
-        }
-        else {
-          window.location.href = `../index.html`;
-        }
-      });
-    </script>
   </body>
 </html>
