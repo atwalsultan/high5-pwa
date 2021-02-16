@@ -46,7 +46,7 @@ const getUserPosition = () => {
     if('geolocation' in navigator) {
         navigator.geolocation.watchPosition(position => {
             userPos = position;
-            console.log(userPos);
+            // console.log(userPos);
         }, undefined, {maximumAge: 60000}); // New position every minute
     }
     
@@ -121,6 +121,22 @@ const addButtonListeners = (updateBtn, deleteBtn, doc) => {
     });
 }
 
+const toRad = (degrees) => {
+    return degrees * (Math.PI / 180);
+}
+
+const calculateDistance = (lat1, lon1, lat2, lon2) => {
+    const R = 6371;
+    let dLat = toRad(lat2 - lat1);
+    let dLon = toRad(lon2 - lon1);
+
+    let a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLon/2) * Math.sin(dLon/2);
+
+    let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+
+    return (R * c).toFixed(2);
+};
+
 // Create elements and render post
 const renderPost = (doc) => {
     // Create elements to be rendered
@@ -147,6 +163,18 @@ const renderPost = (doc) => {
     li.appendChild(time);
     li.appendChild(category);
     li.appendChild(description);
+
+    // Display distance if user's position is available
+    if(userPos) {
+        // Calculate distance
+        let km = calculateDistance(doc.data().coordinates.latitude, doc.data().coordinates.longitude, userPos.coords.latitude, userPos.coords.longitude);
+
+        // Create element
+        let distance = document.createElement('p');
+        distance.setAttribute('class', 'distance');
+        distance.textContent = `${km} kilometer(s) away`;
+        li.appendChild(distance);
+    }
 
     // Add 'Update' and 'Delete' buttons only for posts owned by the user
     if(auth.currentUser.uid === doc.data().uid) {
