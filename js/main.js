@@ -4,17 +4,17 @@
 //**************************************************************
 //**************************************************************
 
-
 //**************************************************************
 //      Root Scope Variable Declarations
 //**************************************************************
+
 // Create functionality
 const postForm = document.getElementById("postForm");
 const createBtn = document.getElementById('createBtn');
 const createOverlay = document.getElementById('createOverlay');
 
 // Read functionality
-const postList = document.getElementById('post-list');
+const postList = document.getElementById('postList');
 
 // Update functionality
 let updateId;
@@ -32,11 +32,28 @@ const closeBtns = document.querySelectorAll('.closeBtn');
 // To store user's position object
 let userPos;
 
-let logoutBtn = document.getElementById('logoutBtn');
+// Filter
+const categoryForm = document.getElementById('categoryForm');
+
+const logoutBtn = document.getElementById('logoutBtn');
 
 //**************************************************************
 //      Function Declarations
 //**************************************************************
+
+// Get user's position
+const getUserPosition = () => {
+    if('geolocation' in navigator) {
+        navigator.geolocation.watchPosition(position => {
+            userPos = position;
+            console.log(userPos);
+        }, undefined, {maximumAge: 60000}); // New position every minute
+    }
+    
+    else {
+        console.log('Geolocation not available');
+    }
+}
 
 // Create and store new post
 const createPost = (event) => {
@@ -115,6 +132,9 @@ const renderPost = (doc) => {
 
     // Set unique ID for each list item
     li.setAttribute('id', doc.id);
+
+    // Set class names
+    category.setAttribute('class', 'category');
 
     // Contents for each element
     date.textContent = doc.data().date;
@@ -218,18 +238,34 @@ const outsideClick = (event) => {
     }
 }
 
-// Get user's position
-const getUserPosition = () => {
-    if('geolocation' in navigator) {
-        navigator.geolocation.watchPosition(position => {
-            userPos = position;
-            console.log(userPos);
-        }, undefined, {maximumAge: 60000}); // New position every minute
-    }
-    
-    else {
-        console.log('Geolocation not available');
-    }
+// Log the user out or show error message 
+const logUserOut = () => {
+    auth.signOut().catch((error) => {
+        // Show message
+        console.log(error.message);
+    });
+}
+
+// Filter by category
+const filterByCategory = (event) => {
+    // Prevent form from actually submitting
+    event.preventDefault();
+
+    let categories = [];
+
+    // Get checked checkboxes
+    document.querySelectorAll('#categoryForm input:checked').forEach(category => {
+        categories.push(category.value);
+    });
+
+    document.querySelectorAll('#postList li').forEach((post) => {
+        if(!categories.includes(post.querySelector('.category').textContent)) {
+            post.style.display = 'none';
+        }
+        else {
+            post.style.display = 'list-item';
+        }
+    });
 }
 
 //**************************************************************
@@ -241,7 +277,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Get user's position
     getUserPosition();
 
-    // Real time listener
+    // Firestore real time listener
     db.collection('posts').orderBy("updated", "asc").onSnapshot((snapshot) => {
         let changes = snapshot.docChanges();
         changes.forEach((change) => {
@@ -291,9 +327,7 @@ createBtn.addEventListener('click', () => {
 });
 
 // Log the user out or show error message
-logoutBtn.addEventListener('click', () => {
-    auth.signOut().catch((error) => {
-        // Show message
-        console.log(error.message);
-    });
-});
+logoutBtn.addEventListener('click', logUserOut);
+
+// Filter by category
+categoryForm.addEventListener('submit', filterByCategory);
