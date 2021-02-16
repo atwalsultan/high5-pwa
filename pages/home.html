@@ -26,17 +26,23 @@
     <button id="createBtn">New Post</button>
     <button id="logoutBtn">Log Out</button>
 
+    <!-- Category filter -->
     <fieldset>
-      <legend>Filter</legend>
-      <form id="categoryForm">
-        <input type="checkbox" id="categoryA" name="categoryA" value="Category A" checked>
+      <legend>Filters</legend>
+      <form id="filterForm">
+        <!-- Category -->
+        <input type="checkbox" id="categoryA" value="Category A" checked>
         <label for="categoryA">Category A</label>
-        <input type="checkbox" id="categoryB" name="categoryB" value="Category B" checked>
+        <input type="checkbox" id="categoryB" value="Category B" checked>
         <label for="categoryB">Category B</label>
-        <input type="checkbox" id="categoryC" name="categoryC" value="Category C" checked>
+        <input type="checkbox" id="categoryC" value="Category C" checked>
         <label for="categoryC">Category C</label>
-        <input type="checkbox" id="categoryD" name="categoryD" value="Category D" checked>
+        <input type="checkbox" id="categoryD" value="Category D" checked>
         <label for="categoryD">Category D</label>
+
+        <!-- Distance -->
+        <label for="distance">Show posts created within (km): </label>
+        <input type="number" min="0" id="distance" placeholder="Infinite">
         <button type="submit">Apply</button>
       </form>
     </fieldset>

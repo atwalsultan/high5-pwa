@@ -33,8 +33,12 @@ const closeBtns = document.querySelectorAll('.closeBtn');
 let userPos;
 
 // Filter
-const categoryForm = document.getElementById('categoryForm');
+const filterForm = document.getElementById('filterForm');
 
+// Radius of the Earth in kms
+const R = 6371;
+
+// Logout button
 const logoutBtn = document.getElementById('logoutBtn');
 
 //**************************************************************
@@ -126,7 +130,6 @@ const toRad = (degrees) => {
 }
 
 const calculateDistance = (lat1, lon1, lat2, lon2) => {
-    const R = 6371;
     let dLat = toRad(lat2 - lat1);
     let dLon = toRad(lon2 - lon1);
 
@@ -134,7 +137,7 @@ const calculateDistance = (lat1, lon1, lat2, lon2) => {
 
     let c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
 
-    return (R * c).toFixed(2);
+    return (R * c).toFixed(1);
 };
 
 // Create elements and render post
@@ -172,7 +175,7 @@ const renderPost = (doc) => {
         // Create element
         let distance = document.createElement('p');
         distance.setAttribute('class', 'distance');
-        distance.textContent = `${km} kilometer(s) away`;
+        distance.textContent = km;
         li.appendChild(distance);
     }
 
@@ -274,26 +277,38 @@ const logUserOut = () => {
     });
 }
 
-// Filter by category
-const filterByCategory = (event) => {
+// Filter by category or distance
+const filter = (event) => {
     // Prevent form from actually submitting
     event.preventDefault();
 
-    let categories = [];
+    // Categories
+    let filterCategories = [];
 
-    // Get checked checkboxes
-    document.querySelectorAll('#categoryForm input:checked').forEach(category => {
-        categories.push(category.value);
+    // Get filter categories
+    filterForm.querySelectorAll('input[type="checkbox"]:checked').forEach(category => {
+        filterCategories.push(category.value);
     });
 
+    // Distance
+    let distance = parseInt(filterForm.distance.value);
+
+    // Filter by category or distance
     document.querySelectorAll('#postList li').forEach((post) => {
-        if(!categories.includes(post.querySelector('.category').textContent)) {
+        // Get category and distance of post
+        let postCategory = post.querySelector('.category').textContent;
+        let postDistance = parseFloat(post.getElementsByClassName('distance')[0].textContent);
+
+        // Hide or show post as necessary
+        if(!filterCategories.includes(postCategory) || postDistance > distance) {
             post.style.display = 'none';
         }
         else {
             post.style.display = 'list-item';
         }
     });
+
+    // console.log(distance);
 }
 
 //**************************************************************
@@ -357,5 +372,5 @@ createBtn.addEventListener('click', () => {
 // Log the user out or show error message
 logoutBtn.addEventListener('click', logUserOut);
 
-// Filter by category
-categoryForm.addEventListener('submit', filterByCategory);
+// Filter by category or distance
+filterForm.addEventListener('submit', filter);
