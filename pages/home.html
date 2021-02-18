@@ -26,23 +26,42 @@
     <button id="createBtn">New Post</button>
     <button id="logoutBtn">Log Out</button>
 
-    <!-- Category filter -->
+    <!-- Filter -->
     <fieldset>
       <legend>Filters</legend>
       <form id="filterForm">
         <!-- Category -->
-        <input type="checkbox" id="categoryA" value="Category A" checked>
-        <label for="categoryA">Category A</label>
-        <input type="checkbox" id="categoryB" value="Category B" checked>
-        <label for="categoryB">Category B</label>
-        <input type="checkbox" id="categoryC" value="Category C" checked>
-        <label for="categoryC">Category C</label>
-        <input type="checkbox" id="categoryD" value="Category D" checked>
-        <label for="categoryD">Category D</label>
+        <input type="checkbox" id="Art & Craft" value="Art & Craft" checked>
+        <label for="categoryA">Art & Craft</label>
+        <input type="checkbox" id="Board Games" value="Board Games" checked>
+        <label for="categoryB">Board Games</label>
+        <input type="checkbox" id="Buying / Selling" value="Buying / Selling" checked>
+        <label for="categoryC">Buying / Selling</label>
+        <input type="checkbox" id="Cooking" value="Cooking" checked>
+        <label for="categoryD">Cooking</label>
+        <input type="checkbox" id="Dance" value="Dance" checked>
+        <label for="categoryD">Dance</label>
+        <input type="checkbox" id="Learning" value="Learning" checked>
+        <label for="categoryD">Learning</label>
+        <input type="checkbox" id="Movies" value="Movies" checked>
+        <label for="categoryD">Movies</label>
+        <input type="checkbox" id="Music" value="Music" checked>
+        <label for="categoryD">Music</label>
+        <input type="checkbox" id="Outdoor & Adventure" value="Outdoor & Adventure" checked>
+        <label for="categoryD">Outdoor & Adventure</label>
+        <input type="checkbox" id="Reading" value="Reading" checked>
+        <label for="categoryD">Reading</label>
+        <input type="checkbox" id="Renting" value="Renting" checked>
+        <label for="categoryD">Renting</label>
+        <input type="checkbox" id="Sports & Fitness" value="Sports & Fitness" checked>
+        <label for="categoryD">Sports & Fitness</label>
+        <input type="checkbox" id="Virtual Games" value="Virtual Games" checked>
+        <label for="categoryD">Virtual Games</label>
 
         <!-- Distance -->
         <label for="distance">Show posts created within (km): </label>
         <input type="number" min="0" id="distance" placeholder="Infinite">
+        
         <button type="submit">Apply</button>
       </form>
     </fieldset>
@@ -62,18 +81,22 @@
         <form id="postForm">
           <input type="date" id="activityDate" placeholder="Date" />
           <input type="time" id="activityTime" placeholder="Time" />
-          <input
-            type="text"
-            id="activityDesc"
-            placeholder="Description"
-            maxlength="300"
-            required
-          />
+          <input type="text" id="activityDesc" placeholder="Description" maxlength="300" required />
+
           <select name="activityCategory" id="activityCategory">
-            <option value="Category A">Category A</option>
-            <option value="Category B">Category B</option>
-            <option value="Category C">Category C</option>
-            <option value="Category D">Category D</option>
+            <option value="Art & Craft">Art & Craft</option>
+            <option value="Board Games">Board Games</option>
+            <option value="Buying / Selling">Buying / Selling</option>
+            <option value="Cooking">Cooking</option>
+            <option value="Dance">Dance</option>
+            <option value="Learning">Learning</option>
+            <option value="Movies">Movies</option>
+            <option value="Music">Music</option>
+            <option value="Outdoor & Adventure">Outdoor & Adventure</option>
+            <option value="Reading">Reading</option>
+            <option value="Renting">Renting</option>
+            <option value="Sports & Fitness">Sports & Fitness</option>
+            <option value="Virtual Games">Virtual Games</option>
           </select>
 
           <button type="submit">Create Post</button>
@@ -92,12 +115,22 @@
         <form id="updateForm">
           <input type="date" id="updateDate" placeholder="Date" />
           <input type="time" id="updateTime" placeholder="Time" />
-          <input type="text" id="updateDesc" placeholder="Description" />
+          <input type="text" id="updateDesc" placeholder="Description" maxlength="300" />
+
           <select name="updateCategory" id="updateCategory">
-            <option value="Category A">Category A</option>
-            <option value="Category B">Category B</option>
-            <option value="Category C">Category C</option>
-            <option value="Category D">Category D</option>
+            <option value="Art & Craft">Art & Craft</option>
+            <option value="Board Games">Board Games</option>
+            <option value="Buying / Selling">Buying / Selling</option>
+            <option value="Cooking">Cooking</option>
+            <option value="Dance">Dance</option>
+            <option value="Learning">Learning</option>
+            <option value="Movies">Movies</option>
+            <option value="Music">Music</option>
+            <option value="Outdoor & Adventure">Outdoor & Adventure</option>
+            <option value="Reading">Reading</option>
+            <option value="Renting">Renting</option>
+            <option value="Sports & Fitness">Sports & Fitness</option>
+            <option value="Virtual Games">Virtual Games</option>
           </select>
           <!-- <input type="text" id="updateCategory" placeholder="Category"> -->
           <button type="submit">Update</button>

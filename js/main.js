@@ -286,7 +286,7 @@ const filter = (event) => {
     let filterCategories = [];
 
     // Get filter categories
-    filterForm.querySelectorAll('input[type="checkbox"]:checked').forEach(category => {
+    filterForm.querySelectorAll('input[type="checkbox"]:checked').forEach((category) => {
         filterCategories.push(category.value);
     });
 
@@ -297,7 +297,7 @@ const filter = (event) => {
     document.querySelectorAll('#postList li').forEach((post) => {
         // Get category and distance of post
         let postCategory = post.querySelector('.category').textContent;
-        let postDistance = parseFloat(post.getElementsByClassName('distance')[0].textContent);
+        let postDistance = parseFloat(post.querySelector('.distance').textContent);
 
         // Hide or show post as necessary
         if(!filterCategories.includes(postCategory) || postDistance > distance) {
@@ -307,8 +307,6 @@ const filter = (event) => {
             post.style.display = 'list-item';
         }
     });
-
-    // console.log(distance);
 }
 
 //**************************************************************
