@@ -54,11 +54,11 @@ const getUserPosition = () => {
     if('geolocation' in navigator) {
         navigator.geolocation.watchPosition(position => {
             userPos = position;
-            // console.log(userPos);
         }, undefined, {maximumAge: 60000}); // New position every minute
     }
     
     else {
+        // Show message?
         console.log('Geolocation not available');
     }
 }
@@ -216,8 +216,9 @@ const updatePost = (event) => {
     updateForm.updateTime.value === "" ? updateObj.time = 'Unspecified' : updateObj.time = updateForm.updateTime.value; // time = 'Unspedified' if user leaves it empty
     updateObj.category = updateForm.updateCategory.value;
     updateObj.description = updateForm.updateDesc.value;
-    if(userPos) { // TODO: Add a checkbox in DOM to choose if users want to update the position or use the pre-existing position?
+    if(userPos && updateForm.updateLocation.checked) {// If user position is available and user has chosen to update it
         updateObj.coordinates = new firebase.firestore.GeoPoint(userPos.coords.latitude, userPos.coords.longitude)
+        console.log();
     }
     updateObj.updated = new firebase.firestore.FieldValue.serverTimestamp();
 
