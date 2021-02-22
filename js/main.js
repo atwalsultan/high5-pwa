@@ -43,7 +43,6 @@ const logoutBtn = document.getElementById('logoutBtn');
 
 // Alerts
 const alertDiv = document.getElementById('alerts');
-const alertContent = document.getElementById('message');
 
 //**************************************************************
 //      Function Declarations
@@ -321,8 +320,14 @@ const filter = (event) => {
 
 // Show alerts
 const showAlert = (content, type) => {
-    // Put contents of the message into div
+    // Create element to show message
+    let alertContent = document.createElement('p');
+
+    // Put contents of the message into element
     alertContent.textContent = content;
+
+    // Prepend element to alert div
+    alertDiv.prepend(alertContent);
 
     // Background colors
     if (type === 'success') {
