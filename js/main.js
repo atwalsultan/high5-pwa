@@ -41,6 +41,10 @@ const R = 6371;
 // Logout button
 const logoutBtn = document.getElementById('logoutBtn');
 
+// Alerts
+const alertDiv = document.getElementById('alerts');
+const alertContent = document.getElementById('message');
+
 //**************************************************************
 //      Function Declarations
 //**************************************************************
@@ -88,19 +92,19 @@ const createPost = (event) => {
         timestamp: new firebase.firestore.FieldValue.serverTimestamp(),
         updated: new firebase.firestore.FieldValue.serverTimestamp()
     }).then(() => {
-
         // Show message
+        showAlert(`New post created successfully!`, `success`);
 
     }).catch((err) => {
-
         // Show message
-        console.log(err.message);
+        showAlert(err.message, `error`);
     });
 
     // Clear form and close modal
     closeModals();
 }
 
+// Add event listeners to update and delete buttons
 const addButtonListeners = (updateBtn, deleteBtn, doc) => {
     updateBtn.addEventListener('click', (event) => {
         // Get array index of post to update
@@ -125,10 +129,12 @@ const addButtonListeners = (updateBtn, deleteBtn, doc) => {
     });
 }
 
+// Convert degrees to radians
 const toRad = (degrees) => {
     return degrees * (Math.PI / 180);
 }
 
+// Calculate distance between 2 co-ordinates
 const calculateDistance = (lat1, lon1, lat2, lon2) => {
     let dLat = toRad(lat2 - lat1);
     let dLon = toRad(lon2 - lon1);
@@ -217,13 +223,12 @@ const updatePost = (event) => {
 
     // Updating document in collection
     db.collection('posts').doc(updateId).update(updateObj).then(() => {
-
         // Show message
+        showAlert(`Post updated successfully!`, `success`);
 
     }).catch((err) => {
-
         // Show message
-        console.log(err.message);
+        showAlert(err.message, `error`);
     });
 
     // Clear form and close modal
@@ -234,13 +239,12 @@ const updatePost = (event) => {
 const deletePost = () => {
     // Delete document from collection
     db.collection('posts').doc(deleteId).delete().then(() => {
-
         // Show message
+        showAlert(`Post deleted successfully`, `success`)
 
     }).catch((err) => {
-
         // Show message
-        console.log(err.message);
+        showAlert(err.message, `error`);
     });
 
     // Close modal
@@ -273,7 +277,7 @@ const outsideClick = (event) => {
 const logUserOut = () => {
     auth.signOut().catch((error) => {
         // Show message
-        console.log(error.message);
+        showAlert(error.message, `error`);
     });
 }
 
@@ -309,6 +313,33 @@ const filter = (event) => {
     });
 }
 
+// Show alerts
+const showAlert = (content, type) => {
+    // Put contents of the message into div
+    alertContent.textContent = content;
+
+    // Background colors
+    if (type === 'success') {
+        alertDiv.style.backgroundColor = `rgba(0, 200, 0, 0.4)`;
+    }
+    else if (type === 'error') {
+        alertDiv.style.backgroundColor = `rgba(200, 0, 0, 0.4)`
+    }
+
+    // Slide alert div down
+    alertDiv.style.top = "1rem";
+
+    // Push alert div back up after 3 seconds
+    setTimeout(() => {
+        alertDiv.style.top = "-5rem";
+    }, 3000);
+
+    // Clear contents of alert div once it goes back up
+    setTimeout(() => {
+        alertContent.textContent = "";
+    }, 3500);
+}
+
 //**************************************************************
 //      Event Listeners
 //**************************************************************
@@ -341,7 +372,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }, (err) => {
         // Show message
-        console.log(err.message);
+        showAlert(err.message, `error`);
     })
 });
 
