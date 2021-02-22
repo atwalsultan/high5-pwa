@@ -294,6 +294,11 @@ const filter = (event) => {
         filterCategories.push(category.value);
     });
 
+    if(filterCategories.length === 0) {
+        showAlert(`You did not select any filter category. Please try again`, `error`);
+        return;
+    }
+
     // Distance
     let distance = parseInt(filterForm.distance.value);
 
