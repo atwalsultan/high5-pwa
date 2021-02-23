@@ -43,7 +43,6 @@ const logoutBtn = document.getElementById('logoutBtn');
 
 // Alerts
 const alertDiv = document.getElementById('alerts');
-const alertContent = document.getElementById('message');
 
 //**************************************************************
 //      Function Declarations
@@ -54,11 +53,11 @@ const getUserPosition = () => {
     if('geolocation' in navigator) {
         navigator.geolocation.watchPosition(position => {
             userPos = position;
-            // console.log(userPos);
         }, undefined, {maximumAge: 60000}); // New position every minute
     }
     
     else {
+        // Show message?
         console.log('Geolocation not available');
     }
 }
@@ -216,8 +215,9 @@ const updatePost = (event) => {
     updateForm.updateTime.value === "" ? updateObj.time = 'Unspecified' : updateObj.time = updateForm.updateTime.value; // time = 'Unspedified' if user leaves it empty
     updateObj.category = updateForm.updateCategory.value;
     updateObj.description = updateForm.updateDesc.value;
-    if(userPos) { // TODO: Add a checkbox in DOM to choose if users want to update the position or use the pre-existing position?
+    if(userPos && updateForm.updateLocation.checked) {// If user position is available and user has chosen to update it
         updateObj.coordinates = new firebase.firestore.GeoPoint(userPos.coords.latitude, userPos.coords.longitude)
+        console.log();
     }
     updateObj.updated = new firebase.firestore.FieldValue.serverTimestamp();
 
@@ -294,6 +294,11 @@ const filter = (event) => {
         filterCategories.push(category.value);
     });
 
+    if(filterCategories.length === 0) {
+        showAlert(`You did not select any filter category. Please try again`, `error`);
+        return;
+    }
+
     // Distance
     let distance = parseInt(filterForm.distance.value);
 
@@ -315,8 +320,14 @@ const filter = (event) => {
 
 // Show alerts
 const showAlert = (content, type) => {
-    // Put contents of the message into div
+    // Create element to show message
+    let alertContent = document.createElement('p');
+
+    // Put contents of the message into element
     alertContent.textContent = content;
+
+    // Prepend element to alert div
+    alertDiv.prepend(alertContent);
 
     // Background colors
     if (type === 'success') {

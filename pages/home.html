@@ -24,9 +24,8 @@
   </head>
   <body>
 
-    <div id="alerts">
-      <p id="message">This is a test</p>
-    </div>
+    <!-- Alerts -->
+    <div id="alerts"></div>
 
     <button id="createBtn">New Post</button>
     <button id="logoutBtn">Log Out</button>
@@ -36,31 +35,31 @@
       <legend>Filters</legend>
       <form id="filterForm">
         <!-- Category -->
-        <input type="checkbox" id="Art & Craft" value="Art & Craft" checked>
+        <input type="checkbox" id="Art & Craft" value="Art & Craft">
         <label for="categoryA">Art & Craft</label>
-        <input type="checkbox" id="Board Games" value="Board Games" checked>
+        <input type="checkbox" id="Board Games" value="Board Games">
         <label for="categoryB">Board Games</label>
-        <input type="checkbox" id="Buying / Selling" value="Buying / Selling" checked>
+        <input type="checkbox" id="Buying / Selling" value="Buying / Selling">
         <label for="categoryC">Buying / Selling</label>
-        <input type="checkbox" id="Cooking" value="Cooking" checked>
+        <input type="checkbox" id="Cooking" value="Cooking">
         <label for="categoryD">Cooking</label>
-        <input type="checkbox" id="Dance" value="Dance" checked>
+        <input type="checkbox" id="Dance" value="Dance">
         <label for="categoryD">Dance</label>
-        <input type="checkbox" id="Learning" value="Learning" checked>
+        <input type="checkbox" id="Learning" value="Learning">
         <label for="categoryD">Learning</label>
-        <input type="checkbox" id="Movies" value="Movies" checked>
+        <input type="checkbox" id="Movies" value="Movies">
         <label for="categoryD">Movies</label>
-        <input type="checkbox" id="Music" value="Music" checked>
+        <input type="checkbox" id="Music" value="Music">
         <label for="categoryD">Music</label>
-        <input type="checkbox" id="Outdoor & Adventure" value="Outdoor & Adventure" checked>
+        <input type="checkbox" id="Outdoor & Adventure" value="Outdoor & Adventure">
         <label for="categoryD">Outdoor & Adventure</label>
-        <input type="checkbox" id="Reading" value="Reading" checked>
+        <input type="checkbox" id="Reading" value="Reading">
         <label for="categoryD">Reading</label>
-        <input type="checkbox" id="Renting" value="Renting" checked>
+        <input type="checkbox" id="Renting" value="Renting">
         <label for="categoryD">Renting</label>
-        <input type="checkbox" id="Sports & Fitness" value="Sports & Fitness" checked>
+        <input type="checkbox" id="Sports & Fitness" value="Sports & Fitness">
         <label for="categoryD">Sports & Fitness</label>
-        <input type="checkbox" id="Virtual Games" value="Virtual Games" checked>
+        <input type="checkbox" id="Virtual Games" value="Virtual Games">
         <label for="categoryD">Virtual Games</label>
 
         <!-- Distance -->
@@ -137,7 +136,9 @@
             <option value="Sports & Fitness">Sports & Fitness</option>
             <option value="Virtual Games">Virtual Games</option>
           </select>
-          <!-- <input type="text" id="updateCategory" placeholder="Category"> -->
+
+          <input type="checkbox" id="updateLocation">
+          <label for="updateLocation">Update Location</label>
           <button type="submit">Update</button>
         </form>
       </div>
