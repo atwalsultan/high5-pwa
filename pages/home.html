@@ -4,6 +4,9 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/df6bb686cb.js" crossorigin="anonymous"></script>
+
     <!-- External CSS file -->
     <link rel="stylesheet" href="../css/styles.css" />
 
@@ -22,12 +25,29 @@
 
     <title>High5!</title>
   </head>
+
   <body>
 
     <!-- Alerts -->
     <div id="alerts"></div>
 
-    <button id="createBtn">New Post</button>
+    <header>
+        <nav>
+          <ul>
+            <li><button>
+              <span class="fas fa-bars"></span>
+              <span class="visually-hidden">Open Side Menu</span>
+            <button></li>
+            <li><a href="#"><h1>High5!</h1></a></li>
+            <li><button>
+              <span class="fas fa-plus" id="createBtn"></span>
+              <span class="visually-hidden">Create New Post</span>
+            <button></li>
+          </ul>
+        </nav>
+    </header>
+
+    <!-- <button id="createBtn">New Post</button> -->
     <button id="logoutBtn">Log Out</button>
 
     <!-- Filter -->

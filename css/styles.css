@@ -1,3 +1,63 @@
+/* Importing Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+a {
+  text-decoration: none;
+  color: initial;
+}
+
+h1 {
+  font-family: "Caveat", sans-serif;
+}
+
+/* Header Styles */
+header {
+  /* Position properties */
+  position: sticky;
+  top: 0;
+  left: 0;
+  z-index: 10;
+}
+
+header nav {
+  background-color: rgb(225, 225, 225);
+  padding: .75rem 1rem;
+}
+
+header nav ul {
+  /* Flexbox properties */
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+}
+
+header button, header button:active {
+  background-color: initial;
+  border: none;
+  outline: none;
+}
+
+header button:hover {
+  cursor: pointer;
+}
+
+header .fas {
+  font-size: 1.5rem;
+}
+
+/* ID Styles */
+/* Overlays for modals */
 #updateOverlay,
 #deleteOverlay,
 #createOverlay {
@@ -11,6 +71,20 @@
   display: none;
 }
 
+#alerts {
+  background-color: rgba(0, 0, 0, 0.8);
+  padding: .75rem;
+  position: fixed;
+  top: -5rem;
+  left: 50%;
+  transform: translate(-50%, 0);
+  transition: all .5s ease-out;
+  border-radius: 10px;
+  backdrop-filter: blur(10px);
+}
+
+/* Class Styles */
+/* Modals */
 .modal {
   border: 1px solid black;
   margin: 20% auto;
@@ -24,14 +98,13 @@
   cursor: pointer;
 }
 
-#alerts {
-  background-color: rgba(0, 0, 0, 0.8);
-  padding: .75rem;
-  position: fixed;
-  top: -5rem;
-  left: 50%;
-  transform: translate(-50%, 0);
-  transition: all .5s ease-out;
-  border-radius: 10px;
-  backdrop-filter: blur(10px);
+/* To hide elements that are present only for accessibility purposes */
+.visually-hidden {
+	clip: rect(0,0,0,0);
+	clip-path: inset(50%);
+	height: 1px;
+	overflow: hidden;
+	position: absolute;
+	white-space: nowrap;
+	width: 1px;
 }
