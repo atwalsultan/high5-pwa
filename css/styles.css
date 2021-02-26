@@ -30,11 +30,12 @@ header {
 }
 
 header nav {
-  background-color: rgb(225, 225, 225);
+  background-color: white;
   padding: .75rem 1rem;
+  border-bottom: 1px solid #000;
 }
 
-header nav ul {
+header nav ul, footer nav ul {
   /* Flexbox properties */
   display: flex;
   flex-flow: row nowrap;
@@ -42,18 +43,38 @@ header nav ul {
   align-items: center;
 }
 
-header button, header button:active {
+header button, header button:active, footer button, footer button:active {
   background-color: initial;
   border: none;
   outline: none;
 }
 
-header button:hover {
+header button:hover, footer button:hover {
   cursor: pointer;
 }
 
 header .fas {
   font-size: 1.5rem;
+}
+
+/* Footer Styles */
+footer {
+  position: sticky;
+  bottom: 0;
+  left: 0;
+}
+
+footer nav {
+  background-color: white;
+  padding: .75rem 1rem;
+  border-top: 1px solid #000;
+}
+
+footer .fas {
+  font-size: 1.25rem;
+  background-color: rgb(200, 200, 200);
+  padding: .75rem;
+  border-radius: 50%;
 }
 
 /* ID Styles */
