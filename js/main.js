@@ -33,7 +33,7 @@ const closeBtns = document.querySelectorAll('.closeBtn');
 let userPos;
 
 // Filter
-const filterForm = document.getElementById('filterForm');
+const filterForm = document.getElementById('filter-form');
 
 // Radius of the Earth in kms
 const R = 6371;
