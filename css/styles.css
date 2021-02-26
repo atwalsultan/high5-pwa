@@ -58,11 +58,13 @@ header .fas {
 }
 
 /* Sidebar Styles */
-main aside {
+#sidebar {
   background-color: black;
   color: white;
   padding: .75rem 1.25rem;
   box-sizing: border-box;
+  overflow-y: auto;
+  transition: all .5s ease-out;
 
   /* Position Properties */
   position: fixed;
@@ -71,12 +73,11 @@ main aside {
   bottom: 3.25rem;
   height: calc(100vh - 3.25rem - 3.25rem);
   width: 55vw;
-
-  overflow-y: auto;
 }
 
-main aside h2 {
+#sidebar h3 {
   border-bottom: 1px solid white;
+  text-align: center;
 }
 
 #filter-form {
@@ -96,13 +97,13 @@ main aside h2 {
 .category-filters {
   display: flex;
   flex-flow: column nowrap;
-  gap: .5rem;
+  gap: .35rem;
 }
 
 .distance-filter {
   display: flex;
   flex-flow: column nowrap;
-  gap: .5rem;
+  gap: .35rem;
 }
 
 .category {
@@ -115,6 +116,10 @@ main aside h2 {
   display: flex;
   flex-flow: column nowrap;
   gap: .25rem;
+}
+
+aside#sidebar.sidebar-hidden {
+  left: -60vw;
 }
 
 /* Footer Styles */

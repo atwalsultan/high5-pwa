@@ -44,6 +44,10 @@ const logoutBtn = document.getElementById('logoutBtn');
 // Alerts
 const alertDiv = document.getElementById('alerts');
 
+// Sidebar
+const sidebar = document.getElementById('sidebar');
+const sidebarBtn = document.getElementById('sidebar-btn');
+
 //**************************************************************
 //      Function Declarations
 //**************************************************************
@@ -351,6 +355,12 @@ const showAlert = (content, type) => {
     }, 3500);
 }
 
+// Toggle sidebar
+const toggleSidebar = () => {
+    console.log(1);
+    sidebar.classList.toggle('sidebar-hidden');
+}
+
 //**************************************************************
 //      Event Listeners
 //**************************************************************
@@ -414,3 +424,6 @@ logoutBtn.addEventListener('click', logUserOut);
 
 // Filter by category or distance
 filterForm.addEventListener('submit', filter);
+
+// Toggle sidebar
+sidebarBtn.addEventListener('click', toggleSidebar);

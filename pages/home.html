@@ -37,7 +37,7 @@
             <!-- Side Menu Button -->
             <li>
               <button>
-                <span class="fas fa-bars"></span>
+                <span class="fas fa-bars" id="sidebar-btn"></span>
                 <span class="visually-hidden">Open Side Menu</span>
               <button>
             </li>
@@ -53,94 +53,93 @@
         </nav>
     </header>
 
+    <aside id="sidebar" class="sidebar-hidden">
+      <form id="filter-form">
 
-    <main>
-
-      <aside>
-        <form id="filter-form">
-
-          <!-- Category -->
-          <div class="category-filters">
-            <h2>Category</h2>
-            <div class="category">
-              <input type="checkbox" id="Art & Craft" value="Art & Craft">
-              <label for="categoryA">Art & Craft</label>
-            </div>  
-            
-            <div class="category">
-              <input type="checkbox" id="Board Games" value="Board Games">
-              <label for="categoryB">Board Games</label>
-            </div>
-            
-            <div class="category">
-              <input type="checkbox" id="Buying / Selling" value="Buying / Selling">
-              <label for="categoryC">Buying / Selling</label>
-            </div>
-            
-            <div class="category">
-              <input type="checkbox" id="Cooking" value="Cooking">
-              <label for="categoryD">Cooking</label>
-            </div>
-            
-            <div class="category">
-              <input type="checkbox" id="Dance" value="Dance">
-              <label for="categoryD">Dance</label>
-            </div>
-            
-            <div class="category">
-              <input type="checkbox" id="Learning" value="Learning">
-              <label for="categoryD">Learning</label>
-            </div>
-            
-            <div class="category">
-              <input type="checkbox" id="Movies" value="Movies">
-              <label for="categoryD">Movies</label>
-            </div>
-            
-            <div class="category">
-              <input type="checkbox" id="Music" value="Music">
-              <label for="categoryD">Music</label>
-            </div>
-            
-            <div class="category">
-              <input type="checkbox" id="Outdoor & Adventure" value="Outdoor & Adventure">
-              <label for="categoryD">Outdoor & Adventure</label>
-            </div>
-            
-            <div class="category">
-              <input type="checkbox" id="Reading" value="Reading">
-              <label for="categoryD">Reading</label>
-            </div>
-            
-            <div class="category">
-              <input type="checkbox" id="Renting" value="Renting">
-              <label for="categoryD">Renting</label>
-            </div>
-            
-            <div class="category">
-              <input type="checkbox" id="Sports & Fitness" value="Sports & Fitness">
-              <label for="categoryD">Sports & Fitness</label>
-            </div>
-            
-            <div class="category">
-              <input type="checkbox" id="Virtual Games" value="Virtual Games">
-              <label for="categoryD">Virtual Games</label>
-            </div>
-          </div>
-
-          <!-- Distance -->
-          <div class="distance-filter">
-            <h2>Distance</h2>
-            <div class="distance">
-              <label for="distance">Show posts created within (km): </label>
-              <input type="number" min="0" id="distance" placeholder="Infinite">
-            </div>
+        <!-- Category -->
+        <div class="category-filters">
+          <h3>Category</h3>
+          <div class="category">
+            <input type="checkbox" id="Art & Craft" value="Art & Craft">
+            <label for="categoryA">Art & Craft</label>
+          </div>  
+          
+          <div class="category">
+            <input type="checkbox" id="Board Games" value="Board Games">
+            <label for="categoryB">Board Games</label>
           </div>
           
-          <button type="submit">Apply</button>
-        </form>
-      </aside>
+          <div class="category">
+            <input type="checkbox" id="Buying / Selling" value="Buying / Selling">
+            <label for="categoryC">Buying / Selling</label>
+          </div>
+          
+          <div class="category">
+            <input type="checkbox" id="Cooking" value="Cooking">
+            <label for="categoryD">Cooking</label>
+          </div>
+          
+          <div class="category">
+            <input type="checkbox" id="Dance" value="Dance">
+            <label for="categoryD">Dance</label>
+          </div>
+          
+          <div class="category">
+            <input type="checkbox" id="Learning" value="Learning">
+            <label for="categoryD">Learning</label>
+          </div>
+          
+          <div class="category">
+            <input type="checkbox" id="Movies" value="Movies">
+            <label for="categoryD">Movies</label>
+          </div>
+          
+          <div class="category">
+            <input type="checkbox" id="Music" value="Music">
+            <label for="categoryD">Music</label>
+          </div>
+          
+          <div class="category">
+            <input type="checkbox" id="Outdoor & Adventure" value="Outdoor & Adventure">
+            <label for="categoryD">Outdoor & Adventure</label>
+          </div>
+          
+          <div class="category">
+            <input type="checkbox" id="Reading" value="Reading">
+            <label for="categoryD">Reading</label>
+          </div>
+          
+          <div class="category">
+            <input type="checkbox" id="Renting" value="Renting">
+            <label for="categoryD">Renting</label>
+          </div>
+          
+          <div class="category">
+            <input type="checkbox" id="Sports & Fitness" value="Sports & Fitness">
+            <label for="categoryD">Sports & Fitness</label>
+          </div>
+          
+          <div class="category">
+            <input type="checkbox" id="Virtual Games" value="Virtual Games">
+            <label for="categoryD">Virtual Games</label>
+          </div>
+        </div>
 
+        <!-- Distance -->
+        <div class="distance-filter">
+          <h3>Distance</h3>
+          <div class="distance">
+            <label for="distance">Show posts created within (km): </label>
+            <input type="number" min="0" id="distance" placeholder="Infinite">
+          </div>
+        </div>
+        
+        <button type="submit">Apply</button>
+      </form>
+    </aside>
+
+
+    <main>
       <!-- <button id="createBtn">New Post</button> -->
       <button id="logoutBtn">Log Out</button>
 
