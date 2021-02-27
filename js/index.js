@@ -10,8 +10,8 @@
 //**************************************************************
 
 // Login and signup form 
-const signupForm = document.getElementById('signupForm');
-const loginForm = document.getElementById('loginForm');
+const signupForm = document.getElementById('signup-form');
+const loginForm = document.getElementById('login-form');
 
 // Alerts
 const alertDiv = document.getElementById('alerts');

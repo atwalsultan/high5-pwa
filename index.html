@@ -26,17 +26,30 @@
   <body>
     <div id="alerts"></div>
 
-    <form id="signupForm">
+    <!-- <form id="signup-form">
       <input type="email" id="signupEmail" placeholder="Email" required />
       <input type="password" id="signupPassword" placeholder="Password" required />
       <input type="password" id="confirmPassword" placeholder="Confirm Password" required />
       <button type="submit">Sign Up</button>
-    </form>
+    </form> -->
 
-    <form id="loginForm">
-      <input type="email" id="loginEmail" placeholder="Email" required />
-      <input type="password" id="loginPassword" placeholder="Password" required />
-      <button type="submit">Log In</button>
-    </form>
+    <main id="index-main">
+      <div class="form-wrapper">
+        <h2>Login</h2>
+
+        <form id="login-form">
+          <input type="email" id="loginEmail" placeholder="Email" required />
+          <input type="password" id="loginPassword" placeholder="Password" required />
+          <button type="submit">Log In</button>
+          <p><a href="#">Forgot password?</a></p>
+        </form>
+
+        <div class="sign-up">
+          <p>Create a new account?</p>
+          <p><a href="#">Sign Up</a></p>
+        </div>
+      </div>
+    </main>
+
   </body>
 </html>
