@@ -9,7 +9,7 @@
 //      Root Scope Variable Declarations
 //**************************************************************
 
-// Login and signup form 
+// Login form 
 const signupForm = document.getElementById('signup-form');
 const loginForm = document.getElementById('login-form');
 
@@ -20,7 +20,7 @@ const alertDiv = document.getElementById('alerts');
 //      Function Declarations
 //**************************************************************
 
-// // Show alerts
+// Show alerts
 const showAlert = (content, type) => {
     // Create element to show message
     let alertContent = document.createElement('p');
@@ -52,37 +52,13 @@ const showAlert = (content, type) => {
         alertContent.textContent = "";
     }, 3500);
 }
+
+
 //**************************************************************
 //      Event Listeners
 //**************************************************************
-signupForm.addEventListener('submit', (e) => {
-    // Prevent form from actually submitting
-    e.preventDefault();
 
-    // Get email and password from DOM
-    let email = signupForm.signupEmail.value;
-    let password = signupForm.signupPassword.value;
-    let confirmPassword = signupForm.confirmPassword.value;
-
-    // Clear form
-    signupForm.reset();
-    signupForm.signupEmail.focus();
-
-    // Check if passwords match
-    if(password === confirmPassword) {
-        // Sign up the user or show error message
-        auth.createUserWithEmailAndPassword(email, password).catch((error) => {
-            // Show message
-            showAlert(error.message, `error`);
-        });
-    }
-    else {
-        // Show message
-        showAlert(`The passwords do not match. Please try again.`, `error`);
-    }
-
-});
-
+// Login form submit
 loginForm.addEventListener('submit', (e) => {
     // Prevent form from actually submitting
     e.preventDefault();
