@@ -146,7 +146,7 @@ aside#sidebar.sidebar-hidden {
   gap: 2rem;
 }
 
-#index-main .form-wrapper h2 {
+#index-main .form-wrapper h2, #signup-main .form-wrapper h2 {
   flex-grow: 1;
   display: flex;
   flex-flow: row nowrap;
@@ -177,17 +177,12 @@ aside#sidebar.sidebar-hidden {
   cursor: pointer;
 }
 
-#index-main .sign-up {
+#index-main .sign-up, #signup-main .login {
   flex-grow: 1;
   display: flex;
   flex-flow: column nowrap;
   justify-content: flex-end;
   align-items: center;
-}
-
-/* Signup page styles */
-#signup-main .form-wrapper h2 {
-  text-align: center;
 }
 
 /* Footer Styles */
