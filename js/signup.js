@@ -76,27 +76,28 @@ signupForm.addEventListener('submit', (e) => {
         auth.createUserWithEmailAndPassword(email, password).then(() => {
             // Add display name to user profile
             let user = auth.currentUser;
-            user.updateProfile({
-                displayName: name,
+
+            // Add user to collection
+            db.collection('users').doc(user.uid).set({
+                email: email,
+                name: name,
+                timestamp: new firebase.firestore.FieldValue.serverTimestamp(),
             }).then(() => {
-                // Log user out
-                auth.signOut().catch((error) => {
-                    // Show message
-                    showAlert(error.message, `error`);
-                });
-
-            }).catch((error) => {
                 // Show message
-                showAlert(error.message, `error`);
+                showAlert(`Account created successfully! Redirecting to home page.`, `success`);
+
+                // Navigate to home page after 3 seconds
+                setTimeout(() => {
+                    window.location.href = `home.html`;
+                }, 3500);
+        
+            }).catch((err) => {
+                // Delete user account
+                // auth.deleteUser(user.id);
+
+                // Show message
+                showAlert(err.message, `error`);
             });
-
-            // Show message
-            showAlert(`Account created successfully! Redirecting to login page.`, `success`);
-
-            // Navigate to home page after 3 seconds
-            setTimeout(() => {
-                window.location.href = `../index.html`;
-            }, 3000);
 
         }).catch((error) => {
             // Show message
