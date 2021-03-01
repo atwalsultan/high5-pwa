@@ -61,20 +61,31 @@ signupForm.addEventListener('submit', (e) => {
     e.preventDefault();
 
     // Get email and password from DOM
+    let name = signupForm.displayName.value;
     let email = signupForm.signupEmail.value;
     let password = signupForm.signupPassword.value;
     let confirmPassword = signupForm.confirmPassword.value;
 
     // Clear form
     signupForm.reset();
-    signupForm.signupEmail.focus();
+    signupForm.displayName.focus();
 
     // Check if passwords match
     if(password === confirmPassword) {
         // Sign up the user or show error message
         auth.createUserWithEmailAndPassword(email, password).then(() => {
-            // Log user out
-            auth.signOut().catch((error) => {
+            // Add display name to user profile
+            let user = auth.currentUser;
+            user.updateProfile({
+                displayName: name,
+            }).then(() => {
+                // Log user out
+                auth.signOut().catch((error) => {
+                    // Show message
+                    showAlert(error.message, `error`);
+                });
+
+            }).catch((error) => {
                 // Show message
                 showAlert(error.message, `error`);
             });
@@ -86,7 +97,6 @@ signupForm.addEventListener('submit', (e) => {
             setTimeout(() => {
                 window.location.href = `../index.html`;
             }, 3000);
-            
 
         }).catch((error) => {
             // Show message
