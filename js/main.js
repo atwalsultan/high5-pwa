@@ -92,6 +92,7 @@ const createPost = (event) => {
         description: description,
         coordinates: new firebase.firestore.GeoPoint(latitude, longitude),
         uid: auth.currentUser.uid,
+        createdBy: auth.currentUser.displayName,
         timestamp: new firebase.firestore.FieldValue.serverTimestamp(),
         updated: new firebase.firestore.FieldValue.serverTimestamp()
     }).then(() => {
@@ -224,6 +225,7 @@ const updatePost = (event) => {
         console.log();
     }
     updateObj.updated = new firebase.firestore.FieldValue.serverTimestamp();
+    updateObj.createdBy = auth.currentUser.displayName;
 
     // Updating document in collection
     db.collection('posts').doc(updateId).update(updateObj).then(() => {
