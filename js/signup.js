@@ -4,14 +4,12 @@
 //**************************************************************
 //**************************************************************
 
-
 //**************************************************************
 //      Root Scope Variable Declarations
 //**************************************************************
 
-// Login form 
+// Signup form 
 const signupForm = document.getElementById('signup-form');
-const loginForm = document.getElementById('login-form');
 
 // Alerts
 const alertDiv = document.getElementById('alerts');
@@ -53,27 +51,62 @@ const showAlert = (content, type) => {
     }, 3500);
 }
 
-
 //**************************************************************
 //      Event Listeners
 //**************************************************************
 
-// Login form submit
-loginForm.addEventListener('submit', (e) => {
+// Signup form submit
+signupForm.addEventListener('submit', (e) => {
     // Prevent form from actually submitting
     e.preventDefault();
-    
+
     // Get email and password from DOM
-    let email = loginForm.loginEmail.value;
-    let password = loginForm.loginPassword.value;
+    let name = signupForm.displayName.value;
+    let email = signupForm.signupEmail.value;
+    let password = signupForm.signupPassword.value;
+    let confirmPassword = signupForm.confirmPassword.value;
 
     // Clear form
-    loginForm.reset();
-    loginForm.loginEmail.focus();
+    signupForm.reset();
+    signupForm.displayName.focus();
 
-    // Sign up the user or show error message
-    auth.signInWithEmailAndPassword(email, password).catch((error) => {
+    // Check if passwords match
+    if(password === confirmPassword) {
+        // Sign up the user or show error message
+        auth.createUserWithEmailAndPassword(email, password).then(() => {
+            // Add display name to user profile
+            let user = auth.currentUser;
+
+            // Add user to collection
+            db.collection('users').doc(user.uid).set({
+                email: email,
+                name: name,
+                timestamp: new firebase.firestore.FieldValue.serverTimestamp(),
+            }).then(() => {
+                // Show message
+                showAlert(`Account created successfully! Redirecting to home page.`, `success`);
+
+                // Navigate to home page after 3 seconds
+                setTimeout(() => {
+                    window.location.href = `home.html`;
+                }, 3500);
+        
+            }).catch((err) => {
+                // Delete user account
+                // auth.deleteUser(user.id);
+
+                // Show message
+                showAlert(err.message, `error`);
+            });
+
+        }).catch((error) => {
+            // Show message
+            showAlert(error.message, `error`);
+        });
+    }
+    else {
         // Show message
-        showAlert(error.message, `error`);
-    });
+        showAlert(`The passwords do not match. Please try again.`, `error`);
+    }
+
 });
