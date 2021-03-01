@@ -71,31 +71,24 @@ const createPost = (event) => {
     // Prevent form from actually submitting
     event.preventDefault();
 
-    let date;
-    let time;
     let latitude;
     let longitude;
+    let createObj = {};
 
     // Get values from DOM
-    postForm.activityDate.value === "" ? date = "Unspecified" : date = postForm.activityDate.value; // date = 'Unspedified' if user leaves it empty
-    postForm.activityTime.value === "" ? time = "Unspecified" : time = postForm.activityTime.value; // time = 'Unspedified' if user leaves it empty
-    let description = postForm.activityDesc.value;
-    let category = postForm.activityCategory.value;
+    postForm.activityDate.value === "" ? createObj.date = "Unspecified" : createObj.date = postForm.activityDate.value; // date = 'Unspedified' if user leaves it empty
+    postForm.activityTime.value === "" ? createObj.time = "Unspecified" : createObj.time = postForm.activityTime.value; // time = 'Unspedified' if user leaves it empty
+    createObj.description = postForm.activityDesc.value;
+    createObj.category = postForm.activityCategory.value;
+    createObj.uid = auth.currentUser.uid;
+    createObj.timestamp = new firebase.firestore.FieldValue.serverTimestamp();
+    createObj.updated = new firebase.firestore.FieldValue.serverTimestamp();
     userPos ? latitude = userPos.coords.latitude : latitude = 0; // latitude = '' if the user position is not available
     userPos ? longitude = userPos.coords.longitude : longitude = 0; // longitude = '' if the user position is not available
+    createObj.coordinates = new firebase.firestore.GeoPoint(latitude, longitude);
 
     // Add post as document to collection
-    db.collection('posts').add({
-        date: date,
-        time: time,
-        category: category,
-        description: description,
-        coordinates: new firebase.firestore.GeoPoint(latitude, longitude),
-        uid: auth.currentUser.uid,
-        createdBy: auth.currentUser.displayName,
-        timestamp: new firebase.firestore.FieldValue.serverTimestamp(),
-        updated: new firebase.firestore.FieldValue.serverTimestamp()
-    }).then(() => {
+    db.collection('posts').add(createObj).then(() => {
         // Show message
         showAlert(`New post created successfully!`, `success`);
 
@@ -222,10 +215,9 @@ const updatePost = (event) => {
     updateObj.description = updateForm.updateDesc.value;
     if(userPos && updateForm.updateLocation.checked) {// If user position is available and user has chosen to update it
         updateObj.coordinates = new firebase.firestore.GeoPoint(userPos.coords.latitude, userPos.coords.longitude)
-        console.log();
     }
     updateObj.updated = new firebase.firestore.FieldValue.serverTimestamp();
-    updateObj.createdBy = auth.currentUser.displayName;
+
 
     // Updating document in collection
     db.collection('posts').doc(updateId).update(updateObj).then(() => {
