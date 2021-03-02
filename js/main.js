@@ -48,6 +48,10 @@ const alertDiv = document.getElementById('alerts');
 const sidebar = document.getElementById('sidebar');
 const sidebarBtn = document.getElementById('sidebar-btn');
 
+// Sections
+let icons = document.querySelectorAll('footer .fas');
+let sections = document.querySelectorAll('main > section');
+
 //**************************************************************
 //      Function Declarations
 //**************************************************************
@@ -355,6 +359,15 @@ const toggleSidebar = () => {
     sidebar.classList.toggle('sidebar-hidden');
 }
 
+// Change sections
+const changeSections = (index) => {
+    sections.forEach((section) => {
+        section.classList.add('section-hidden');
+    });
+
+    sections[index].classList.remove('section-hidden');
+};
+
 //**************************************************************
 //      Event Listeners
 //**************************************************************
@@ -421,3 +434,10 @@ filterForm.addEventListener('submit', filter);
 
 // Toggle sidebar
 sidebarBtn.addEventListener('click', toggleSidebar);
+
+// Change sections
+icons.forEach((icon, index) => {
+    icon.addEventListener('click', () => {
+        changeSections(index);
+    });
+});
