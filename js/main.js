@@ -151,6 +151,7 @@ const renderPost = (doc) => {
     let time = document.createElement('p');
     let category = document.createElement('p');
     let description = document.createElement('p');
+    let likeBtn= document.createElement('button');
 
     // Set unique ID for each list item
     li.setAttribute('id', doc.id);
@@ -163,12 +164,14 @@ const renderPost = (doc) => {
     time.textContent = doc.data().time;
     category.textContent = doc.data().category;
     description.textContent = doc.data().description;
+    likeBtn.textContent='High5!';
 
     // Append post data to list item element
     li.appendChild(date);
     li.appendChild(time);
     li.appendChild(category);
     li.appendChild(description);
+    li.appendChild(likeBtn);
 
     // Display distance if user's position is available
     if(userPos) {
@@ -195,6 +198,11 @@ const renderPost = (doc) => {
 
         li.appendChild(updateBtn);
         li.appendChild(deleteBtn);
+    }
+    else{
+        let chatBtn=document.createElement('button');
+        chatBtn.textContent='Chat';
+        li.appendChild(chatBtn);
     }
 
     // Prepend list item to list
