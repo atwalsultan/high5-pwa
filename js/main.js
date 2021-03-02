@@ -71,24 +71,30 @@ const createPost = (event) => {
     // Prevent form from actually submitting
     event.preventDefault();
 
+    let date;
+    let time;
     let latitude;
     let longitude;
-    let createObj = {};
 
     // Get values from DOM
-    postForm.activityDate.value === "" ? createObj.date = "Unspecified" : createObj.date = postForm.activityDate.value; // date = 'Unspedified' if user leaves it empty
-    postForm.activityTime.value === "" ? createObj.time = "Unspecified" : createObj.time = postForm.activityTime.value; // time = 'Unspedified' if user leaves it empty
-    createObj.description = postForm.activityDesc.value;
-    createObj.category = postForm.activityCategory.value;
-    createObj.uid = auth.currentUser.uid;
-    createObj.timestamp = new firebase.firestore.FieldValue.serverTimestamp();
-    createObj.updated = new firebase.firestore.FieldValue.serverTimestamp();
+    postForm.activityDate.value === "" ? date = "Unspecified" : date = postForm.activityDate.value; // date = 'Unspedified' if user leaves it empty
+    postForm.activityTime.value === "" ? time = "Unspecified" : time = postForm.activityTime.value; // time = 'Unspedified' if user leaves it empty
+    let description = postForm.activityDesc.value;
+    let category = postForm.activityCategory.value;
     userPos ? latitude = userPos.coords.latitude : latitude = 0; // latitude = '' if the user position is not available
     userPos ? longitude = userPos.coords.longitude : longitude = 0; // longitude = '' if the user position is not available
-    createObj.coordinates = new firebase.firestore.GeoPoint(latitude, longitude);
 
     // Add post as document to collection
-    db.collection('posts').add(createObj).then(() => {
+    db.collection('posts').add({
+        date: date,
+        time: time,
+        category: category,
+        description: description,
+        coordinates: new firebase.firestore.GeoPoint(latitude, longitude),
+        uid: auth.currentUser.uid,
+        timestamp: new firebase.firestore.FieldValue.serverTimestamp(),
+        updated: new firebase.firestore.FieldValue.serverTimestamp()
+    }).then(() => {
         // Show message
         showAlert(`New post created successfully!`, `success`);
 
@@ -151,6 +157,8 @@ const renderPost = (doc) => {
     let time = document.createElement('p');
     let category = document.createElement('p');
     let description = document.createElement('p');
+    let likeBtn= document.createElement('button')
+    
 
     // Set unique ID for each list item
     li.setAttribute('id', doc.id);
@@ -163,12 +171,14 @@ const renderPost = (doc) => {
     time.textContent = doc.data().time;
     category.textContent = doc.data().category;
     description.textContent = doc.data().description;
+    likeBtn.textContent='high5'
 
     // Append post data to list item element
     li.appendChild(date);
     li.appendChild(time);
     li.appendChild(category);
     li.appendChild(description);
+    li.appendChild(likeBtn);
 
     // Display distance if user's position is available
     if(userPos) {
@@ -196,11 +206,17 @@ const renderPost = (doc) => {
         li.appendChild(updateBtn);
         li.appendChild(deleteBtn);
     }
+    else{
+        let chatBtn=document.createElement('button');
+        chatBtn.textContent='chat';
+        li.appendChild('chatBtn');
+
+    }
 
     // Prepend list item to list
     postList.prepend(li);
 };
-
+0
 // Update post
 const updatePost = (event) => {
     // Prevent form from actually submitting
@@ -215,9 +231,9 @@ const updatePost = (event) => {
     updateObj.description = updateForm.updateDesc.value;
     if(userPos && updateForm.updateLocation.checked) {// If user position is available and user has chosen to update it
         updateObj.coordinates = new firebase.firestore.GeoPoint(userPos.coords.latitude, userPos.coords.longitude)
+        console.log();
     }
     updateObj.updated = new firebase.firestore.FieldValue.serverTimestamp();
-
 
     // Updating document in collection
     db.collection('posts').doc(updateId).update(updateObj).then(() => {
