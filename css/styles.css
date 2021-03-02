@@ -20,10 +20,11 @@ h1 {
   font-family: "Caveat", sans-serif;
 }
 
-/* Header Styles */
+/* Header */
 header {
   /* Position properties */
-  position: sticky;
+  position: fixed;
+  width: 100%;
   top: 0;
   left: 0;
   z-index: 10;
@@ -57,7 +58,7 @@ header .fas {
   font-size: 1.5rem;
 }
 
-/* Sidebar Styles */
+/* Sidebar */
 #sidebar {
   background-color: black;
   color: white;
@@ -73,6 +74,7 @@ header .fas {
   bottom: 3.25rem;
   height: calc(100vh - 3.25rem - 3.25rem);
   width: 55vw;
+  z-index: 9;
 }
 
 #sidebar h3 {
@@ -120,6 +122,20 @@ header .fas {
 
 aside#sidebar.sidebar-hidden {
   left: -60vw;
+}
+
+/* Main Sections */
+#home-main > section {
+  position: absolute;
+  width: 100%;
+  transition: all .75s ease-out;
+  left: 0;
+  z-index: 7;
+}
+
+#home-main > section.section-hidden {
+  opacity: 0;
+  left: -100%;
 }
 
 /* Login page styles */
@@ -187,9 +203,11 @@ aside#sidebar.sidebar-hidden {
 
 /* Footer Styles */
 footer {
-  position: sticky;
+  position: fixed;
   bottom: 0;
   left: 0;
+  width: 100%;
+  z-index: 10;
 }
 
 footer nav {
@@ -215,7 +233,7 @@ footer .fas {
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 10;
+  z-index: 8;
   background-color: rgba(0, 0, 0, 0.4);
   display: none;
 }
@@ -230,6 +248,12 @@ footer .fas {
   transition: all .5s ease-out;
   border-radius: 10px;
   backdrop-filter: blur(10px);
+  z-index: 11;
+}
+
+#home-main {
+  margin: 4rem 1rem;
+  position: relative;
 }
 
 /* Class Styles */
