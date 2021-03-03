@@ -52,6 +52,9 @@ const sidebarBtn = document.getElementById('sidebar-btn');
 let icons = document.querySelectorAll('footer .fas');
 let sections = document.querySelectorAll('main > section');
 
+// Chats
+const chatOverlay = document.getElementById('chatOverlay');
+
 //**************************************************************
 //      Function Declarations
 //**************************************************************
@@ -155,7 +158,7 @@ const renderPost = (doc) => {
     let time = document.createElement('p');
     let category = document.createElement('p');
     let description = document.createElement('p');
-    let likeBtn= document.createElement('button');
+    let likeBtn = document.createElement('button');
 
     // Set unique ID for each list item
     li.setAttribute('id', doc.id);
@@ -168,7 +171,7 @@ const renderPost = (doc) => {
     time.textContent = doc.data().time;
     category.textContent = doc.data().category;
     description.textContent = doc.data().description;
-    likeBtn.textContent='High5!';
+    likeBtn.textContent = 'High5!';
 
     // Append post data to list item element
     li.appendChild(date);
@@ -204,8 +207,14 @@ const renderPost = (doc) => {
         li.appendChild(deleteBtn);
     }
     else{
-        let chatBtn=document.createElement('button');
-        chatBtn.textContent='Chat';
+        let chatBtn = document.createElement('button');
+
+        chatBtn.textContent = 'Chat';
+
+        chatBtn.addEventListener('click', () => {
+            chatOverlay.style.display = 'block';
+        });
+
         li.appendChild(chatBtn);
     }
 
@@ -272,11 +281,12 @@ const closeModals = () => {
     createOverlay.style.display = 'none';
     updateOverlay.style.display = 'none';
     deleteOverlay.style.display = 'none';
+    chatOverlay.style.display = 'none';
 }
 
 // Close modals on clicking outside
 const outsideClick = (event) => {
-    if(event.target === updateOverlay || event.target === deleteOverlay || event.target === createOverlay) {
+    if(event.target === updateOverlay || event.target === deleteOverlay || event.target === createOverlay || event.target === chatOverlay) {
 
         // Clear form and close modal
         closeModals();

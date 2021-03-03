@@ -1,283 +1,296 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Font Awesome -->
-    <script src="https://kit.fontawesome.com/df6bb686cb.js" crossorigin="anonymous"></script>
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- External CSS file -->
-    <link rel="stylesheet" href="../css/styles.css" />
+	<!-- Font Awesome -->
+	<script src="https://kit.fontawesome.com/df6bb686cb.js" crossorigin="anonymous"></script>
 
-    <!-- Firebase -->
-    <!-- The core Firebase JS SDK is always required and must be listed first -->
-    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
+	<!-- External CSS file -->
+	<link rel="stylesheet" href="../css/styles.css" />
 
-    <!-- TODO: Add SDKs for Firebase products that you want to use https://firebase.google.com/docs/web/setup#available-libraries -->
-    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-analytics.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-firestore.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-auth.js"></script>
+	<!-- Firebase -->
+	<!-- The core Firebase JS SDK is always required and must be listed first -->
+	<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
 
-    <!-- External JS file -->
-    <script src="../js/auth.js"></script>
-    <script src="../js/main.js" defer></script>
+	<!-- TODO: Add SDKs for Firebase products that you want to use https://firebase.google.com/docs/web/setup#available-libraries -->
+	<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-analytics.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-firestore.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-auth.js"></script>
 
-    <title>High5!</title>
-  </head>
+	<!-- External JS file -->
+	<script src="../js/auth.js"></script>
+	<script src="../js/main.js" defer></script>
 
-  <body>
+	<title>High5!</title>
+</head>
 
-    <!-- Alerts -->
-    <div id="alerts"></div>
+<body>
 
-    <header>
-        <nav>
-          <ul>
-            <!-- Side Menu Button -->
-            <li>
-              <button>
-                <span class="fas fa-bars" id="sidebar-btn"></span>
-                <span class="visually-hidden">Open Side Menu</span>
-              <button>
-            </li>
-            <!-- Site Title -->
-            <li><a href="#"><h1>High5!</h1></a></li>
-            <!-- New Post Button -->
-            <li>
-              <button>
-                <span class="fas fa-plus" id="createBtn"></span>
-                <span class="visually-hidden">Create New Post</span>
-              <button></li>
-          </ul>
-        </nav>
-    </header>
+	<!-- Alerts -->
+	<div id="alerts"></div>
 
-    <aside id="sidebar" class="sidebar-hidden">
-      <form id="filter-form">
+	<header>
+		<nav>
+			<ul>
+				<!-- Side Menu Button -->
+				<li>
+					<button>
+						<span class="fas fa-bars" id="sidebar-btn"></span>
+						<span class="visually-hidden">Open Side Menu</span>
+						<button>
+				</li>
+				<!-- Site Title -->
+				<li><a href="#">
+						<h1>High5!</h1>
+					</a></li>
+				<!-- New Post Button -->
+				<li>
+					<button>
+						<span class="fas fa-plus" id="createBtn"></span>
+						<span class="visually-hidden">Create New Post</span>
+						<button>
+				</li>
+			</ul>
+		</nav>
+	</header>
 
-        <!-- Category -->
-        <div class="category-filters">
-          <h3>Category</h3>
-          <div class="category">
-            <input type="checkbox" id="Art & Craft" value="Art & Craft">
-            <label for="categoryA">Art & Craft</label>
-          </div>  
-          
-          <div class="category">
-            <input type="checkbox" id="Board Games" value="Board Games">
-            <label for="categoryB">Board Games</label>
-          </div>
-          
-          <div class="category">
-            <input type="checkbox" id="Buying / Selling" value="Buying / Selling">
-            <label for="categoryC">Buying / Selling</label>
-          </div>
-          
-          <div class="category">
-            <input type="checkbox" id="Cooking" value="Cooking">
-            <label for="categoryD">Cooking</label>
-          </div>
-          
-          <div class="category">
-            <input type="checkbox" id="Dance" value="Dance">
-            <label for="categoryD">Dance</label>
-          </div>
-          
-          <div class="category">
-            <input type="checkbox" id="Learning" value="Learning">
-            <label for="categoryD">Learning</label>
-          </div>
-          
-          <div class="category">
-            <input type="checkbox" id="Movies" value="Movies">
-            <label for="categoryD">Movies</label>
-          </div>
-          
-          <div class="category">
-            <input type="checkbox" id="Music" value="Music">
-            <label for="categoryD">Music</label>
-          </div>
-          
-          <div class="category">
-            <input type="checkbox" id="Outdoor & Adventure" value="Outdoor & Adventure">
-            <label for="categoryD">Outdoor & Adventure</label>
-          </div>
-          
-          <div class="category">
-            <input type="checkbox" id="Reading" value="Reading">
-            <label for="categoryD">Reading</label>
-          </div>
-          
-          <div class="category">
-            <input type="checkbox" id="Renting" value="Renting">
-            <label for="categoryD">Renting</label>
-          </div>
-          
-          <div class="category">
-            <input type="checkbox" id="Sports & Fitness" value="Sports & Fitness">
-            <label for="categoryD">Sports & Fitness</label>
-          </div>
-          
-          <div class="category">
-            <input type="checkbox" id="Virtual Games" value="Virtual Games">
-            <label for="categoryD">Virtual Games</label>
-          </div>
-        </div>
+	<aside id="sidebar" class="sidebar-hidden">
+		<form id="filter-form">
 
-        <!-- Distance -->
-        <div class="distance-filter">
-          <h3>Distance</h3>
-          <div class="distance">
-            <label for="distance">Show posts created within (km): </label>
-            <input type="number" min="0" id="distance" placeholder="Infinite">
-          </div>
-        </div>
-        
-        <button type="submit">Apply</button>
-      </form>
-    </aside>
+			<!-- Category -->
+			<div class="category-filters">
+				<h3>Category</h3>
+				<div class="category">
+					<input type="checkbox" id="Art & Craft" value="Art & Craft">
+					<label for="categoryA">Art & Craft</label>
+				</div>
 
-    <!-- Create markup  -->
-    <div id="createOverlay">
-      <div class="modal">
-        <span class="closeBtn">&times;</span>
+				<div class="category">
+					<input type="checkbox" id="Board Games" value="Board Games">
+					<label for="categoryB">Board Games</label>
+				</div>
 
-        <p>Create New Post</p>
+				<div class="category">
+					<input type="checkbox" id="Buying / Selling" value="Buying / Selling">
+					<label for="categoryC">Buying / Selling</label>
+				</div>
 
-        <!-- Form to create a new post -->
-        <form id="postForm">
-          <input type="date" id="activityDate" placeholder="Date" />
-          <input type="time" id="activityTime" placeholder="Time" />
-          <input type="text" id="activityDesc" placeholder="Description" maxlength="300" required />
+				<div class="category">
+					<input type="checkbox" id="Cooking" value="Cooking">
+					<label for="categoryD">Cooking</label>
+				</div>
 
-          <select name="activityCategory" id="activityCategory">
-            <option value="Art & Craft">Art & Craft</option>
-            <option value="Board Games">Board Games</option>
-            <option value="Buying / Selling">Buying / Selling</option>
-            <option value="Cooking">Cooking</option>
-            <option value="Dance">Dance</option>
-            <option value="Learning">Learning</option>
-            <option value="Movies">Movies</option>
-            <option value="Music">Music</option>
-            <option value="Outdoor & Adventure">Outdoor & Adventure</option>
-            <option value="Reading">Reading</option>
-            <option value="Renting">Renting</option>
-            <option value="Sports & Fitness">Sports & Fitness</option>
-            <option value="Virtual Games">Virtual Games</option>
-          </select>
+				<div class="category">
+					<input type="checkbox" id="Dance" value="Dance">
+					<label for="categoryD">Dance</label>
+				</div>
 
-          <button type="submit">Create Post</button>
-        </form>
-      </div>
-    </div>
+				<div class="category">
+					<input type="checkbox" id="Learning" value="Learning">
+					<label for="categoryD">Learning</label>
+				</div>
 
-    <!-- Update markup -->
-    <div id="updateOverlay">
-      <div class="modal">
-        <span class="closeBtn">&times;</span>
+				<div class="category">
+					<input type="checkbox" id="Movies" value="Movies">
+					<label for="categoryD">Movies</label>
+				</div>
 
-        <p>Update Post</p>
+				<div class="category">
+					<input type="checkbox" id="Music" value="Music">
+					<label for="categoryD">Music</label>
+				</div>
 
-        <form id="updateForm">
-          <input type="date" id="updateDate" placeholder="Date" />
-          <input type="time" id="updateTime" placeholder="Time" />
-          <input type="text" id="updateDesc" placeholder="Description" maxlength="300" />
+				<div class="category">
+					<input type="checkbox" id="Outdoor & Adventure" value="Outdoor & Adventure">
+					<label for="categoryD">Outdoor & Adventure</label>
+				</div>
 
-          <select name="updateCategory" id="updateCategory">
-            <option value="Art & Craft">Art & Craft</option>
-            <option value="Board Games">Board Games</option>
-            <option value="Buying / Selling">Buying / Selling</option>
-            <option value="Cooking">Cooking</option>
-            <option value="Dance">Dance</option>
-            <option value="Learning">Learning</option>
-            <option value="Movies">Movies</option>
-            <option value="Music">Music</option>
-            <option value="Outdoor & Adventure">Outdoor & Adventure</option>
-            <option value="Reading">Reading</option>
-            <option value="Renting">Renting</option>
-            <option value="Sports & Fitness">Sports & Fitness</option>
-            <option value="Virtual Games">Virtual Games</option>
-          </select>
+				<div class="category">
+					<input type="checkbox" id="Reading" value="Reading">
+					<label for="categoryD">Reading</label>
+				</div>
 
-          <input type="checkbox" id="updateLocation">
-          <label for="updateLocation">Update Location</label>
-          <button type="submit">Update</button>
-        </form>
-      </div>
-    </div>
+				<div class="category">
+					<input type="checkbox" id="Renting" value="Renting">
+					<label for="categoryD">Renting</label>
+				</div>
 
-    <!-- Delete markup -->
-    <div id="deleteOverlay">
-      <div class="modal">
-        <span class="closeBtn">&times;</span>
-        <p>
-          Are you sure you want to delete this post? This cannot be undone.
-        </p>
-        <button id="confirmDelete">Delete Post</button>
-      </div>
-    </div>
+				<div class="category">
+					<input type="checkbox" id="Sports & Fitness" value="Sports & Fitness">
+					<label for="categoryD">Sports & Fitness</label>
+				</div>
+
+				<div class="category">
+					<input type="checkbox" id="Virtual Games" value="Virtual Games">
+					<label for="categoryD">Virtual Games</label>
+				</div>
+			</div>
+
+			<!-- Distance -->
+			<div class="distance-filter">
+				<h3>Distance</h3>
+				<div class="distance">
+					<label for="distance">Show posts created within (km): </label>
+					<input type="number" min="0" id="distance" placeholder="Infinite">
+				</div>
+			</div>
+
+			<button type="submit">Apply</button>
+		</form>
+	</aside>
+
+	<!-- Create markup  -->
+	<div id="createOverlay">
+		<div class="modal">
+			<span class="closeBtn">&times;</span>
+
+			<p>Create New Post</p>
+
+			<!-- Form to create a new post -->
+			<form id="postForm">
+				<input type="date" id="activityDate" placeholder="Date" />
+				<input type="time" id="activityTime" placeholder="Time" />
+				<input type="text" id="activityDesc" placeholder="Description" maxlength="300" required />
+
+				<select name="activityCategory" id="activityCategory">
+					<option value="Art & Craft">Art & Craft</option>
+					<option value="Board Games">Board Games</option>
+					<option value="Buying / Selling">Buying / Selling</option>
+					<option value="Cooking">Cooking</option>
+					<option value="Dance">Dance</option>
+					<option value="Learning">Learning</option>
+					<option value="Movies">Movies</option>
+					<option value="Music">Music</option>
+					<option value="Outdoor & Adventure">Outdoor & Adventure</option>
+					<option value="Reading">Reading</option>
+					<option value="Renting">Renting</option>
+					<option value="Sports & Fitness">Sports & Fitness</option>
+					<option value="Virtual Games">Virtual Games</option>
+				</select>
+
+				<button type="submit">Create Post</button>
+			</form>
+		</div>
+	</div>
+
+	<!-- Update markup -->
+	<div id="updateOverlay">
+		<div class="modal">
+			<span class="closeBtn">&times;</span>
+
+			<p>Update Post</p>
+
+			<form id="updateForm">
+				<input type="date" id="updateDate" placeholder="Date" />
+				<input type="time" id="updateTime" placeholder="Time" />
+				<input type="text" id="updateDesc" placeholder="Description" maxlength="300" />
+
+				<select name="updateCategory" id="updateCategory">
+					<option value="Art & Craft">Art & Craft</option>
+					<option value="Board Games">Board Games</option>
+					<option value="Buying / Selling">Buying / Selling</option>
+					<option value="Cooking">Cooking</option>
+					<option value="Dance">Dance</option>
+					<option value="Learning">Learning</option>
+					<option value="Movies">Movies</option>
+					<option value="Music">Music</option>
+					<option value="Outdoor & Adventure">Outdoor & Adventure</option>
+					<option value="Reading">Reading</option>
+					<option value="Renting">Renting</option>
+					<option value="Sports & Fitness">Sports & Fitness</option>
+					<option value="Virtual Games">Virtual Games</option>
+				</select>
+
+				<input type="checkbox" id="updateLocation">
+				<label for="updateLocation">Update Location</label>
+				<button type="submit">Update</button>
+			</form>
+		</div>
+	</div>
+
+	<!-- Delete markup -->
+	<div id="deleteOverlay">
+		<div class="modal">
+			<span class="closeBtn">&times;</span>
+			<p>
+				Are you sure you want to delete this post? This cannot be undone.
+			</p>
+			<button id="confirmDelete">Delete Post</button>
+		</div>
+	</div>
+
+	<!-- Chat modal -->
+	<div id="chatOverlay">
+		<div class="modal">
+			<span class="closeBtn">&times;</span>
+			<h2>This is the chat modal</h2>
+		</div>
+	</div>
 
 
-    <main id="home-main">
-      <!-- Posts -->
-      <section id="posts">
-        <h2>Posts Section</h2>
-        <button id="logoutBtn">Log Out</button>
+	<main id="home-main">
+		<!-- Posts -->
+		<section id="posts">
+			<h2>Posts Section</h2>
+			<button id="logoutBtn">Log Out</button>
 
-        <!-- Read markup just a <ul> -->
-        <ul id="postList"></ul>
-      </section>
+			<!-- Read markup just a <ul> -->
+			<ul id="postList"></ul>
+		</section>
 
-      <!-- Notifications -->
-      <section id="notification" class="section-hidden">
-        <h2>Notifications Section</h2>
-      </section>
+		<!-- Notifications -->
+		<section id="notification" class="section-hidden">
+			<h2>Notifications Section</h2>
+		</section>
 
-      <!-- Chats -->
-      <section id="chats" class="section-hidden">
-        <h2>Chats Section</h2>
-      </section>
+		<!-- Chats -->
+		<section id="chats" class="section-hidden">
+			<h2>Chats Section</h2>
+		</section>
 
-      <!-- Profile -->
-      <section id="profile" class="section-hidden">
-        <h2>Profile Section</h2>
-      </section>
-    </main>
+		<!-- Profile -->
+		<section id="profile" class="section-hidden">
+			<h2>Profile Section</h2>
+		</section>
+	</main>
 
-    <footer>
-      <nav>
-        <ul>
-          <!-- Home Button -->
-          <li>
-            <button>
-              <span class="fas fa-home"></span>
-              <span class="visually-hidden">Home</span>
-            </button>
-          </li>
-          <!-- Notifications Button -->
-          <li>
-            <button>
-              <span class="fas fa-bell"></span>
-              <span class="visually-hidden">Notifications</span>
-            </button>
-          </li>
-          <!-- Messages Button -->
-          <li>
-            <button>
-              <span class="fas fa-comments"></span>
-              <span class="visually-hidden">Messages</span>
-            </button>
-          </li>
-          <!-- Profile Button -->
-          <li>
-            <button>
-              <span class="fas fa-user"></span>
-              <span class="visually-hidden">My Profile</span>
-            </button>
-          </li>
-        </ul>
-      </nav>
-    </footer>
-  </body>
+	<footer>
+		<nav>
+			<ul>
+				<!-- Home Button -->
+				<li>
+					<button>
+						<span class="fas fa-home"></span>
+						<span class="visually-hidden">Home</span>
+					</button>
+				</li>
+				<!-- Notifications Button -->
+				<li>
+					<button>
+						<span class="fas fa-bell"></span>
+						<span class="visually-hidden">Notifications</span>
+					</button>
+				</li>
+				<!-- Messages Button -->
+				<li>
+					<button>
+						<span class="fas fa-comments"></span>
+						<span class="visually-hidden">Messages</span>
+					</button>
+				</li>
+				<!-- Profile Button -->
+				<li>
+					<button>
+						<span class="fas fa-user"></span>
+						<span class="visually-hidden">My Profile</span>
+					</button>
+				</li>
+			</ul>
+		</nav>
+	</footer>
+</body>
+
 </html>

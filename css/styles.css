@@ -227,7 +227,8 @@ footer .fas {
 /* Overlays for modals */
 #updateOverlay,
 #deleteOverlay,
-#createOverlay {
+#createOverlay,
+#chatOverlay {
   position: fixed;
   top: 0;
   left: 0;
