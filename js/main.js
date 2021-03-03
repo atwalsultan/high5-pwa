@@ -26,6 +26,10 @@ let deleteId;
 const confirmDelete = document.getElementById('confirmDelete');
 const deleteOverlay = document.getElementById('deleteOverlay');
 
+// logout modal 
+const confirmLogout = document.getElementById('confirmLogout');
+const logoutOverlay = document.getElementById('logoutOverlay');
+
 // 'X' buttons to close modals
 const closeBtns = document.querySelectorAll('.closeBtn');
 
@@ -272,11 +276,12 @@ const closeModals = () => {
     createOverlay.style.display = 'none';
     updateOverlay.style.display = 'none';
     deleteOverlay.style.display = 'none';
+    logoutOverlay.style.display = 'none';
 }
 
 // Close modals on clicking outside
 const outsideClick = (event) => {
-    if(event.target === updateOverlay || event.target === deleteOverlay || event.target === createOverlay) {
+    if(event.target === updateOverlay || event.target === deleteOverlay || event.target === createOverlay || event.target ===logoutOverlay) {
 
         // Clear form and close modal
         closeModals();
@@ -434,8 +439,15 @@ createBtn.addEventListener('click', () => {
     createOverlay.style.display = 'block'
 });
 
+
+// Logout functionality
+logoutBtn.addEventListener('click', (e) =>{
+    logoutOverlay.style.display = 'block';
+})
+
 // Log the user out or show error message
-logoutBtn.addEventListener('click', logUserOut);
+confirmLogout.addEventListener('click', logUserOut);
+
 
 // Filter by category or distance
 filterForm.addEventListener('submit', filter);
