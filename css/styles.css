@@ -1,5 +1,5 @@
 /* Importing Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap");
 
 * {
   margin: 0;
@@ -32,11 +32,12 @@ header {
 
 header nav {
   background-color: white;
-  padding: .75rem 1rem;
+  padding: 0.75rem 1rem;
   border-bottom: 1px solid #000;
 }
 
-header nav ul, footer nav ul {
+header nav ul,
+footer nav ul {
   /* Flexbox properties */
   display: flex;
   flex-flow: row nowrap;
@@ -44,13 +45,17 @@ header nav ul, footer nav ul {
   align-items: center;
 }
 
-header button, header button:active, footer button, footer button:active {
+header button,
+header button:active,
+footer button,
+footer button:active {
   background-color: initial;
   border: none;
   outline: none;
 }
 
-header button:hover, footer button:hover {
+header button:hover,
+footer button:hover {
   cursor: pointer;
 }
 
@@ -62,10 +67,10 @@ header .fas {
 #sidebar {
   background-color: black;
   color: white;
-  padding: .75rem 1.25rem;
+  padding: 0.75rem 1.25rem;
   box-sizing: border-box;
   overflow-y: auto;
-  transition: all .5s ease-out;
+  transition: all 0.5s ease-out;
 
   /* Position Properties */
   position: fixed;
@@ -91,7 +96,7 @@ header .fas {
 
 #filter-form button {
   margin: 1rem 0rem;
-  padding: .25rem 1rem;
+  padding: 0.25rem 1rem;
   max-width: 50%;
   margin: auto;
 }
@@ -99,13 +104,13 @@ header .fas {
 .category-filters {
   display: flex;
   flex-flow: column nowrap;
-  gap: .35rem;
+  gap: 0.35rem;
 }
 
 .distance-filter {
   display: flex;
   flex-flow: column nowrap;
-  gap: .35rem;
+  gap: 0.35rem;
 }
 
 .category {
@@ -117,7 +122,7 @@ header .fas {
 .distance {
   display: flex;
   flex-flow: column nowrap;
-  gap: .25rem;
+  gap: 0.25rem;
 }
 
 aside#sidebar.sidebar-hidden {
@@ -128,7 +133,7 @@ aside#sidebar.sidebar-hidden {
 #home-main > section {
   position: absolute;
   width: 100%;
-  transition: all .75s ease-out;
+  transition: all 0.75s ease-out;
   left: 0;
   z-index: 7;
 }
@@ -139,7 +144,8 @@ aside#sidebar.sidebar-hidden {
 }
 
 /* Login page styles */
-#index-main, #signup-main {
+#index-main,
+#signup-main {
   display: flex;
   height: 100vh;
   flex-flow: row nowrap;
@@ -147,12 +153,13 @@ aside#sidebar.sidebar-hidden {
   justify-content: center;
 }
 
-#index-main .form-wrapper, #signup-main .form-wrapper {
+#index-main .form-wrapper,
+#signup-main .form-wrapper {
   height: 80vh;
   padding: 2rem;
   background-color: #f4f4f4;
   border-radius: 10px;
-  box-shadow: 0 0 5px 5px rgba(0,0,0,0.3);
+  box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.3);
   flex-grow: 1;
   max-width: 275px;
 
@@ -162,7 +169,8 @@ aside#sidebar.sidebar-hidden {
   gap: 2rem;
 }
 
-#index-main .form-wrapper h2, #signup-main .form-wrapper h2 {
+#index-main .form-wrapper h2,
+#signup-main .form-wrapper h2 {
   flex-grow: 1;
   display: flex;
   flex-flow: row nowrap;
@@ -170,30 +178,34 @@ aside#sidebar.sidebar-hidden {
   justify-content: center;
 }
 
-#index-main .form-wrapper form, #signup-main .form-wrapper form {
+#index-main .form-wrapper form,
+#signup-main .form-wrapper form {
   display: flex;
   flex-flow: column nowrap;
   gap: 1rem;
   align-items: center;
 }
 
-#index-main .form-wrapper input, #signup-main .form-wrapper input {
+#index-main .form-wrapper input,
+#signup-main .form-wrapper input {
   font-family: inherit;
-  font-size: .9rem;
-  padding: .5rem;
+  font-size: 0.9rem;
+  padding: 0.5rem;
   border-radius: 5px;
   border: 1px solid gray;
   width: 80%;
 }
 
-#index-main .form-wrapper button, #signup-main .form-wrapper button {
-  padding: .5rem 2.5rem .5rem 2.5rem;
+#index-main .form-wrapper button,
+#signup-main .form-wrapper button {
+  padding: 0.5rem 2.5rem 0.5rem 2.5rem;
   border-radius: 5px;
   border: 1px solid rgb(79, 79, 79);
   cursor: pointer;
 }
 
-#index-main .sign-up, #signup-main .login {
+#index-main .sign-up,
+#signup-main .login {
   flex-grow: 1;
   display: flex;
   flex-flow: column nowrap;
@@ -212,14 +224,14 @@ footer {
 
 footer nav {
   background-color: white;
-  padding: .65rem 1rem;
+  padding: 0.65rem 1rem;
   border-top: 1px solid #000;
 }
 
 footer .fas {
   font-size: 1.25rem;
   background-color: rgb(200, 200, 200);
-  padding: .5rem;
+  padding: 0.5rem;
   border-radius: 50%;
 }
 
@@ -228,7 +240,8 @@ footer .fas {
 #updateOverlay,
 #deleteOverlay,
 #createOverlay,
-#chatOverlay {
+#chatOverlay,
+#logoutOverlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -241,12 +254,12 @@ footer .fas {
 
 #alerts {
   background-color: rgba(0, 0, 0, 0.8);
-  padding: .75rem;
+  padding: 0.75rem;
   position: fixed;
   top: -5rem;
   left: 50%;
   transform: translate(-50%, 0);
-  transition: all .5s ease-out;
+  transition: all 0.5s ease-out;
   border-radius: 10px;
   backdrop-filter: blur(10px);
   z-index: 11;
@@ -274,11 +287,11 @@ footer .fas {
 
 /* To hide elements that are present only for accessibility purposes */
 .visually-hidden {
-	clip: rect(0,0,0,0);
-	clip-path: inset(50%);
-	height: 1px;
-	overflow: hidden;
-	position: absolute;
-	white-space: nowrap;
-	width: 1px;
+  clip: rect(0, 0, 0, 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
 }
