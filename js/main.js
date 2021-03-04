@@ -56,6 +56,9 @@ const sidebarBtn = document.getElementById('sidebar-btn');
 let icons = document.querySelectorAll('footer .fas');
 let sections = document.querySelectorAll('main > section');
 
+// Chats
+const chatOverlay = document.getElementById('chatOverlay');
+
 //**************************************************************
 //      Function Declarations
 //**************************************************************
@@ -159,7 +162,7 @@ const renderPost = (doc) => {
     let time = document.createElement('p');
     let category = document.createElement('p');
     let description = document.createElement('p');
-    let likeBtn= document.createElement('button');
+    let likeBtn = document.createElement('button');
 
     // Set unique ID for each list item
     li.setAttribute('id', doc.id);
@@ -172,7 +175,7 @@ const renderPost = (doc) => {
     time.textContent = doc.data().time;
     category.textContent = doc.data().category;
     description.textContent = doc.data().description;
-    likeBtn.textContent='High5!';
+    likeBtn.textContent = 'High5!';
 
     // Append post data to list item element
     li.appendChild(date);
@@ -207,9 +210,35 @@ const renderPost = (doc) => {
         li.appendChild(updateBtn);
         li.appendChild(deleteBtn);
     }
-    else{
-        let chatBtn=document.createElement('button');
-        chatBtn.textContent='Chat';
+    else {
+        let chatBtn = document.createElement('button');
+        
+        chatBtn.textContent = 'Chat';
+
+        chatBtn.addEventListener('click', (event) => {
+            let postId = event.target.parentNode.id;
+
+            // Fetch chat between logged in user and owner of post
+            db.collection('chats').where(`members.${auth.currentUser.uid}`, '==', true).where(`members.${doc.data().uid}`, '==', true).get().then((querySnapshot) => {
+                if(!querySnapshot.empty) { // If chat already exists
+                    querySnapshot.forEach((single) => {
+                        console.log(single.data().members);
+                    });
+                }
+                else { // Create new chat if it doesn't exist
+                    // Create users map
+                    let usersObj = {};
+                    usersObj[auth.currentUser.uid] = true;
+                    usersObj[doc.data().uid] = true;
+
+                    // Create chat
+                    db.collection('chats').add({
+                        members: usersObj,
+                    });
+                }
+            });
+        });
+
         li.appendChild(chatBtn);
     }
 
@@ -276,13 +305,13 @@ const closeModals = () => {
     createOverlay.style.display = 'none';
     updateOverlay.style.display = 'none';
     deleteOverlay.style.display = 'none';
+    chatOverlay.style.display = 'none';
     logoutOverlay.style.display = 'none';
 }
 
 // Close modals on clicking outside
 const outsideClick = (event) => {
-    if(event.target === updateOverlay || event.target === deleteOverlay || event.target === createOverlay || event.target ===logoutOverlay) {
-
+    if(event.target === updateOverlay || event.target === deleteOverlay || event.target === createOverlay || event.target === chatOverlay || event.target ===logoutOverlay) {
         // Clear form and close modal
         closeModals();
     }

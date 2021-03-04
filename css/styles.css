@@ -240,6 +240,7 @@ footer .fas {
 #updateOverlay,
 #deleteOverlay,
 #createOverlay,
+#chatOverlay,
 #logoutOverlay {
   position: fixed;
   top: 0;
