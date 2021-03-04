@@ -206,13 +206,33 @@ const renderPost = (doc) => {
         li.appendChild(updateBtn);
         li.appendChild(deleteBtn);
     }
-    else{
+    else {
         let chatBtn = document.createElement('button');
-
+        
         chatBtn.textContent = 'Chat';
 
-        chatBtn.addEventListener('click', () => {
-            chatOverlay.style.display = 'block';
+        chatBtn.addEventListener('click', (event) => {
+            let postId = event.target.parentNode.id;
+
+            // Fetch chat between logged in user and owner of post
+            db.collection('chats').where(`members.${auth.currentUser.uid}`, '==', true).where(`members.${doc.data().uid}`, '==', true).get().then((querySnapshot) => {
+                if(!querySnapshot.empty) { // If chat already exists
+                    querySnapshot.forEach((single) => {
+                        console.log(single.data().members);
+                    });
+                }
+                else { // Create new chat if it doesn't exist
+                    // Create users map
+                    let usersObj = {};
+                    usersObj[auth.currentUser.uid] = true;
+                    usersObj[doc.data().uid] = true;
+
+                    // Create chat
+                    db.collection('chats').add({
+                        members: usersObj,
+                    });
+                }
+            });
         });
 
         li.appendChild(chatBtn);
