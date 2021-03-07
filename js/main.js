@@ -222,7 +222,8 @@ const renderPost = (doc) => {
             db.collection('chats').where(`members.${auth.currentUser.uid}`, '==', true).where(`members.${doc.data().uid}`, '==', true).get().then((querySnapshot) => {
                 if(!querySnapshot.empty) { // If chat already exists
                     querySnapshot.forEach((single) => {
-                        console.log(single.data().members);
+                        // console.log(single.data().members);
+                        chatOverlay.style.display = 'block';
                     });
                 }
                 else { // Create new chat if it doesn't exist
