@@ -59,6 +59,8 @@ let sections = document.querySelectorAll('main > section');
 // Chats
 const chatOverlay = document.getElementById('chatOverlay');
 const newMessage = document.getElementById('newMessage');
+const previousMessages = document.getElementById('previousMessages');
+let chatListener = null;
 
 //**************************************************************
 //      Function Declarations
@@ -266,6 +268,18 @@ const renderPost = (doc) => {
                         // Append form to div in DOM
                         newMessage.append(chatForm);
 
+                        // Display previous messages from chat
+                        chatListener = db.collection('chats').doc(chat.id).collection('messages').orderBy('timestamp', 'asc').onSnapshot((snapshot) => {
+                            let changes = snapshot.docChanges();
+                            changes.forEach((change) => {
+                                if(change.type === 'added') {
+                                    let message = document.createElement('li');
+                                    message.textContent = `${change.doc.data().sender}: ${change.doc.data().content}`;
+                                    previousMessages.append(message);
+                                }
+                            })
+                        });
+
                         // Display chat modal
                         chatOverlay.style.display = 'block';
 
@@ -325,6 +339,18 @@ const renderPost = (doc) => {
 
                         // Append form to div in DOM
                         newMessage.append(chatForm);
+
+                        // Display previous messages from chat
+                        chatListener = db.collection('chats').doc(chat.id).collection('messages').orderBy('timestamp', 'asc').onSnapshot((snapshot) => {
+                            let changes = snapshot.docChanges();
+                            changes.forEach((change) => {
+                                if(change.type === 'added') {
+                                    let message = document.createElement('li');
+                                    message.textContent = `${change.doc.data().sender}: ${change.doc.data().content}`;
+                                    previousMessages.append(message);
+                                }
+                            })
+                        });
 
                         // Display chat modal
                         chatOverlay.style.display = 'block';
@@ -404,6 +430,11 @@ const closeModals = () => {
     deleteOverlay.style.display = 'none';
     chatOverlay.style.display = 'none';
     newMessage.innerHTML = '';
+    previousMessages.innerHTML = '';
+    if(chatListener != null) {
+        chatListener();
+        chatListener = null;
+    }
     logoutOverlay.style.display = 'none';
 }
 
