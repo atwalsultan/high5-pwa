@@ -58,6 +58,9 @@ let sections = document.querySelectorAll('main > section');
 
 // Chats
 const chatOverlay = document.getElementById('chatOverlay');
+const newMessage = document.getElementById('newMessage');
+const previousMessages = document.getElementById('previousMessages');
+let chatListener = null;
 
 //**************************************************************
 //      Function Declarations
@@ -221,8 +224,67 @@ const renderPost = (doc) => {
             // Fetch chat between logged in user and owner of post
             db.collection('chats').where(`members.${auth.currentUser.uid}`, '==', true).where(`members.${doc.data().uid}`, '==', true).get().then((querySnapshot) => {
                 if(!querySnapshot.empty) { // If chat already exists
-                    querySnapshot.forEach((single) => {
-                        console.log(single.data().members);
+                    querySnapshot.forEach((chat) => {
+                        // Create chat form
+                        let chatForm = document.createElement('form');
+                        
+                        // Create input field 
+                        let messageInput = document.createElement('input');
+                        messageInput.setAttribute('type', 'text');
+                        messageInput.setAttribute('id', 'message');
+                        messageInput.setAttribute('required', 'required')
+
+                        // Create submit button
+                        let sendBtn = document.createElement('button');
+                        sendBtn.setAttribute('type', 'submit');
+                        sendBtn.textContent = 'Send';
+
+                        // Append input and button to form
+                        chatForm.append(messageInput);
+                        chatForm.append(sendBtn);
+
+                        // Add event listener to form
+                        chatForm.addEventListener('submit', (e) => {
+                            // Prevent form from actually submitting
+                            e.preventDefault();
+
+                            // Get contents of message
+                            let message = chatForm.message.value;
+
+                            // Create object to store
+                            let messageObj = {
+                                content: message,
+                                sender: auth.currentUser.uid,
+                                timestamp: new firebase.firestore.FieldValue.serverTimestamp(),
+                            }
+
+                            // Store object
+                            db.collection('chats').doc(chat.id).collection('messages').add(messageObj);
+
+                            chatForm.reset();
+                            chatForm.message.focus();
+                        });
+
+                        // Append form to div in DOM
+                        newMessage.append(chatForm);
+
+                        // Display previous messages from chat
+                        chatListener = db.collection('chats').doc(chat.id).collection('messages').orderBy('timestamp', 'asc').onSnapshot((snapshot) => {
+                            let changes = snapshot.docChanges();
+                            changes.forEach((change) => {
+                                if(change.type === 'added') {
+                                    let message = document.createElement('li');
+                                    message.textContent = `${change.doc.data().sender}: ${change.doc.data().content}`;
+                                    previousMessages.append(message);
+                                }
+                            })
+                        });
+
+                        // Display chat modal
+                        chatOverlay.style.display = 'block';
+
+                        // Focus on input field
+                        chatForm.message.focus();
                     });
                 }
                 else { // Create new chat if it doesn't exist
@@ -234,6 +296,67 @@ const renderPost = (doc) => {
                     // Create chat
                     db.collection('chats').add({
                         members: usersObj,
+                    }).then((chat) => {
+                        // Create chat form
+                        let chatForm = document.createElement('form');
+                        
+                        // Create input field 
+                        let messageInput = document.createElement('input');
+                        messageInput.setAttribute('type', 'text');
+                        messageInput.setAttribute('id', 'message');
+                        messageInput.setAttribute('required', 'required')
+
+                        // Create submit button
+                        let sendBtn = document.createElement('button');
+                        sendBtn.setAttribute('type', 'submit');
+                        sendBtn.textContent = 'Send';
+
+                        // Append input and button to form
+                        chatForm.append(messageInput);
+                        chatForm.append(sendBtn);
+
+                        // Add event listener to form
+                        chatForm.addEventListener('submit', (e) => {
+                            // Prevent form from actually submitting
+                            e.preventDefault();
+
+                            // Get contents of message
+                            let message = chatForm.message.value;
+
+                            // Create object to store
+                            let messageObj = {
+                                content: message,
+                                sender: auth.currentUser.uid,
+                                timestamp: new firebase.firestore.FieldValue.serverTimestamp(),
+                            }
+
+                            // Store object
+                            db.collection('chats').doc(chat.id).collection('messages').add(messageObj);
+
+                            chatForm.reset();
+                            chatForm.message.focus();
+                        });
+
+                        // Append form to div in DOM
+                        newMessage.append(chatForm);
+
+                        // Display previous messages from chat
+                        chatListener = db.collection('chats').doc(chat.id).collection('messages').orderBy('timestamp', 'asc').onSnapshot((snapshot) => {
+                            let changes = snapshot.docChanges();
+                            changes.forEach((change) => {
+                                if(change.type === 'added') {
+                                    let message = document.createElement('li');
+                                    message.textContent = `${change.doc.data().sender}: ${change.doc.data().content}`;
+                                    previousMessages.append(message);
+                                }
+                            })
+                        });
+
+                        // Display chat modal
+                        chatOverlay.style.display = 'block';
+
+                        // Focus on input field
+                        chatForm.message.focus();
                     });
                 }
             });
@@ -306,6 +429,12 @@ const closeModals = () => {
     updateOverlay.style.display = 'none';
     deleteOverlay.style.display = 'none';
     chatOverlay.style.display = 'none';
+    newMessage.innerHTML = '';
+    previousMessages.innerHTML = '';
+    if(chatListener != null) {
+        chatListener();
+        chatListener = null;
+    }
     logoutOverlay.style.display = 'none';
 }
 
