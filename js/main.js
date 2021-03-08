@@ -58,6 +58,7 @@ let sections = document.querySelectorAll('main > section');
 
 // Chats
 const chatOverlay = document.getElementById('chatOverlay');
+const newMessage = document.getElementById('newMessage');
 
 //**************************************************************
 //      Function Declarations
@@ -221,8 +222,25 @@ const renderPost = (doc) => {
             // Fetch chat between logged in user and owner of post
             db.collection('chats').where(`members.${auth.currentUser.uid}`, '==', true).where(`members.${doc.data().uid}`, '==', true).get().then((querySnapshot) => {
                 if(!querySnapshot.empty) { // If chat already exists
-                    querySnapshot.forEach((single) => {
-                        // console.log(single.data().members);
+                    querySnapshot.forEach((chat) => {
+                        // Create chat form
+                        let chatForm = document.createElement('form');
+
+                        let messageInput = document.createElement('input');
+                        messageInput.setAttribute('type', 'text');
+                        messageInput.setAttribute('id', 'message');
+
+                        let sendBtn = document.createElement('button');
+                        sendBtn.setAttribute('type', 'submit');
+                        sendBtn.textContent = 'Send';
+
+                        chatForm.append(messageInput);
+                        chatForm.append(sendBtn);
+
+                        newMessage.append(chatForm);
+                        
+
+                        // Display chat modal
                         chatOverlay.style.display = 'block';
                     });
                 }
