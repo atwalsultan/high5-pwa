@@ -157,6 +157,70 @@ const calculateDistance = (lat1, lon1, lat2, lon2) => {
     return (R * c).toFixed(1);
 };
 
+const createChatForm = (chat) => {
+    // Create chat form
+    let chatForm = document.createElement('form');
+                        
+    // Create input field 
+    let messageInput = document.createElement('input');
+    messageInput.setAttribute('type', 'text');
+    messageInput.setAttribute('id', 'message');
+    messageInput.setAttribute('required', 'required')
+
+    // Create submit button
+    let sendBtn = document.createElement('button');
+    sendBtn.setAttribute('type', 'submit');
+    sendBtn.textContent = 'Send';
+
+    // Append input and button to form
+    chatForm.append(messageInput);
+    chatForm.append(sendBtn);
+
+    // Add event listener to form
+    chatForm.addEventListener('submit', (e) => {
+        // Prevent form from actually submitting
+        e.preventDefault();
+
+        // Get contents of message
+        let message = chatForm.message.value;
+
+        // Create object to store
+        let messageObj = {
+            content: message,
+            sender: auth.currentUser.uid,
+            timestamp: new firebase.firestore.FieldValue.serverTimestamp(),
+        }
+
+        // Store object
+        db.collection('chats').doc(chat.id).collection('messages').add(messageObj);
+
+        chatForm.reset();
+        chatForm.message.focus();
+    });
+
+    return chatForm;
+};
+
+const createChatListener = (chat) => {
+    let listener = db.collection('chats').doc(chat.id).collection('messages').orderBy('timestamp', 'asc').onSnapshot((snapshot) => {
+        let changes = snapshot.docChanges();
+        changes.forEach((change) => {
+            if(change.type === 'added') {
+                // Create element
+                let message = document.createElement('li');
+
+                // Add content
+                message.textContent = `${change.doc.data().content}`;
+
+                // Add to DOM
+                previousMessages.append(message);
+            }
+        })
+    });
+
+    return listener;
+};
+
 // Create elements and render post
 const renderPost = (doc) => {
     // Create elements to be rendered
@@ -226,59 +290,13 @@ const renderPost = (doc) => {
                 if(!querySnapshot.empty) { // If chat already exists
                     querySnapshot.forEach((chat) => {
                         // Create chat form
-                        let chatForm = document.createElement('form');
-                        
-                        // Create input field 
-                        let messageInput = document.createElement('input');
-                        messageInput.setAttribute('type', 'text');
-                        messageInput.setAttribute('id', 'message');
-                        messageInput.setAttribute('required', 'required')
-
-                        // Create submit button
-                        let sendBtn = document.createElement('button');
-                        sendBtn.setAttribute('type', 'submit');
-                        sendBtn.textContent = 'Send';
-
-                        // Append input and button to form
-                        chatForm.append(messageInput);
-                        chatForm.append(sendBtn);
-
-                        // Add event listener to form
-                        chatForm.addEventListener('submit', (e) => {
-                            // Prevent form from actually submitting
-                            e.preventDefault();
-
-                            // Get contents of message
-                            let message = chatForm.message.value;
-
-                            // Create object to store
-                            let messageObj = {
-                                content: message,
-                                sender: auth.currentUser.uid,
-                                timestamp: new firebase.firestore.FieldValue.serverTimestamp(),
-                            }
-
-                            // Store object
-                            db.collection('chats').doc(chat.id).collection('messages').add(messageObj);
-
-                            chatForm.reset();
-                            chatForm.message.focus();
-                        });
+                        let chatForm = createChatForm(chat);
 
                         // Append form to div in DOM
                         newMessage.append(chatForm);
 
                         // Display previous messages from chat
-                        chatListener = db.collection('chats').doc(chat.id).collection('messages').orderBy('timestamp', 'asc').onSnapshot((snapshot) => {
-                            let changes = snapshot.docChanges();
-                            changes.forEach((change) => {
-                                if(change.type === 'added') {
-                                    let message = document.createElement('li');
-                                    message.textContent = `${change.doc.data().sender}: ${change.doc.data().content}`;
-                                    previousMessages.append(message);
-                                }
-                            })
-                        });
+                        chatListener = createChatListener(chat);
 
                         // Display chat modal
                         chatOverlay.style.display = 'block';
@@ -298,59 +316,13 @@ const renderPost = (doc) => {
                         members: usersObj,
                     }).then((chat) => {
                         // Create chat form
-                        let chatForm = document.createElement('form');
-                        
-                        // Create input field 
-                        let messageInput = document.createElement('input');
-                        messageInput.setAttribute('type', 'text');
-                        messageInput.setAttribute('id', 'message');
-                        messageInput.setAttribute('required', 'required')
-
-                        // Create submit button
-                        let sendBtn = document.createElement('button');
-                        sendBtn.setAttribute('type', 'submit');
-                        sendBtn.textContent = 'Send';
-
-                        // Append input and button to form
-                        chatForm.append(messageInput);
-                        chatForm.append(sendBtn);
-
-                        // Add event listener to form
-                        chatForm.addEventListener('submit', (e) => {
-                            // Prevent form from actually submitting
-                            e.preventDefault();
-
-                            // Get contents of message
-                            let message = chatForm.message.value;
-
-                            // Create object to store
-                            let messageObj = {
-                                content: message,
-                                sender: auth.currentUser.uid,
-                                timestamp: new firebase.firestore.FieldValue.serverTimestamp(),
-                            }
-
-                            // Store object
-                            db.collection('chats').doc(chat.id).collection('messages').add(messageObj);
-
-                            chatForm.reset();
-                            chatForm.message.focus();
-                        });
+                        let chatForm = createChatForm(chat);
 
                         // Append form to div in DOM
                         newMessage.append(chatForm);
 
                         // Display previous messages from chat
-                        chatListener = db.collection('chats').doc(chat.id).collection('messages').orderBy('timestamp', 'asc').onSnapshot((snapshot) => {
-                            let changes = snapshot.docChanges();
-                            changes.forEach((change) => {
-                                if(change.type === 'added') {
-                                    let message = document.createElement('li');
-                                    message.textContent = `${change.doc.data().sender}: ${change.doc.data().content}`;
-                                    previousMessages.append(message);
-                                }
-                            })
-                        });
+                        chatListener = createChatListener(chat);
 
                         // Display chat modal
                         chatOverlay.style.display = 'block';
