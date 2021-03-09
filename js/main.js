@@ -224,6 +224,10 @@ const createChatListener = (chat) => {
                 previousMessages.append(message);
             }
         })
+
+        // Scroll to bottom of chat
+        let lastMessage = previousMessages.querySelector('li:last-of-type');
+        lastMessage.scrollIntoView();
     });
 
     return listener;

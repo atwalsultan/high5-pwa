@@ -303,6 +303,7 @@ footer .fas {
   flex-flow: column nowrap;
   gap: .5rem;
   margin: 1rem 0;
+  padding: 0 .25rem 0 .4rem;
 }
 
 .message {
@@ -366,8 +367,4 @@ footer .fas {
   background-color: rgb(175, 175, 175);
   box-sizing: border-box;
   padding: .5rem;
-}
-
-#previousMessages {
-  padding: 0 .25rem;
 }
