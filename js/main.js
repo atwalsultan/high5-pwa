@@ -212,6 +212,14 @@ const createChatListener = (chat) => {
                 // Add content
                 message.textContent = `${change.doc.data().content}`;
 
+                // Add class
+                message.classList.add('message');
+
+                // Identify messages sent by logged in user
+                if (change.doc.data().sender === auth.currentUser.uid) {
+                    message.classList.add('my-message');
+                }
+
                 // Add to DOM
                 previousMessages.append(message);
             }
