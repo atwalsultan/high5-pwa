@@ -436,8 +436,8 @@ section > h2 {
   border-bottom: 1px solid gray;
 }
 
-/* Create Modal */
-#createHeader, #updateHeader {
+/* Modals */
+#createHeader, #updateHeader, #deleteHeader, #logoutHeader {
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
@@ -448,7 +448,7 @@ section > h2 {
   border-radius: 10px 10px 0 0;
 }
 
-#createOverlay form, #updateOverlay form {
+#createOverlay form, #updateOverlay form, .delete-logout-body {
   display: flex;
   flex-flow: column nowrap;
   gap: .5rem;
@@ -473,7 +473,7 @@ section > h2 {
   resize: none;
 }
 
-#createOverlay button, #updateOverlay button {
+#createOverlay button, #updateOverlay button, .delete-logout-body button {
   max-width: 50%;
   align-self: center;
   margin-top: .5rem;
