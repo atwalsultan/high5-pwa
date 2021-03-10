@@ -243,25 +243,41 @@ const renderPost = (doc) => {
     let description = document.createElement('p');
     let likeBtn = document.createElement('button');
 
+    let dateTime = document.createElement('div');
+    dateTime.classList.add('date-time');
+
+    let categoryDistance = document.createElement('div');
+    categoryDistance.classList.add('category-distance');
+
+    let buttons = document.createElement('div');
+    buttons.classList.add('buttons');
+
     // Set unique ID for each list item
     li.setAttribute('id', doc.id);
 
     // Set class names
-    category.setAttribute('class', 'category');
+    // category.setAttribute('class', 'category');
 
     // Contents for each element
-    date.textContent = doc.data().date;
-    time.textContent = doc.data().time;
-    category.textContent = doc.data().category;
-    description.textContent = doc.data().description;
+    date.innerHTML = `<span class="bold-text">Expected Date:</span> ${doc.data().date}`;
+    time.innerHTML = `<span class="bold-text">Expected Time:</span> ${doc.data().time}`;
+    category.innerHTML = `<span class="bold-text">Category:</span> ${doc.data().category}`;
+    description.innerHTML = `<span class="bold-text">Description:</span> ${doc.data().description}`;
     likeBtn.textContent = 'High5!';
 
     // Append post data to list item element
-    li.appendChild(date);
-    li.appendChild(time);
-    li.appendChild(category);
+    dateTime.appendChild(date);
+    dateTime.appendChild(time);
+    li.appendChild(dateTime);
+
+    categoryDistance.appendChild(category);
+    
+    li.appendChild(categoryDistance);
+
     li.appendChild(description);
-    li.appendChild(likeBtn);
+
+    buttons.appendChild(likeBtn);
+    li.appendChild(buttons);
 
     // Display distance if user's position is available
     if(userPos) {
@@ -270,9 +286,9 @@ const renderPost = (doc) => {
 
         // Create element
         let distance = document.createElement('p');
-        distance.setAttribute('class', 'distance');
-        distance.textContent = km;
-        li.appendChild(distance);
+        // distance.setAttribute('class', 'distance');
+        distance.innerHTML = `<span class="bold-text">Distance:</span> ${km} km`;
+        categoryDistance.appendChild(distance);
     }
 
     // Add 'Update' and 'Delete' buttons only for posts owned by the user
@@ -286,8 +302,8 @@ const renderPost = (doc) => {
         // Add event listeners to buttons
         addButtonListeners(updateBtn, deleteBtn, doc);
 
-        li.appendChild(updateBtn);
-        li.appendChild(deleteBtn);
+        buttons.appendChild(updateBtn);
+        buttons.appendChild(deleteBtn);
     }
     else {
         let chatBtn = document.createElement('button');
@@ -346,7 +362,7 @@ const renderPost = (doc) => {
             });
         });
 
-        li.appendChild(chatBtn);
+        buttons.appendChild(chatBtn);
     }
 
     // Prepend list item to list
