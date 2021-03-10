@@ -145,15 +145,19 @@
 	<!-- Create markup  -->
 	<div id="createOverlay">
 		<div class="modal">
-			<span class="closeBtn">&times;</span>
-
-			<p>Create New Post</p>
+			<div id="createHeader">
+				<h2>Create New Post</h2>
+				<span class="closeBtn">&times;</span>
+			</div>
 
 			<!-- Form to create a new post -->
 			<form id="postForm">
-				<input type="date" id="activityDate" placeholder="Date" />
-				<input type="time" id="activityTime" placeholder="Time" />
-				<input type="text" id="activityDesc" placeholder="Description" maxlength="300" required />
+				<div class="expected-date-time">
+					<input type="date" id="activityDate" placeholder="Date" />
+					<input type="time" id="activityTime" placeholder="Time" />
+				</div>
+
+				<textarea id="activityDesc" placeholder="Description" maxlength="300" required></textarea>
 
 				<select name="activityCategory" id="activityCategory">
 					<option value="Art & Craft">Art & Craft</option>
@@ -179,14 +183,15 @@
 	<!-- Update markup -->
 	<div id="updateOverlay">
 		<div class="modal">
-			<span class="closeBtn">&times;</span>
-
-			<p>Update Post</p>
+			<div id="updateHeader">
+				<h2>Update Post</h2>
+				<span class="closeBtn">&times;</span>
+			</div>
 
 			<form id="updateForm">
 				<input type="date" id="updateDate" placeholder="Date" />
 				<input type="time" id="updateTime" placeholder="Time" />
-				<input type="text" id="updateDesc" placeholder="Description" maxlength="300" />
+				<textarea id="updateDesc" placeholder="Description" maxlength="300"></textarea>
 
 				<select name="updateCategory" id="updateCategory">
 					<option value="Art & Craft">Art & Craft</option>
@@ -203,9 +208,10 @@
 					<option value="Sports & Fitness">Sports & Fitness</option>
 					<option value="Virtual Games">Virtual Games</option>
 				</select>
-
-				<input type="checkbox" id="updateLocation">
-				<label for="updateLocation">Update Location</label>
+				<div class="update-location">
+					<input type="checkbox" id="updateLocation">
+					<label for="updateLocation">Update Location</label>
+				</div>
 				<button type="submit">Update</button>
 			</form>
 		</div>
@@ -253,7 +259,6 @@
 		<!-- Posts -->
 		<section id="posts">
 			<h2>Posts Section</h2>
-			<button id="logoutBtn">Log Out</button>
 
 			<!-- Read markup just a <ul> -->
 			<ul id="postList"></ul>
@@ -272,6 +277,7 @@
 		<!-- Profile -->
 		<section id="profile" class="section-hidden">
 			<h2>Profile Section</h2>
+			<button id="logoutBtn">Log Out</button>
 		</section>
 	</main>
 

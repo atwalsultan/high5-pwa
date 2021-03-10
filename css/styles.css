@@ -54,8 +54,7 @@ footer button:active {
   outline: none;
 }
 
-header button:hover,
-footer button:hover {
+button:hover {
   cursor: pointer;
 }
 
@@ -249,7 +248,7 @@ footer .fas {
   width: 100%;
   height: 100%;
   z-index: 8;
-  background-color: rgba(0, 0, 0, 0.4);
+  background-color: rgba(0, 0, 0, 0.7);
   display: none;
 }
 
@@ -275,10 +274,11 @@ footer .fas {
 /* Modals */
 .modal {
   border: 1px solid black;
+  border-radius: 10px;
   margin: 20% auto;
   max-width: 60%;
   height: 60%;
-  overflow-y: scroll;
+  max-height: 80%;
   box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 7px 20px 0 rgba(0, 0, 0, 0.2);
   background-color: white;
 }
@@ -370,6 +370,24 @@ footer .fas {
   padding: .5rem;
 }
 
+#chatOverlay .modal {
+  overflow-y: scroll;
+}
+
+#chatOverlay .modal::-webkit-scrollbar {
+  width: 10px;
+}
+
+#chatOverlay .modal::-webkit-scrollbar-track {
+  box-shadow: inset 0 0 6px rgba(0,0,0,0.3); 
+  border-radius: 10px;
+}
+
+#chatOverlay .modal::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  background-color: lightgrey;
+}
+
 /* Posts */
 #postList {
   display: flex;
@@ -408,4 +426,61 @@ button {
 
 .bold-text {
   font-weight: bold;
+}
+
+/* Sections */
+section > h2 {
+  max-width: max-content;
+  padding: 0rem .25rem;
+  margin-bottom: .75rem;
+  border-bottom: 1px solid gray;
+}
+
+/* Create Modal */
+#createHeader, #updateHeader {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  align-items: center;
+  padding: .5rem;
+  background-color: rgb(175, 175, 175);
+  margin-bottom: 1rem;
+  border-radius: 10px 10px 0 0;
+}
+
+#createOverlay form, #updateOverlay form {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: .5rem;
+  padding: .5rem;
+}
+
+#createOverlay input, #createOverlay select, #updateOverlay input, #updateOverlay select {
+  padding: .2rem;
+  border-radius: 5px;
+  border: 1px solid black;
+  font-family: inherit;
+  font-size: inherit;
+}
+
+#createOverlay textarea, #updateOverlay textarea {
+  height: 6.5rem;
+  padding: .25rem;
+  border-radius: 5px;
+  border: 1px solid black;
+  font-family: inherit;
+  font-size: inherit;
+  resize: none;
+}
+
+#createOverlay button, #updateOverlay button {
+  max-width: 50%;
+  align-self: center;
+  margin-top: .5rem;
+}
+
+.expected-date-time {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
 }
