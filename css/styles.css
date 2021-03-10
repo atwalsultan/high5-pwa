@@ -271,16 +271,9 @@ footer .fas {
 }
 
 /* Class Styles */
-/* Modals */
-.modal {
-  border: 1px solid black;
-  border-radius: 10px;
-  margin: 20% auto;
-  max-width: 60%;
-  height: 60%;
-  max-height: 80%;
-  box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 7px 20px 0 rgba(0, 0, 0, 0.2);
-  background-color: white;
+.closeBtn {
+  font-size: 1.5rem;
+  font-weight: bold;
 }
 
 .closeBtn:hover {
@@ -437,6 +430,26 @@ section > h2 {
 }
 
 /* Modals */
+
+.modal {
+  border: 1px solid black;
+  border-radius: 10px;
+  box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 7px 20px 0 rgba(0, 0, 0, 0.2);
+  background-color: white;
+}
+
+#chatOverlay .modal, #createOverlay .modal, #updateOverlay .modal {
+  margin: 18% auto;
+  max-width: 60%;
+  max-height: 70%;
+}
+
+#deleteOverlay .modal, #logoutOverlay .modal {
+  margin: 45% auto;
+  max-width: 80%;
+  max-height: 60%;
+}
+
 #createHeader, #updateHeader, #deleteHeader, #logoutHeader {
   display: flex;
   flex-flow: row nowrap;
@@ -476,11 +489,15 @@ section > h2 {
 #createOverlay button, #updateOverlay button, .delete-logout-body button {
   max-width: 50%;
   align-self: center;
-  margin-top: .5rem;
+  margin: .75rem 0;
 }
 
 .expected-date-time {
   display: flex;
   flex-flow: row nowrap;
   justify-content: space-between;
+}
+
+.delete-logout-body {
+  text-align: center;
 }
