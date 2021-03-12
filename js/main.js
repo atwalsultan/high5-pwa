@@ -256,13 +256,13 @@ const renderPost = (doc) => {
     li.setAttribute('id', doc.id);
 
     // Set class names
-    // category.setAttribute('class', 'category');
+    category.setAttribute('class', 'category');
 
     // Contents for each element
-    date.innerHTML = `<span class="bold-text">Expected Date:</span> ${doc.data().date}`;
-    time.innerHTML = `<span class="bold-text">Expected Time:</span> ${doc.data().time}`;
-    category.innerHTML = `<span class="bold-text">Category:</span> ${doc.data().category}`;
-    description.innerHTML = `<span class="bold-text">Description:</span> ${doc.data().description}`;
+    date.textContent = `Expected Date: ${doc.data().date}`;
+    time.textContent = `Expected Time: ${doc.data().time}`;
+    category.textContent = `Category: ${doc.data().category}`;
+    description.textContent = `Description: ${doc.data().description}`;
     likeBtn.textContent = 'High5!';
 
     // Append post data to list item element
@@ -286,8 +286,8 @@ const renderPost = (doc) => {
 
         // Create element
         let distance = document.createElement('p');
-        // distance.setAttribute('class', 'distance');
-        distance.innerHTML = `<span class="bold-text">Distance:</span> ${km} km`;
+        distance.setAttribute('class', 'distance');
+        distance.textContent = `Distance: ${km} km`;
         categoryDistance.appendChild(distance);
     }
 
