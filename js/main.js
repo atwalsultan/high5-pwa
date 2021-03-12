@@ -261,7 +261,7 @@ const renderPost = (doc) => {
     // Contents for each element
     date.textContent = `Expected Date: ${doc.data().date}`;
     time.textContent = `Expected Time: ${doc.data().time}`;
-    category.textContent = `Category: ${doc.data().category}`;
+    category.textContent = `${doc.data().category}`;
     description.textContent = `Description: ${doc.data().description}`;
     likeBtn.textContent = 'High5!';
 
@@ -287,7 +287,7 @@ const renderPost = (doc) => {
         // Create element
         let distance = document.createElement('p');
         distance.setAttribute('class', 'distance');
-        distance.textContent = `Distance: ${km} km`;
+        distance.textContent = `${km}`;
         categoryDistance.appendChild(distance);
     }
 
@@ -459,18 +459,18 @@ const filter = (event) => {
     // Prevent form from actually submitting
     event.preventDefault();
 
-    // Categories
-    let filterCategories = [];
+    // // Categories
+    // let filterCategories = [];
 
-    // Get filter categories
-    filterForm.querySelectorAll('input[type="checkbox"]:checked').forEach((category) => {
-        filterCategories.push(category.value);
-    });
+    // // Get filter categories
+    // filterForm.querySelectorAll('input[type="checkbox"]:checked').forEach((category) => {
+    //     filterCategories.push(category.value);
+    // });
 
-    if(filterCategories.length === 0) {
-        showAlert(`You did not select any filter category. Please try again`, `error`);
-        return;
-    }
+    // if(filterCategories.length === 0) {
+    //     showAlert(`You did not select any filter category. Please try again`, `error`);
+    //     return;
+    // }
 
     // Distance
     let distance = parseInt(filterForm.distance.value);
@@ -478,11 +478,10 @@ const filter = (event) => {
     // Filter by category or distance
     document.querySelectorAll('#postList li').forEach((post) => {
         // Get category and distance of post
-        let postCategory = post.querySelector('.category').textContent;
         let postDistance = parseFloat(post.querySelector('.distance').textContent);
 
         // Hide or show post as necessary
-        if(!filterCategories.includes(postCategory) || postDistance > distance) {
+        if(postDistance > distance) {
             post.style.display = 'none';
         }
         else {
@@ -526,7 +525,6 @@ const showAlert = (content, type) => {
 
 // Toggle sidebar
 const toggleSidebar = () => {
-    console.log(1);
     sidebar.classList.toggle('sidebar-hidden');
 }
 
@@ -617,5 +615,35 @@ sidebarBtn.addEventListener('click', toggleSidebar);
 icons.forEach((icon, index) => {
     icon.addEventListener('click', () => {
         changeSections(index);
+    });
+});
+
+// On category filter click
+sidebar.querySelectorAll('input[type="checkbox"]').forEach((category) => {
+    category.addEventListener('change', (event) => {
+        let checked = sidebar.querySelectorAll('input[type="checkbox"]:checked');
+
+        if(checked.length === 0) {
+            // Display all posts
+            document.querySelectorAll('#postList li').forEach((post) => {
+                post.style.display = 'flex';
+            });
+        }
+        else {
+            let checkedCategories = [];
+
+            checked.forEach((category) => {
+                checkedCategories.push(category.value);
+            });
+
+            document.querySelectorAll('#postList li').forEach((post) => {
+                if (checkedCategories.includes(post.querySelector('.category').textContent)) {
+                    post.style.display = 'flex';
+                }
+                else {
+                    post.style.display = 'none';
+                }
+            });
+        }
     });
 });
