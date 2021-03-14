@@ -22,6 +22,8 @@ var firebaseConfig = {
 
   const db = firebase.firestore();
   const auth = firebase.auth();
+  const ref = firebase.storage().ref()
+
   db.settings({ timestampsInSnapshots: true 
 });
 

@@ -111,6 +111,20 @@ const createPost = (event) => {
         showAlert(err.message, `error`);
     });
 
+    // Photos sandbox
+    let file = document.getElementById('postImage').files[0];
+    let name = new Date() + '-' + file.name;
+    let metaData = {
+        contentType: file.type,
+    }
+
+    let task = ref.child(name).put(file, metaData);
+    task.then(snapshot => {
+        snapshot.ref.getDownloadURL().then(url => {
+            console.log(url);
+        });
+    });
+
     // Clear form and close modal
     closeModals();
 }
@@ -458,19 +472,6 @@ const logUserOut = () => {
 const filter = (event) => {
     // Prevent form from actually submitting
     event.preventDefault();
-
-    // // Categories
-    // let filterCategories = [];
-
-    // // Get filter categories
-    // filterForm.querySelectorAll('input[type="checkbox"]:checked').forEach((category) => {
-    //     filterCategories.push(category.value);
-    // });
-
-    // if(filterCategories.length === 0) {
-    //     showAlert(`You did not select any filter category. Please try again`, `error`);
-    //     return;
-    // }
 
     // Distance
     let distance = parseInt(filterForm.distance.value);
