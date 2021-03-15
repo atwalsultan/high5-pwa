@@ -61,7 +61,8 @@ const chatOverlay = document.getElementById('chatOverlay');
 const newMessage = document.getElementById('newMessage');
 const previousMessages = document.getElementById('previousMessages');
 let chatListener = null;
-let chatUserName = document.getElementById('chatUserName');
+const chatUserName = document.getElementById('chatUserName');
+const chatList = document.getElementById('chatList');
 
 //**************************************************************
 //      Function Declarations
@@ -457,7 +458,7 @@ const updatePost = (event) => {
 
     // Clear form and close modal
     // closeModals();
-}
+};
 
 // Delete post
 const deletePost = () => {
@@ -473,7 +474,7 @@ const deletePost = () => {
 
     // Close modal
     closeModals();
-}
+};
 
 // Close modals
 const closeModals = () => {
@@ -494,7 +495,7 @@ const closeModals = () => {
         chatListener = null;
     }
     logoutOverlay.style.display = 'none';
-}
+};
 
 // Close modals on clicking outside
 const outsideClick = (event) => {
@@ -502,7 +503,7 @@ const outsideClick = (event) => {
         // Clear form and close modal
         closeModals();
     }
-}
+};
 
 // Log the user out or show error message 
 const logUserOut = () => {
@@ -510,7 +511,7 @@ const logUserOut = () => {
         // Show message
         showAlert(error.message, `error`);
     });
-}
+};
 
 // Filter by category or distance
 const filter = (event) => {
@@ -533,7 +534,7 @@ const filter = (event) => {
             post.style.display = 'list-item';
         }
     });
-}
+};
 
 // Show alerts
 const showAlert = (content, type) => {
@@ -566,12 +567,12 @@ const showAlert = (content, type) => {
     setTimeout(() => {
         alertContent.textContent = "";
     }, 3500);
-}
+};
 
 // Toggle sidebar
 const toggleSidebar = () => {
     sidebar.classList.toggle('sidebar-hidden');
-}
+};
 
 // Change sections
 const changeSections = (index) => {
@@ -580,6 +581,31 @@ const changeSections = (index) => {
     });
 
     sections[index].classList.remove('section-hidden');
+};
+
+// Create elements and render chat
+const renderChat = (doc, uids) => {
+    uids.forEach((uid) => {
+        if(uid != auth.currentUser.uid) {
+            db.collection('users').doc(uid).get().then((user) => {
+                // Create elements to be rendered
+                let li = document.createElement('li');
+                let userName = document.createElement('p');
+
+                let name = user.data().name;
+                
+                userName.textContent = name;
+                li.append(userName);
+                
+                // Set unique ID for each list item
+                li.setAttribute('id', `ch-${doc.id}`);
+
+                chatList.append(li);
+            });
+        }
+    });
+
+    
 };
 
 //**************************************************************
@@ -591,7 +617,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Get user's position
     getUserPosition();
 
-    // Firestore real time listener
+    // Real time listener for posts
     db.collection('posts').orderBy("updated", "asc").onSnapshot((snapshot) => {
         let changes = snapshot.docChanges();
         changes.forEach((change) => {
@@ -615,7 +641,30 @@ document.addEventListener('DOMContentLoaded', () => {
     }, (err) => {
         // Show message
         showAlert(err.message, `error`);
-    })
+    });
+
+    // Real time listener for chats
+    db.collection('chats').onSnapshot((snapshot) => {
+        let changes = snapshot.docChanges();
+        changes.forEach((change) => {
+            if(change.type === 'added') {
+                let members = change.doc.data().members;
+                let uids = Object.keys(members);
+                if(uids.includes(auth.currentUser.uid)) {
+                    renderChat(change.doc, uids);
+                }
+            }
+            else if(change.type === 'modified') {
+                // let li = document.getElementById(change.doc.id);
+                // chatListener.removeChild(li);
+                // renderChat(change.doc);
+            }
+            else if(change.type === 'removed') {
+                // let li = document.getElementById(change.doc.id);
+                // chatList.removeChild(li);
+            }
+        });            
+    });
 });
 
 // Create form submission
