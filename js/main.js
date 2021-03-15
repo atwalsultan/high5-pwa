@@ -102,9 +102,31 @@ const createPost = (event) => {
     createObj.coordinates = new firebase.firestore.GeoPoint(latitude, longitude);
 
     // Add post as document to collection
-    db.collection('posts').add(createObj).then(() => {
-        // Show message
-        showAlert(`New post created successfully!`, `success`);
+    db.collection('posts').add(createObj).then((post) => {
+        let file = postForm.postImage.files[0];
+        if(file) {
+            let name = new Date() + '-' + file.name;
+            let metaData = {
+                contentType: file.type,
+            }
+
+            let task = ref.child(name).put(file, metaData);
+            task.then(snapshot => {
+                snapshot.ref.getDownloadURL().then(url => {
+                    updateObj = {
+                        photoURL: url,
+                    }
+                    db.collection('posts').doc(post.id).update(updateObj).then(() =>{
+                        // Show message
+                        showAlert(`New post created successfully!`, `success`);
+                    })
+                });
+            });
+        }
+        else {
+            // Show message
+            showAlert(`New post created successfully!`, `success`);
+        }
 
     }).catch((err) => {
         // Show message
@@ -112,7 +134,7 @@ const createPost = (event) => {
     });
 
     // Clear form and close modal
-    closeModals();
+    // closeModals();
 }
 
 // Add event listeners to update and delete buttons
@@ -256,13 +278,13 @@ const renderPost = (doc) => {
     li.setAttribute('id', doc.id);
 
     // Set class names
-    // category.setAttribute('class', 'category');
+    category.setAttribute('class', 'category');
 
     // Contents for each element
-    date.innerHTML = `<span class="bold-text">Expected Date:</span> ${doc.data().date}`;
-    time.innerHTML = `<span class="bold-text">Expected Time:</span> ${doc.data().time}`;
-    category.innerHTML = `<span class="bold-text">Category:</span> ${doc.data().category}`;
-    description.innerHTML = `<span class="bold-text">Description:</span> ${doc.data().description}`;
+    date.textContent = `Expected Date: ${doc.data().date}`;
+    time.textContent = `Expected Time: ${doc.data().time}`;
+    category.textContent = `${doc.data().category}`;
+    description.textContent = `Description: ${doc.data().description}`;
     likeBtn.textContent = 'High5!';
 
     // Append post data to list item element
@@ -286,8 +308,8 @@ const renderPost = (doc) => {
 
         // Create element
         let distance = document.createElement('p');
-        // distance.setAttribute('class', 'distance');
-        distance.innerHTML = `<span class="bold-text">Distance:</span> ${km} km`;
+        distance.setAttribute('class', 'distance');
+        distance.textContent = `${km}`;
         categoryDistance.appendChild(distance);
     }
 
@@ -389,8 +411,30 @@ const updatePost = (event) => {
 
     // Updating document in collection
     db.collection('posts').doc(updateId).update(updateObj).then(() => {
-        // Show message
-        showAlert(`Post updated successfully!`, `success`);
+        let file = updateForm.updatePostImage.files[0];
+        if(file) {
+            let name = new Date() + '-' + file.name;
+            let metaData = {
+                contentType: file.type,
+            }
+
+            let task = ref.child(name).put(file, metaData);
+            task.then(snapshot => {
+                snapshot.ref.getDownloadURL().then(url => {
+                    updateObj = {
+                        photoURL: url,
+                    }
+                    db.collection('posts').doc(updateId).update(updateObj).then(() =>{
+                        // Show message
+                        showAlert(`Post updated successfully!`, `success`);
+                    });
+                });
+            });
+        }
+        else {
+            // Show message
+            showAlert(`Post updated successfully!`, `success`);
+        }
 
     }).catch((err) => {
         // Show message
@@ -398,7 +442,7 @@ const updatePost = (event) => {
     });
 
     // Clear form and close modal
-    closeModals();
+    // closeModals();
 }
 
 // Delete post
@@ -459,30 +503,16 @@ const filter = (event) => {
     // Prevent form from actually submitting
     event.preventDefault();
 
-    // Categories
-    let filterCategories = [];
-
-    // Get filter categories
-    filterForm.querySelectorAll('input[type="checkbox"]:checked').forEach((category) => {
-        filterCategories.push(category.value);
-    });
-
-    if(filterCategories.length === 0) {
-        showAlert(`You did not select any filter category. Please try again`, `error`);
-        return;
-    }
-
     // Distance
     let distance = parseInt(filterForm.distance.value);
 
     // Filter by category or distance
     document.querySelectorAll('#postList li').forEach((post) => {
         // Get category and distance of post
-        let postCategory = post.querySelector('.category').textContent;
         let postDistance = parseFloat(post.querySelector('.distance').textContent);
 
         // Hide or show post as necessary
-        if(!filterCategories.includes(postCategory) || postDistance > distance) {
+        if(postDistance > distance) {
             post.style.display = 'none';
         }
         else {
@@ -526,7 +556,6 @@ const showAlert = (content, type) => {
 
 // Toggle sidebar
 const toggleSidebar = () => {
-    console.log(1);
     sidebar.classList.toggle('sidebar-hidden');
 }
 
@@ -617,5 +646,35 @@ sidebarBtn.addEventListener('click', toggleSidebar);
 icons.forEach((icon, index) => {
     icon.addEventListener('click', () => {
         changeSections(index);
+    });
+});
+
+// On category filter click
+sidebar.querySelectorAll('input[type="checkbox"]').forEach((category) => {
+    category.addEventListener('change', (event) => {
+        let checked = sidebar.querySelectorAll('input[type="checkbox"]:checked');
+
+        if(checked.length === 0) {
+            // Display all posts
+            document.querySelectorAll('#postList li').forEach((post) => {
+                post.style.display = 'flex';
+            });
+        }
+        else {
+            let checkedCategories = [];
+
+            checked.forEach((category) => {
+                checkedCategories.push(category.value);
+            });
+
+            document.querySelectorAll('#postList li').forEach((post) => {
+                if (checkedCategories.includes(post.querySelector('.category').textContent)) {
+                    post.style.display = 'flex';
+                }
+                else {
+                    post.style.display = 'none';
+                }
+            });
+        }
     });
 });

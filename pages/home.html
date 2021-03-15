@@ -18,6 +18,7 @@
 	<!-- TODO: Add SDKs for Firebase products that you want to use https://firebase.google.com/docs/web/setup#available-libraries -->
 	<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-analytics.js"></script>
 	<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-firestore.js"></script>
+	<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-storage.js"></script>
 	<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-auth.js"></script>
 
 	<!-- External JS file -->
@@ -58,77 +59,77 @@
 	</header>
 
 	<aside id="sidebar" class="sidebar-hidden">
-		<form id="filter-form">
 
-			<!-- Category -->
-			<div class="category-filters">
-				<h3>Category</h3>
-				<div class="category">
-					<input type="checkbox" id="Art & Craft" value="Art & Craft">
-					<label for="categoryA">Art & Craft</label>
-				</div>
-
-				<div class="category">
-					<input type="checkbox" id="Board Games" value="Board Games">
-					<label for="categoryB">Board Games</label>
-				</div>
-
-				<div class="category">
-					<input type="checkbox" id="Buying / Selling" value="Buying / Selling">
-					<label for="categoryC">Buying / Selling</label>
-				</div>
-
-				<div class="category">
-					<input type="checkbox" id="Cooking" value="Cooking">
-					<label for="categoryD">Cooking</label>
-				</div>
-
-				<div class="category">
-					<input type="checkbox" id="Dance" value="Dance">
-					<label for="categoryD">Dance</label>
-				</div>
-
-				<div class="category">
-					<input type="checkbox" id="Learning" value="Learning">
-					<label for="categoryD">Learning</label>
-				</div>
-
-				<div class="category">
-					<input type="checkbox" id="Movies" value="Movies">
-					<label for="categoryD">Movies</label>
-				</div>
-
-				<div class="category">
-					<input type="checkbox" id="Music" value="Music">
-					<label for="categoryD">Music</label>
-				</div>
-
-				<div class="category">
-					<input type="checkbox" id="Outdoor & Adventure" value="Outdoor & Adventure">
-					<label for="categoryD">Outdoor & Adventure</label>
-				</div>
-
-				<div class="category">
-					<input type="checkbox" id="Reading" value="Reading">
-					<label for="categoryD">Reading</label>
-				</div>
-
-				<div class="category">
-					<input type="checkbox" id="Renting" value="Renting">
-					<label for="categoryD">Renting</label>
-				</div>
-
-				<div class="category">
-					<input type="checkbox" id="Sports & Fitness" value="Sports & Fitness">
-					<label for="categoryD">Sports & Fitness</label>
-				</div>
-
-				<div class="category">
-					<input type="checkbox" id="Virtual Games" value="Virtual Games">
-					<label for="categoryD">Virtual Games</label>
-				</div>
+		<!-- Category -->
+		<div class="category-filters">
+			<h3>Category</h3>
+			<div class="category">
+				<input type="checkbox" id="Art & Craft" value="Art & Craft">
+				<label for="categoryA">Art & Craft</label>
 			</div>
 
+			<div class="category">
+				<input type="checkbox" id="Board Games" value="Board Games">
+				<label for="categoryB">Board Games</label>
+			</div>
+
+			<div class="category">
+				<input type="checkbox" id="Buying / Selling" value="Buying / Selling">
+				<label for="categoryC">Buying / Selling</label>
+			</div>
+
+			<div class="category">
+				<input type="checkbox" id="Cooking" value="Cooking">
+				<label for="categoryD">Cooking</label>
+			</div>
+
+			<div class="category">
+				<input type="checkbox" id="Dance" value="Dance">
+				<label for="categoryD">Dance</label>
+			</div>
+
+			<div class="category">
+				<input type="checkbox" id="Learning" value="Learning">
+				<label for="categoryD">Learning</label>
+			</div>
+
+			<div class="category">
+				<input type="checkbox" id="Movies" value="Movies">
+				<label for="categoryD">Movies</label>
+			</div>
+
+			<div class="category">
+				<input type="checkbox" id="Music" value="Music">
+				<label for="categoryD">Music</label>
+			</div>
+
+			<div class="category">
+				<input type="checkbox" id="Outdoor & Adventure" value="Outdoor & Adventure">
+				<label for="categoryD">Outdoor & Adventure</label>
+			</div>
+
+			<div class="category">
+				<input type="checkbox" id="Reading" value="Reading">
+				<label for="categoryD">Reading</label>
+			</div>
+
+			<div class="category">
+				<input type="checkbox" id="Renting" value="Renting">
+				<label for="categoryD">Renting</label>
+			</div>
+
+			<div class="category">
+				<input type="checkbox" id="Sports & Fitness" value="Sports & Fitness">
+				<label for="categoryD">Sports & Fitness</label>
+			</div>
+
+			<div class="category">
+				<input type="checkbox" id="Virtual Games" value="Virtual Games">
+				<label for="categoryD">Virtual Games</label>
+			</div>
+		</div>
+		
+		<form id="filter-form">
 			<!-- Distance -->
 			<div class="distance-filter">
 				<h3>Distance</h3>
@@ -175,6 +176,8 @@
 					<option value="Virtual Games">Virtual Games</option>
 				</select>
 
+				<input type="file" id="postImage">;
+
 				<button type="submit">Create Post</button>
 			</form>
 		</div>
@@ -212,6 +215,9 @@
 					<input type="checkbox" id="updateLocation">
 					<label for="updateLocation">Update Location</label>
 				</div>
+
+				<input type="file" id="updatePostImage">;
+
 				<button type="submit">Update</button>
 			</form>
 		</div>
