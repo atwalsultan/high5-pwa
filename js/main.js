@@ -419,20 +419,28 @@ const updatePost = (event) => {
     db.collection('posts').doc(updateId).update(updateObj).then(() => {
         let file = updateForm.updatePostImage.files[0];
         if(file) {
-            let name = new Date() + '-' + file.name;
-            let metaData = {
-                contentType: file.type,
-            }
 
-            let task = ref.child(name).put(file, metaData);
-            task.then(snapshot => {
-                snapshot.ref.getDownloadURL().then(url => {
-                    updateObj = {
-                        photoURL: url,
+            db.collection('posts').doc(updateId).get().then((post) => {
+                photoURL = post.data().photoURL;
+                
+                let httpsReference = firebase.storage().refFromURL(photoURL);
+                httpsReference.delete().then(() => {
+                    let name = new Date() + '-' + file.name;
+                    let metaData = {
+                        contentType: file.type,
                     }
-                    db.collection('posts').doc(updateId).update(updateObj).then(() =>{
-                        // Show message
-                        showAlert(`Post updated successfully!`, `success`);
+
+                    let task = ref.child(name).put(file, metaData);
+                    task.then(snapshot => {
+                        snapshot.ref.getDownloadURL().then(url => {
+                            updateObj = {
+                                photoURL: url,
+                            }
+                            db.collection('posts').doc(updateId).update(updateObj).then(() =>{
+                                // Show message
+                                showAlert(`Post updated successfully!`, `success`);
+                            });
+                        });
                     });
                 });
             });
