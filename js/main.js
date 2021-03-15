@@ -61,6 +61,7 @@ const chatOverlay = document.getElementById('chatOverlay');
 const newMessage = document.getElementById('newMessage');
 const previousMessages = document.getElementById('previousMessages');
 let chatListener = null;
+let chatUserName = document.getElementById('chatUserName');
 
 //**************************************************************
 //      Function Declarations
@@ -341,6 +342,11 @@ const renderPost = (doc) => {
                     querySnapshot.forEach((chat) => {
                         // Create chat form
                         let chatForm = createChatForm(chat);
+
+                        // Get user's name
+                        db.collection('users').doc(doc.data().uid).get().then((user) => {
+                            chatUserName.innerText = user.data().name;
+                        });
 
                         // Append form to div in DOM
                         newMessage.append(chatForm);
