@@ -411,8 +411,30 @@ const updatePost = (event) => {
 
     // Updating document in collection
     db.collection('posts').doc(updateId).update(updateObj).then(() => {
-        // Show message
-        showAlert(`Post updated successfully!`, `success`);
+        let file = updateForm.updatePostImage.files[0];
+        if(file) {
+            let name = new Date() + '-' + file.name;
+            let metaData = {
+                contentType: file.type,
+            }
+
+            let task = ref.child(name).put(file, metaData);
+            task.then(snapshot => {
+                snapshot.ref.getDownloadURL().then(url => {
+                    updateObj = {
+                        photoURL: url,
+                    }
+                    db.collection('posts').doc(updateId).update(updateObj).then(() =>{
+                        // Show message
+                        showAlert(`Post updated successfully!`, `success`);
+                    });
+                });
+            });
+        }
+        else {
+            // Show message
+            showAlert(`Post updated successfully!`, `success`);
+        }
 
     }).catch((err) => {
         // Show message
@@ -420,7 +442,7 @@ const updatePost = (event) => {
     });
 
     // Clear form and close modal
-    closeModals();
+    // closeModals();
 }
 
 // Delete post
