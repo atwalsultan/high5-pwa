@@ -102,31 +102,39 @@ const createPost = (event) => {
     createObj.coordinates = new firebase.firestore.GeoPoint(latitude, longitude);
 
     // Add post as document to collection
-    db.collection('posts').add(createObj).then(() => {
-        // Show message
-        showAlert(`New post created successfully!`, `success`);
+    db.collection('posts').add(createObj).then((post) => {
+        let file = postForm.postImage.files[0];
+        if(file) {
+            let name = new Date() + '-' + file.name;
+            let metaData = {
+                contentType: file.type,
+            }
+
+            let task = ref.child(name).put(file, metaData);
+            task.then(snapshot => {
+                snapshot.ref.getDownloadURL().then(url => {
+                    updateObj = {
+                        photoURL: url,
+                    }
+                    db.collection('posts').doc(post.id).update(updateObj).then(() =>{
+                        // Show message
+                        showAlert(`New post created successfully!`, `success`);
+                    })
+                });
+            });
+        }
+        else {
+            // Show message
+            showAlert(`New post created successfully!`, `success`);
+        }
 
     }).catch((err) => {
         // Show message
         showAlert(err.message, `error`);
     });
 
-    // Photos sandbox
-    let file = document.getElementById('postImage').files[0];
-    let name = new Date() + '-' + file.name;
-    let metaData = {
-        contentType: file.type,
-    }
-
-    let task = ref.child(name).put(file, metaData);
-    task.then(snapshot => {
-        snapshot.ref.getDownloadURL().then(url => {
-            console.log(url);
-        });
-    });
-
     // Clear form and close modal
-    closeModals();
+    // closeModals();
 }
 
 // Add event listeners to update and delete buttons
