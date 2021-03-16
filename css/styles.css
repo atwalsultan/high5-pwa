@@ -136,6 +136,10 @@ aside#sidebar.sidebar-hidden {
   left: 0;
   z-index: 7;
   padding-bottom: 5.25rem;
+
+  height: 64vh;
+  overflow-y: scroll;
+  /* border: 2px solid black; */
 }
 
 #home-main > section.section-hidden {
