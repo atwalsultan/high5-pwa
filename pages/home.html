@@ -176,7 +176,10 @@
 					<option value="Virtual Games">Virtual Games</option>
 				</select>
 
-				<input type="file" id="postImage">
+				<div>
+					<input type="file" id="postImage">
+					<button id="newPostImage">Add New</button>
+				</div>
 
 				<button type="submit">Create Post</button>
 			</form>
@@ -267,6 +270,15 @@
 			<button id="confirmLogout">Logout</button>
 		</div>
     </div>
+  </div>
+
+  <div id="cameraOverlay">
+	<div class="modal">
+		<video id="video" width="640" height="480" autoplay></video>
+		<canvas id="canvas" width="640" height="480"></canvas>
+		<button id="snap">Capture</button>
+		<button id="flip-button">Flip</button>
+	</div>
   </div>
 
 

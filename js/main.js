@@ -64,6 +64,8 @@ let chatListener = null;
 const chatUserName = document.getElementById('chatUserName');
 const chatList = document.getElementById('chatList');
 
+const newPostImage = document.getElementById('newPostImage');
+
 //**************************************************************
 //      Function Declarations
 //**************************************************************
@@ -740,4 +742,45 @@ sidebar.querySelectorAll('input[type="checkbox"]').forEach((category) => {
             });
         }
     });
+});
+
+// Click new post image
+newPostImage.addEventListener('click', (e) => {
+    // Prevent form from actually submitting
+    e.preventDefault();
+    
+    console.log(1);
+});
+
+let canvas = document.querySelector('#canvas');
+let context = canvas.getContext("2d");
+let videoElement = document.querySelector('#video');
+
+if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+	var front = false;
+	document.getElementById('flip-button').addEventListener('click', () => {
+		front = !front;
+	})
+	navigator.mediaDevices.getUserMedia({ video: true }).then((stream) => {
+		videoElement.srcObject = stream;
+		videoElement.play();
+		
+	})
+		.catch(err => {
+			showcase.innerHTML=`Access denied due to ${err}`
+	})
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+	canvas.style.display = 'none';
+})
+
+snap.addEventListener('click', () => {
+	canvas.style.display = 'block';
+	video.style.display = 'none';
+	snap.style.display = 'none';
+	context.drawImage(video, 0, 0, 640, 480);
+	video.srcObject.getVideoTracks().forEach(track => track.stop());
+	let image = canvas.toDataURL();
+    console.log(image);
 });
