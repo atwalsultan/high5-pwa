@@ -831,3 +831,17 @@ newPostImage.addEventListener('click', (e) => {
         // Remove event listener from snap button
     }
 });
+
+postImage.addEventListener('change', () => {
+    let image = new Image();
+
+    let fr = new FileReader();
+    fr.onload = () => {
+        image.src = fr.result;
+    }
+
+    fr.readAsDataURL(postImage.files[0]);
+
+    uploadPhoto.innerHTML = ``;
+    uploadPhoto.append(image);
+});
