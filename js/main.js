@@ -785,6 +785,10 @@ newPostImage.addEventListener('click', (e) => {
     // Prevent form from actually submitting
     e.preventDefault();
 
+    video.style.display = 'block';
+    snapButton.style.display = 'block';
+    context.clearRect(0, 0, canvas.width, canvas.height);
+
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
         var front = false;
         flipButton.addEventListener('click', () => {
@@ -821,6 +825,8 @@ newPostImage.addEventListener('click', (e) => {
                     
                     blobToUpload = blob;
 
+                    canvas.style.display = 'none';
+                    uploadButton.style.display = 'none';
                     cameraOverlay.style.display = 'none';
                 });
 
