@@ -514,10 +514,30 @@ section > h2 {
   height: 100%;
   z-index: 100;
   background-color: rgba(0, 0, 0, 0.7);
-  /* display: none; */
+  display: none;
 
-  display: flex;
+  /* display: flex; */
   flex-flow: row nowrap;
   justify-content: center;
   align-items: center;
+}
+
+#cameraButtons {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  background-color: transparent;
+}
+
+#postForm img {
+  width: 100px;
+  height: auto;
+}
+
+canvas {
+  display: none;
+}
+
+#uploadButton {
+  display: none;
 }

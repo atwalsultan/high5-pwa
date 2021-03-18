@@ -65,6 +65,15 @@ const chatUserName = document.getElementById('chatUserName');
 const chatList = document.getElementById('chatList');
 
 const newPostImage = document.getElementById('newPostImage');
+const canvas = document.querySelector('#canvas');
+const context = canvas.getContext("2d");
+const videoElement = document.querySelector('#video');
+const uploadButton = document.getElementById('uploadButton');
+const flipButton = document.getElementById('flipButton')
+const snapButton = document.getElementById('snapButton');
+const uploadPhoto = document.getElementById('uploadPhoto');
+const cameraOverlay = document.getElementById('cameraOverlay');
+let blobToUpload = null;
 
 //**************************************************************
 //      Function Declarations
@@ -108,25 +117,49 @@ const createPost = (event) => {
     // Add post as document to collection
     db.collection('posts').add(createObj).then((post) => {
         let file = postForm.postImage.files[0];
+
         if(file) {
             let name = new Date() + '-' + file.name;
             let metaData = {
                 contentType: file.type,
-            }
+            };
 
             let task = ref.child(name).put(file, metaData);
             task.then(snapshot => {
                 snapshot.ref.getDownloadURL().then(url => {
                     updateObj = {
                         photoURL: url,
-                    }
+                    };
                     db.collection('posts').doc(post.id).update(updateObj).then(() =>{
                         // Show message
                         showAlert(`New post created successfully!`, `success`);
-                    })
+                    });
                 });
             });
         }
+
+        else if(uploadPhoto.src != "") {
+            let name = new Date() + '-';
+            let metaData = {
+                contentType: blobToUpload.type,
+            };
+            
+            let task = ref.child(name).put(blobToUpload, metaData);
+            task.then((snapshot) => {
+                snapshot.ref.getDownloadURL().then((url) => {
+                    updateObj = {
+                        photoURL: url,
+                    };
+                    db.collection('posts').doc(post.id).update(updateObj).then(() => {
+                        // Show message
+                        showAlert(`New post created successfully`, `success`);
+                    });
+                });
+            });
+
+            blobToUpload = null;
+        }
+
         else {
             // Show message
             showAlert(`New post created successfully!`, `success`);
@@ -134,7 +167,7 @@ const createPost = (event) => {
 
     }).catch((err) => {
         // Show message
-        showAlert(err.message, `error`);
+        console.log(err);
     });
 
     // Clear form and close modal
@@ -497,11 +530,14 @@ const closeModals = () => {
         chatListener = null;
     }
     logoutOverlay.style.display = 'none';
+
+    cameraOverlay.style.display = 'none';
+    uploadPhoto.innerHTML = ``;
 };
 
 // Close modals on clicking outside
 const outsideClick = (event) => {
-    if(event.target === updateOverlay || event.target === deleteOverlay || event.target === createOverlay || event.target === chatOverlay || event.target ===logoutOverlay) {
+    if(event.target === updateOverlay || event.target === deleteOverlay || event.target === createOverlay || event.target === chatOverlay || event.target ===logoutOverlay || event.target === cameraOverlay) {
         // Clear form and close modal
         closeModals();
     }
@@ -748,39 +784,50 @@ sidebar.querySelectorAll('input[type="checkbox"]').forEach((category) => {
 newPostImage.addEventListener('click', (e) => {
     // Prevent form from actually submitting
     e.preventDefault();
-    
-    console.log(1);
-});
 
-let canvas = document.querySelector('#canvas');
-let context = canvas.getContext("2d");
-let videoElement = document.querySelector('#video');
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+        var front = false;
+        flipButton.addEventListener('click', () => {
+            front = !front;
+        });
 
-if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-	var front = false;
-	document.getElementById('flip-button').addEventListener('click', () => {
-		front = !front;
-	})
-	navigator.mediaDevices.getUserMedia({ video: true }).then((stream) => {
-		videoElement.srcObject = stream;
-		videoElement.play();
-		
-	})
-		.catch(err => {
-			showcase.innerHTML=`Access denied due to ${err}`
-	})
-}
+        navigator.mediaDevices.getUserMedia({ video: true }).then((stream) => {
+            videoElement.srcObject = stream;
+            videoElement.play();
+            
+        }).catch(err => {
+            showcase.innerHTML=`Access denied due to ${err}`
+        });
 
-window.addEventListener('DOMContentLoaded', () => {
-	canvas.style.display = 'none';
-})
+        cameraOverlay.style.display = 'flex';
 
-snap.addEventListener('click', () => {
-	canvas.style.display = 'block';
-	video.style.display = 'none';
-	snap.style.display = 'none';
-	context.drawImage(video, 0, 0, 640, 480);
-	video.srcObject.getVideoTracks().forEach(track => track.stop());
-	let image = canvas.toDataURL();
-    console.log(image);
+        snapButton.addEventListener('click', () => {
+            canvas.style.display = 'block';
+            uploadButton.style.display = 'block';
+            video.style.display = 'none';
+            snapButton.style.display = 'none';
+            context.drawImage(video, 0, 0, 640, 480);
+            video.srcObject.getVideoTracks().forEach(track => track.stop());
+        
+            // Add event listener to upload button
+            uploadButton.addEventListener('click', () => {
+                // Upload image
+                canvas.toBlob((blob) => {
+                    let image = new Image();
+                    image.src = window.URL.createObjectURL(blob);
+
+                    uploadPhoto.innerHTML = ``;
+                    uploadPhoto.append(image);
+                    
+                    blobToUpload = blob;
+
+                    cameraOverlay.style.display = 'none';
+                });
+
+                // Remove event listener from upload button
+            });
+        });
+
+        // Remove event listener from snap button
+    }
 });
