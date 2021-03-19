@@ -138,7 +138,7 @@ const createPost = (event) => {
             });
         }
 
-        else if(uploadPhoto.src != "") {
+        else if(blobToUpload != null) {
             let name = new Date() + '-';
             let metaData = {
                 contentType: blobToUpload.type,
@@ -533,6 +533,13 @@ const closeModals = () => {
 
     cameraOverlay.style.display = 'none';
     uploadPhoto.innerHTML = ``;
+    blobToUpload = null;
+
+    videoElement.srcObject.getVideoTracks().forEach(track => track.stop());
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    canvas.style.display = 'none';
+    uploadButton.style.display = 'none';
+
 };
 
 // Close modals on clicking outside
@@ -785,9 +792,8 @@ newPostImage.addEventListener('click', (e) => {
     // Prevent form from actually submitting
     e.preventDefault();
 
-    video.style.display = 'block';
+    videoElement.style.display = 'block';
     snapButton.style.display = 'block';
-    context.clearRect(0, 0, canvas.width, canvas.height);
 
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
         var front = false;
@@ -808,10 +814,12 @@ newPostImage.addEventListener('click', (e) => {
         snapButton.addEventListener('click', () => {
             canvas.style.display = 'block';
             uploadButton.style.display = 'block';
-            video.style.display = 'none';
+            videoElement.style.display = 'none';
             snapButton.style.display = 'none';
-            context.drawImage(video, 0, 0, 640, 480);
-            video.srcObject.getVideoTracks().forEach(track => track.stop());
+            context.clearRect(0, 0, canvas.width, canvas.height);
+            context.drawImage(videoElement, 0, 0, 640, 480);
+
+            videoElement.srcObject.getVideoTracks().forEach(track => track.stop());
         
             // Add event listener to upload button
             uploadButton.addEventListener('click', () => {
@@ -819,6 +827,8 @@ newPostImage.addEventListener('click', (e) => {
                 canvas.toBlob((blob) => {
                     let image = new Image();
                     image.src = window.URL.createObjectURL(blob);
+
+                    postForm.postImage.value = ``;
 
                     uploadPhoto.innerHTML = ``;
                     uploadPhoto.append(image);
@@ -839,6 +849,8 @@ newPostImage.addEventListener('click', (e) => {
 });
 
 postImage.addEventListener('change', () => {
+    blobToUpload = null;
+
     let image = new Image();
 
     let fr = new FileReader();
