@@ -653,6 +653,110 @@ const renderChat = (doc, uids) => {
     
 };
 
+// On file input field change
+const newFileImage = () => {
+    // Remove live image blob if it was created previously
+    blobToUpload = null;
+
+    // Create img element and set it's source
+    let image = new Image();
+    let fr = new FileReader();
+    fr.onload = () => {
+        image.src = fr.result;
+    }
+    fr.readAsDataURL(postImage.files[0]);
+
+    // Render uploaded image in DOM
+    uploadPhoto.innerHTML = ``;
+    uploadPhoto.append(image);
+}
+
+// On upload image button click
+const uploadImage = () => {
+    canvas.toBlob((blob) => {
+        // Create img element to render in DOM
+        let image = new Image();
+        image.src = window.URL.createObjectURL(blob);
+
+        // Remove any files added in input field
+        postForm.postImage.value = ``;
+
+        // Render image in DOM
+        uploadPhoto.innerHTML = ``;
+        uploadPhoto.append(image);
+        
+        // Set blob for image that will be uploaded when post is created
+        blobToUpload = blob;
+
+        // Hide and refresh camera overlay for next time
+        cameraOverlay.style.display = 'none';
+        canvas.style.display = 'none';
+        uploadButton.style.display = 'none';
+
+        // Remove event listener from upload button
+        uploadButton.removeEventListener('click', uploadImage);
+    });
+}
+
+// On snap image button click
+const snapImage = () => {
+    // Hide video and snap button and show canvas and upload button
+    canvas.style.display = 'block';
+    uploadButton.style.display = 'block';
+    videoElement.style.display = 'none';
+    snapButton.style.display = 'none';
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    context.drawImage(videoElement, 0, 0, 640, 480);
+
+    // Stop live video stream
+    videoElement.srcObject.getVideoTracks().forEach(track => track.stop());
+
+    // Add event listener to upload button
+    uploadButton.addEventListener('click', uploadImage);
+
+    // Remove event listener from snap button
+    snapButton.removeEventListener('click', snapImage);
+}
+
+// Capture and add new image
+const addNewImage = (e) => {
+    // Prevent form from actually submitting
+    e.preventDefault();
+
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+
+        // Toggle between front and back camera when possible
+        let front = false;
+        flipButton.addEventListener('click', () => {
+            front = !front;
+        });
+
+        // Display live stream in DOM
+        navigator.mediaDevices.getUserMedia({ video: true }).then((stream) => {
+            // Decide source of video element
+            videoElement.srcObject = stream;
+
+            // Play video element
+            videoElement.play();
+        }).catch((err) => {
+            // Show message
+            showAlert(err.message, `error`);
+        });
+
+        // Display camera overlay and child elements
+        cameraOverlay.style.display = 'flex';
+        videoElement.style.display = 'block';
+        snapButton.style.display = 'block';
+
+        // On snap button click
+        snapButton.addEventListener('click', snapImage);
+    }
+    else {
+        // Show message
+        showAlert(`Camera not available`, `error`);
+    }
+}
+
 //**************************************************************
 //      Event Listeners
 //**************************************************************
@@ -743,7 +847,6 @@ logoutBtn.addEventListener('click', (e) =>{
 // Log the user out or show error message
 confirmLogout.addEventListener('click', logUserOut);
 
-
 // Filter by category or distance
 filterForm.addEventListener('submit', filter);
 
@@ -787,79 +890,8 @@ sidebar.querySelectorAll('input[type="checkbox"]').forEach((category) => {
     });
 });
 
-// Click new post image
-newPostImage.addEventListener('click', (e) => {
-    // Prevent form from actually submitting
-    e.preventDefault();
+// When new post image button is clicked
+newPostImage.addEventListener('click', addNewImage);
 
-    videoElement.style.display = 'block';
-    snapButton.style.display = 'block';
-
-    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-        var front = false;
-        flipButton.addEventListener('click', () => {
-            front = !front;
-        });
-
-        navigator.mediaDevices.getUserMedia({ video: true }).then((stream) => {
-            videoElement.srcObject = stream;
-            videoElement.play();
-            
-        }).catch(err => {
-            showcase.innerHTML=`Access denied due to ${err}`
-        });
-
-        cameraOverlay.style.display = 'flex';
-
-        snapButton.addEventListener('click', () => {
-            canvas.style.display = 'block';
-            uploadButton.style.display = 'block';
-            videoElement.style.display = 'none';
-            snapButton.style.display = 'none';
-            context.clearRect(0, 0, canvas.width, canvas.height);
-            context.drawImage(videoElement, 0, 0, 640, 480);
-
-            videoElement.srcObject.getVideoTracks().forEach(track => track.stop());
-        
-            // Add event listener to upload button
-            uploadButton.addEventListener('click', () => {
-                // Upload image
-                canvas.toBlob((blob) => {
-                    let image = new Image();
-                    image.src = window.URL.createObjectURL(blob);
-
-                    postForm.postImage.value = ``;
-
-                    uploadPhoto.innerHTML = ``;
-                    uploadPhoto.append(image);
-                    
-                    blobToUpload = blob;
-
-                    canvas.style.display = 'none';
-                    uploadButton.style.display = 'none';
-                    cameraOverlay.style.display = 'none';
-                });
-
-                // Remove event listener from upload button
-            });
-        });
-
-        // Remove event listener from snap button
-    }
-});
-
-postImage.addEventListener('change', () => {
-    blobToUpload = null;
-
-    let image = new Image();
-
-    let fr = new FileReader();
-    fr.onload = () => {
-        image.src = fr.result;
-    }
-
-    fr.readAsDataURL(postImage.files[0]);
-
-    uploadPhoto.innerHTML = ``;
-    uploadPhoto.append(image);
-});
+// When new file is added to input field
+postImage.addEventListener('change', newFileImage);
