@@ -61,6 +61,19 @@ const chatOverlay = document.getElementById('chatOverlay');
 const newMessage = document.getElementById('newMessage');
 const previousMessages = document.getElementById('previousMessages');
 let chatListener = null;
+const chatUserName = document.getElementById('chatUserName');
+const chatList = document.getElementById('chatList');
+
+const newPostImage = document.getElementById('newPostImage');
+const canvas = document.querySelector('#canvas');
+const context = canvas.getContext("2d");
+const videoElement = document.querySelector('#video');
+const uploadButton = document.getElementById('uploadButton');
+const flipButton = document.getElementById('flipButton')
+const snapButton = document.getElementById('snapButton');
+const uploadPhoto = document.getElementById('uploadPhoto');
+const cameraOverlay = document.getElementById('cameraOverlay');
+let blobToUpload = null;
 
 //**************************************************************
 //      Function Declarations
@@ -104,25 +117,49 @@ const createPost = (event) => {
     // Add post as document to collection
     db.collection('posts').add(createObj).then((post) => {
         let file = postForm.postImage.files[0];
+
         if(file) {
             let name = new Date() + '-' + file.name;
             let metaData = {
                 contentType: file.type,
-            }
+            };
 
             let task = ref.child(name).put(file, metaData);
             task.then(snapshot => {
                 snapshot.ref.getDownloadURL().then(url => {
                     updateObj = {
                         photoURL: url,
-                    }
+                    };
                     db.collection('posts').doc(post.id).update(updateObj).then(() =>{
                         // Show message
                         showAlert(`New post created successfully!`, `success`);
-                    })
+                    });
                 });
             });
         }
+
+        else if(blobToUpload != null) {
+            let name = new Date() + '-';
+            let metaData = {
+                contentType: blobToUpload.type,
+            };
+            
+            let task = ref.child(name).put(blobToUpload, metaData);
+            task.then((snapshot) => {
+                snapshot.ref.getDownloadURL().then((url) => {
+                    updateObj = {
+                        photoURL: url,
+                    };
+                    db.collection('posts').doc(post.id).update(updateObj).then(() => {
+                        // Show message
+                        showAlert(`New post created successfully`, `success`);
+                    });
+                });
+            });
+
+            blobToUpload = null;
+        }
+
         else {
             // Show message
             showAlert(`New post created successfully!`, `success`);
@@ -130,7 +167,7 @@ const createPost = (event) => {
 
     }).catch((err) => {
         // Show message
-        showAlert(err.message, `error`);
+        console.log(err);
     });
 
     // Clear form and close modal
@@ -342,6 +379,11 @@ const renderPost = (doc) => {
                         // Create chat form
                         let chatForm = createChatForm(chat);
 
+                        // Get user's name
+                        db.collection('users').doc(doc.data().uid).get().then((user) => {
+                            chatUserName.innerText = user.data().name;
+                        });
+
                         // Append form to div in DOM
                         newMessage.append(chatForm);
 
@@ -413,20 +455,28 @@ const updatePost = (event) => {
     db.collection('posts').doc(updateId).update(updateObj).then(() => {
         let file = updateForm.updatePostImage.files[0];
         if(file) {
-            let name = new Date() + '-' + file.name;
-            let metaData = {
-                contentType: file.type,
-            }
 
-            let task = ref.child(name).put(file, metaData);
-            task.then(snapshot => {
-                snapshot.ref.getDownloadURL().then(url => {
-                    updateObj = {
-                        photoURL: url,
+            db.collection('posts').doc(updateId).get().then((post) => {
+                photoURL = post.data().photoURL;
+                
+                let httpsReference = firebase.storage().refFromURL(photoURL);
+                httpsReference.delete().then(() => {
+                    let name = new Date() + '-' + file.name;
+                    let metaData = {
+                        contentType: file.type,
                     }
-                    db.collection('posts').doc(updateId).update(updateObj).then(() =>{
-                        // Show message
-                        showAlert(`Post updated successfully!`, `success`);
+
+                    let task = ref.child(name).put(file, metaData);
+                    task.then(snapshot => {
+                        snapshot.ref.getDownloadURL().then(url => {
+                            updateObj = {
+                                photoURL: url,
+                            }
+                            db.collection('posts').doc(updateId).update(updateObj).then(() =>{
+                                // Show message
+                                showAlert(`Post updated successfully!`, `success`);
+                            });
+                        });
                     });
                 });
             });
@@ -443,7 +493,7 @@ const updatePost = (event) => {
 
     // Clear form and close modal
     // closeModals();
-}
+};
 
 // Delete post
 const deletePost = () => {
@@ -459,7 +509,7 @@ const deletePost = () => {
 
     // Close modal
     closeModals();
-}
+};
 
 // Close modals
 const closeModals = () => {
@@ -480,15 +530,25 @@ const closeModals = () => {
         chatListener = null;
     }
     logoutOverlay.style.display = 'none';
-}
+
+    cameraOverlay.style.display = 'none';
+    uploadPhoto.innerHTML = ``;
+    blobToUpload = null;
+
+    videoElement.srcObject.getVideoTracks().forEach(track => track.stop());
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    canvas.style.display = 'none';
+    uploadButton.style.display = 'none';
+
+};
 
 // Close modals on clicking outside
 const outsideClick = (event) => {
-    if(event.target === updateOverlay || event.target === deleteOverlay || event.target === createOverlay || event.target === chatOverlay || event.target ===logoutOverlay) {
+    if(event.target === updateOverlay || event.target === deleteOverlay || event.target === createOverlay || event.target === chatOverlay || event.target ===logoutOverlay || event.target === cameraOverlay) {
         // Clear form and close modal
         closeModals();
     }
-}
+};
 
 // Log the user out or show error message 
 const logUserOut = () => {
@@ -496,7 +556,7 @@ const logUserOut = () => {
         // Show message
         showAlert(error.message, `error`);
     });
-}
+};
 
 // Filter by category or distance
 const filter = (event) => {
@@ -519,7 +579,7 @@ const filter = (event) => {
             post.style.display = 'list-item';
         }
     });
-}
+};
 
 // Show alerts
 const showAlert = (content, type) => {
@@ -552,12 +612,12 @@ const showAlert = (content, type) => {
     setTimeout(() => {
         alertContent.textContent = "";
     }, 3500);
-}
+};
 
 // Toggle sidebar
 const toggleSidebar = () => {
     sidebar.classList.toggle('sidebar-hidden');
-}
+};
 
 // Change sections
 const changeSections = (index) => {
@@ -568,6 +628,135 @@ const changeSections = (index) => {
     sections[index].classList.remove('section-hidden');
 };
 
+// Create elements and render chat
+const renderChat = (doc, uids) => {
+    uids.forEach((uid) => {
+        if(uid != auth.currentUser.uid) {
+            db.collection('users').doc(uid).get().then((user) => {
+                // Create elements to be rendered
+                let li = document.createElement('li');
+                let userName = document.createElement('p');
+
+                let name = user.data().name;
+                
+                userName.textContent = name;
+                li.append(userName);
+                
+                // Set unique ID for each list item
+                li.setAttribute('id', `ch-${doc.id}`);
+
+                chatList.append(li);
+            });
+        }
+    });
+
+    
+};
+
+// On file input field change
+const newFileImage = () => {
+    // Remove live image blob if it was created previously
+    blobToUpload = null;
+
+    // Create img element and set it's source
+    let image = new Image();
+    let fr = new FileReader();
+    fr.onload = () => {
+        image.src = fr.result;
+    }
+    fr.readAsDataURL(postImage.files[0]);
+
+    // Render uploaded image in DOM
+    uploadPhoto.innerHTML = ``;
+    uploadPhoto.append(image);
+}
+
+// On upload image button click
+const uploadImage = () => {
+    canvas.toBlob((blob) => {
+        // Create img element to render in DOM
+        let image = new Image();
+        image.src = window.URL.createObjectURL(blob);
+
+        // Remove any files added in input field
+        postForm.postImage.value = ``;
+
+        // Render image in DOM
+        uploadPhoto.innerHTML = ``;
+        uploadPhoto.append(image);
+        
+        // Set blob for image that will be uploaded when post is created
+        blobToUpload = blob;
+
+        // Hide and refresh camera overlay for next time
+        cameraOverlay.style.display = 'none';
+        canvas.style.display = 'none';
+        uploadButton.style.display = 'none';
+
+        // Remove event listener from upload button
+        uploadButton.removeEventListener('click', uploadImage);
+    });
+}
+
+// On snap image button click
+const snapImage = () => {
+    // Hide video and snap button and show canvas and upload button
+    canvas.style.display = 'block';
+    uploadButton.style.display = 'block';
+    videoElement.style.display = 'none';
+    snapButton.style.display = 'none';
+    context.clearRect(0, 0, canvas.width, canvas.height);
+    context.drawImage(videoElement, 0, 0, 640, 480);
+
+    // Stop live video stream
+    videoElement.srcObject.getVideoTracks().forEach(track => track.stop());
+
+    // Add event listener to upload button
+    uploadButton.addEventListener('click', uploadImage);
+
+    // Remove event listener from snap button
+    snapButton.removeEventListener('click', snapImage);
+}
+
+// Capture and add new image
+const addNewImage = (e) => {
+    // Prevent form from actually submitting
+    e.preventDefault();
+
+    if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
+
+        // Toggle between front and back camera when possible
+        let front = false;
+        flipButton.addEventListener('click', () => {
+            front = !front;
+        });
+
+        // Display live stream in DOM
+        navigator.mediaDevices.getUserMedia({ video: true }).then((stream) => {
+            // Decide source of video element
+            videoElement.srcObject = stream;
+
+            // Play video element
+            videoElement.play();
+        }).catch((err) => {
+            // Show message
+            showAlert(err.message, `error`);
+        });
+
+        // Display camera overlay and child elements
+        cameraOverlay.style.display = 'flex';
+        videoElement.style.display = 'block';
+        snapButton.style.display = 'block';
+
+        // On snap button click
+        snapButton.addEventListener('click', snapImage);
+    }
+    else {
+        // Show message
+        showAlert(`Camera not available`, `error`);
+    }
+}
+
 //**************************************************************
 //      Event Listeners
 //**************************************************************
@@ -577,7 +766,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // Get user's position
     getUserPosition();
 
-    // Firestore real time listener
+    // Real time listener for posts
     db.collection('posts').orderBy("updated", "asc").onSnapshot((snapshot) => {
         let changes = snapshot.docChanges();
         changes.forEach((change) => {
@@ -601,7 +790,30 @@ document.addEventListener('DOMContentLoaded', () => {
     }, (err) => {
         // Show message
         showAlert(err.message, `error`);
-    })
+    });
+
+    // Real time listener for chats
+    db.collection('chats').onSnapshot((snapshot) => {
+        let changes = snapshot.docChanges();
+        changes.forEach((change) => {
+            if(change.type === 'added') {
+                let members = change.doc.data().members;
+                let uids = Object.keys(members);
+                if(uids.includes(auth.currentUser.uid)) {
+                    renderChat(change.doc, uids);
+                }
+            }
+            else if(change.type === 'modified') {
+                // let li = document.getElementById(change.doc.id);
+                // chatListener.removeChild(li);
+                // renderChat(change.doc);
+            }
+            else if(change.type === 'removed') {
+                // let li = document.getElementById(change.doc.id);
+                // chatList.removeChild(li);
+            }
+        });            
+    });
 });
 
 // Create form submission
@@ -634,7 +846,6 @@ logoutBtn.addEventListener('click', (e) =>{
 
 // Log the user out or show error message
 confirmLogout.addEventListener('click', logUserOut);
-
 
 // Filter by category or distance
 filterForm.addEventListener('submit', filter);
@@ -678,3 +889,9 @@ sidebar.querySelectorAll('input[type="checkbox"]').forEach((category) => {
         }
     });
 });
+
+// When new post image button is clicked
+newPostImage.addEventListener('click', addNewImage);
+
+// When new file is added to input field
+postImage.addEventListener('change', newFileImage);

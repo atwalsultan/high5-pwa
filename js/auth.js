@@ -22,10 +22,9 @@ var firebaseConfig = {
 
   const db = firebase.firestore();
   const auth = firebase.auth();
-  const ref = firebase.storage().ref()
+  const ref = firebase.storage().ref();
 
-  db.settings({ timestampsInSnapshots: true 
-});
+  db.settings({ timestampsInSnapshots: true });
 
 //**************************************************************
 //      Root Scope Variable Declarations

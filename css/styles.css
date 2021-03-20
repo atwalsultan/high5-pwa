@@ -136,6 +136,10 @@ aside#sidebar.sidebar-hidden {
   left: 0;
   z-index: 7;
   padding-bottom: 5.25rem;
+
+  height: 64vh;
+  overflow-y: scroll;
+  /* border: 2px solid black; */
 }
 
 #home-main > section.section-hidden {
@@ -439,7 +443,7 @@ section > h2 {
 }
 
 #chatOverlay .modal, #createOverlay .modal, #updateOverlay .modal {
-  margin: 18% auto;
+  margin: 5% auto;
   max-width: 60%;
   max-height: 70%;
 }
@@ -500,4 +504,40 @@ section > h2 {
 
 .delete-logout-body {
   text-align: center;
+}
+
+#cameraOverlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: none;
+
+  /* display: flex; */
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+}
+
+#cameraButtons {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  background-color: transparent;
+}
+
+#postForm img {
+  width: 100px;
+  height: auto;
+}
+
+canvas {
+  display: none;
+}
+
+#uploadButton {
+  display: none;
 }
