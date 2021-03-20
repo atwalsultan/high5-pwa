@@ -32,15 +32,28 @@
         <h2>Login</h2>
 
         <form id="login-form">
-          <input type="email" id="loginEmail" placeholder="Email" required />
-          <input type="password" id="loginPassword" placeholder="Password" required />
-          <button type="submit">Log In</button>
+          <div>
+            <label for="loginEmail">E-Mail</label>
+            <input type="email" id="loginEmail" placeholder="Enter your e-mail" required />
+          </div>
+
+          <div>
+            <label for="loginPassword">Password</label>
+            <input type="password" id="loginPassword" placeholder="Enter your password" required />
+          </div>
+
+          <div id="rememberMe">
+            <input type="checkbox" id="rememberMeCheck">
+            <label for="rememberMeCheck">Remember me</label>
+          </div>
+          
+          <button type="submit">LOGIN</button>
           <p><a href="#">Forgot password?</a></p>
         </form>
 
         <div class="sign-up">
-          <p>Create a new account?</p>
-          <p><a href="pages/signup.html">Sign Up</a></p>
+          <p>Need a new account?</p>
+          <p><a href="pages/signup.html">Sign Up!</a></p>
         </div>
       </div>
     </main>
