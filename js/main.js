@@ -302,61 +302,65 @@ const createChatListener = (chat) => {
 
 // Create elements and render post
 const renderPost = (doc) => {
+    
     // Create elements to be rendered
     let li = document.createElement('li');
-    let date = document.createElement('p');
-    let time = document.createElement('p');
-    let category = document.createElement('p');
-    let description = document.createElement('p');
-    let likeBtn = document.createElement('button');
+    li.setAttribute('id', doc.id); // Set unique ID for each list item
 
-    let dateTime = document.createElement('div');
-    dateTime.classList.add('date-time');
-
-    let categoryDistance = document.createElement('div');
-    categoryDistance.classList.add('category-distance');
-
-    let buttons = document.createElement('div');
-    buttons.classList.add('buttons');
-
-    // Set unique ID for each list item
-    li.setAttribute('id', doc.id);
-
-    // Set class names
-    category.setAttribute('class', 'category');
-
-    // Contents for each element
-    date.textContent = `Expected Date: ${doc.data().date}`;
-    time.textContent = `Expected Time: ${doc.data().time}`;
-    category.textContent = `${doc.data().category}`;
-    description.textContent = `Description: ${doc.data().description}`;
-    likeBtn.textContent = 'High5!';
-
-    // Append post data to list item element
-    dateTime.appendChild(date);
-    dateTime.appendChild(time);
-    li.appendChild(dateTime);
-
-    categoryDistance.appendChild(category);
-    
-    li.appendChild(categoryDistance);
-
-    li.appendChild(description);
-
-    buttons.appendChild(likeBtn);
-    li.appendChild(buttons);
-
-    // Display distance if user's position is available
-    if(userPos) {
-        // Calculate distance
-        let km = calculateDistance(doc.data().coordinates.latitude, doc.data().coordinates.longitude, userPos.coords.latitude, userPos.coords.longitude);
+    let name = document.createElement('p');
+    let nameDistanceTime = document.createElement('div');
+    nameDistanceTime.classList.add('name-distance-time');
+    nameDistanceTime.appendChild(name);
+    if(userPos) { // Display distance if user's position is available
+        let km = calculateDistance(doc.data().coordinates.latitude, doc.data().coordinates.longitude, userPos.coords.latitude, userPos.coords.longitude); // Calculate distance 
 
         // Create element
         let distance = document.createElement('p');
         distance.setAttribute('class', 'distance');
         distance.textContent = `${km}`;
-        categoryDistance.appendChild(distance);
+        nameDistanceTime.appendChild(distance)
     }
+    let timeCreated = document.createElement('p');
+    nameDistanceTime.appendChild(timeCreated);
+
+    let buttons = document.createElement('div');
+    buttons.classList.add('buttons');
+
+    let dateTime = document.createElement('p'); // Expected date and time
+    let description = document.createElement('p'); // Description
+    let category = document.createElement('p'); // Category
+    let likeBtn = document.createElement('button'); // Like button 
+
+    li.appendChild(nameDistanceTime);
+    li.appendChild(description);
+
+    if(doc.data().photoURL) {
+        let img = document.createElement('img');
+        img.setAttribute('src', doc.data().photoURL);
+        li.appendChild(img);
+    }
+
+    li.appendChild(category);
+    li.appendChild(dateTime);
+    li.appendChild(buttons);
+    buttons.appendChild(likeBtn)
+    
+    // Set class names
+    category.setAttribute('class', 'category');
+
+    // Contents for each element
+    let uid = doc.data().uid;
+    db.collection('users').doc(uid).get().then((user) => {
+        name.textContent = user.data().name;
+    });
+    timeCreated.textContent = '2d';
+    dateTime.textContent = `Expected Date & Time: ${doc.data().date} | ${doc.data().time}`;
+    category.textContent = `Category: ${doc.data().category}`;
+    description.textContent = `${doc.data().description}`;
+    likeBtn.textContent = 'High5!';
+
+    // Append post data to list item element
+    postList.appendChild(li);
 
     // Add 'Update' and 'Delete' buttons only for posts owned by the user
     if(auth.currentUser.uid === doc.data().uid) {

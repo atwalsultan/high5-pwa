@@ -142,7 +142,6 @@ aside#sidebar.sidebar-hidden {
 
   height: 64vh;
   overflow-y: scroll;
-  /* border: 2px solid black; */
 }
 
 #home-main > section.section-hidden {
@@ -421,46 +420,6 @@ footer .fas {
   background-color: lightgrey;
 }
 
-/* Posts */
-#postList {
-  display: flex;
-  flex-flow: column nowrap;
-  gap: 1.2rem;
-}
-
-#postList li {
-  background-color: lightgray;
-  padding: .7rem;
-  border-radius: 10px;
-
-  display: flex;
-  flex-flow: column nowrap;
-  gap: .4rem;
-}
-
-button {
-  padding: .25rem .45rem;
-  border-radius: 5px;
-  border: 1px solid black;
-}
-
-.date-time, .category-distance {
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: space-between;
-}
-
-.buttons {
-  display: flex;
-  flex-flow: row nowrap;
-  gap: 0.5rem;
-  justify-content: center;
-}
-
-.bold-text {
-  font-weight: bold;
-}
-
 /* Sections */
 section > h2 {
   max-width: max-content;
@@ -551,8 +510,6 @@ section > h2 {
   z-index: 100;
   background-color: rgba(0, 0, 0, 0.7);
   display: none;
-
-  /* display: flex; */
   flex-flow: row nowrap;
   justify-content: center;
   align-items: center;
@@ -576,4 +533,45 @@ canvas {
 
 #uploadButton {
   display: none;
+}
+
+/* Posts */
+#postList {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 1.2rem;
+}
+
+#postList li {
+  background-color: lightgray;
+  padding: .7rem;
+  border-radius: 10px;
+
+  display: flex;
+  flex-flow: column nowrap;
+  gap: .75rem;
+}
+
+button {
+  padding: .25rem .45rem;
+  border-radius: 5px;
+  border: 1px solid black;
+}
+
+.name-distance-time {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 1.5rem;
+}
+
+.name-distance-time p:last-of-type {
+  flex-grow: 1;
+  text-align: right;
+}
+
+.buttons {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: .35rem;
+  justify-content: center;
 }
