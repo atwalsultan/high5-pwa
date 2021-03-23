@@ -82,6 +82,7 @@ signupForm.addEventListener('submit', (e) => {
                 email: email,
                 name: name,
                 timestamp: new firebase.firestore.FieldValue.serverTimestamp(),
+                photoURL: 'https://firebasestorage.googleapis.com/v0/b/high5-pwa.appspot.com/o/default-pic.jpg?alt=media&token=67e9b9f8-c806-40bd-9872-d3d8951e69e6',
             }).then(() => {
                 // Show message
                 showAlert(`Account created successfully! Redirecting to home page.`, `success`);

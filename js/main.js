@@ -315,8 +315,11 @@ const renderPost = (doc) => {
     li.appendChild(postDiv);
 
     let profilePic = document.createElement('img');
-    profilePic.setAttribute('src', 'https://firebasestorage.googleapis.com/v0/b/high5-pwa.appspot.com/o/Mon%20Mar%2015%202021%2014%3A46%3A56%20GMT-0700%20(Pacific%20Daylight%20Time)-Snapchat-1583136069.jpg?alt=media&token=3996f604-a6e5-4b46-9dda-9921155fd5e9');
     profilePicDiv.appendChild(profilePic);
+
+    db.collection('users').doc(doc.data().uid).get().then((user) => {
+        profilePic.setAttribute('src', user.data().photoURL);
+    });
 
     let name = document.createElement('p');
     let nameDistanceTime = document.createElement('div');
