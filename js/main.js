@@ -307,6 +307,17 @@ const renderPost = (doc) => {
     let li = document.createElement('li');
     li.setAttribute('id', doc.id); // Set unique ID for each list item
 
+    let profilePicDiv = document.createElement('div');
+    profilePicDiv.classList.add('profile-pic-div');
+    let postDiv = document.createElement('div');
+    postDiv.classList.add('post-div');
+    li.appendChild(profilePicDiv);
+    li.appendChild(postDiv);
+
+    let profilePic = document.createElement('img');
+    profilePic.setAttribute('src', 'https://firebasestorage.googleapis.com/v0/b/high5-pwa.appspot.com/o/Mon%20Mar%2015%202021%2014%3A46%3A56%20GMT-0700%20(Pacific%20Daylight%20Time)-Snapchat-1583136069.jpg?alt=media&token=3996f604-a6e5-4b46-9dda-9921155fd5e9');
+    profilePicDiv.appendChild(profilePic);
+
     let name = document.createElement('p');
     let nameDistanceTime = document.createElement('div');
     nameDistanceTime.classList.add('name-distance-time');
@@ -331,18 +342,18 @@ const renderPost = (doc) => {
     let category = document.createElement('p'); // Category
     let likeBtn = document.createElement('button'); // Like button 
 
-    li.appendChild(nameDistanceTime);
-    li.appendChild(description);
+    postDiv.appendChild(nameDistanceTime);
+    postDiv.appendChild(description);
 
     if(doc.data().photoURL) {
         let img = document.createElement('img');
         img.setAttribute('src', doc.data().photoURL);
-        li.appendChild(img);
+        postDiv.appendChild(img);
     }
 
-    li.appendChild(category);
-    li.appendChild(dateTime);
-    li.appendChild(buttons);
+    postDiv.appendChild(category);
+    postDiv.appendChild(dateTime);
+    postDiv.appendChild(buttons);
     buttons.appendChild(likeBtn)
     
     // Set class names

@@ -9,6 +9,11 @@
   font-family: "Open Sans", sans-serif;
 }
 
+img {
+  max-width: 100%;
+  height: auto;
+}
+
 ul {
   list-style-type: none;
   padding: 0;
@@ -544,12 +549,31 @@ canvas {
 
 #postList li {
   background-color: lightgray;
-  padding: .7rem;
+  padding: .75rem;
   border-radius: 10px;
 
   display: flex;
+  flex-flow: row nowrap;
+  gap: .5rem;
+}
+
+.post-div {
+  display: flex;
   flex-flow: column nowrap;
-  gap: .75rem;
+  gap: .5rem;
+
+  flex-grow: 1;
+}
+
+.profile-pic-div {
+  min-width: 40px;
+  min-height: 40px;
+}
+
+.profile-pic-div img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
 }
 
 button {
