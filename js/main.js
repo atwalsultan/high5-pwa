@@ -115,7 +115,8 @@ const createPost = (event) => {
     createObj.coordinates = new firebase.firestore.GeoPoint(latitude, longitude);
 
     // Add post as document to collection
-    db.collection('posts').add(createObj).then((post) => {
+    db.collection('posts').add(createObj)
+    .then((post) => {
         let file = postForm.postImage.files[0];
 
         if(file) {
@@ -125,12 +126,15 @@ const createPost = (event) => {
             };
 
             let task = ref.child(name).put(file, metaData);
-            task.then(snapshot => {
-                snapshot.ref.getDownloadURL().then(url => {
+            task
+            .then(snapshot => {
+                snapshot.ref.getDownloadURL()
+                .then(url => {
                     updateObj = {
                         photoURL: url,
                     };
-                    db.collection('posts').doc(post.id).update(updateObj).then(() =>{
+                    db.collection('posts').doc(post.id).update(updateObj)
+                    .then(() =>{
                         // Show message
                         showAlert(`New post created successfully!`, `success`);
                     });
@@ -145,12 +149,15 @@ const createPost = (event) => {
             };
             
             let task = ref.child(name).put(blobToUpload, metaData);
-            task.then((snapshot) => {
-                snapshot.ref.getDownloadURL().then((url) => {
+            task
+            .then((snapshot) => {
+                snapshot.ref.getDownloadURL()
+                .then((url) => {
                     updateObj = {
                         photoURL: url,
                     };
-                    db.collection('posts').doc(post.id).update(updateObj).then(() => {
+                    db.collection('posts').doc(post.id).update(updateObj)
+                    .then(() => {
                         // Show message
                         showAlert(`New post created successfully`, `success`);
                     });
@@ -165,7 +172,8 @@ const createPost = (event) => {
             showAlert(`New post created successfully!`, `success`);
         }
 
-    }).catch((err) => {
+    })
+    .catch((err) => {
         // Show message
         console.log(err);
     });
@@ -294,61 +302,79 @@ const createChatListener = (chat) => {
 
 // Create elements and render post
 const renderPost = (doc) => {
+    
     // Create elements to be rendered
     let li = document.createElement('li');
-    let date = document.createElement('p');
-    let time = document.createElement('p');
-    let category = document.createElement('p');
-    let description = document.createElement('p');
-    let likeBtn = document.createElement('button');
+    li.setAttribute('id', doc.id); // Set unique ID for each list item
 
-    let dateTime = document.createElement('div');
-    dateTime.classList.add('date-time');
+    let profilePicDiv = document.createElement('div');
+    profilePicDiv.classList.add('profile-pic-div');
+    let postDiv = document.createElement('div');
+    postDiv.classList.add('post-div');
+    li.appendChild(profilePicDiv);
+    li.appendChild(postDiv);
 
-    let categoryDistance = document.createElement('div');
-    categoryDistance.classList.add('category-distance');
+    let profilePic = document.createElement('img');
+    profilePicDiv.appendChild(profilePic);
 
-    let buttons = document.createElement('div');
-    buttons.classList.add('buttons');
+    db.collection('users').doc(doc.data().uid).get().then((user) => {
+        profilePic.setAttribute('src', user.data().photoURL);
+    });
 
-    // Set unique ID for each list item
-    li.setAttribute('id', doc.id);
-
-    // Set class names
-    category.setAttribute('class', 'category');
-
-    // Contents for each element
-    date.textContent = `Expected Date: ${doc.data().date}`;
-    time.textContent = `Expected Time: ${doc.data().time}`;
-    category.textContent = `${doc.data().category}`;
-    description.textContent = `Description: ${doc.data().description}`;
-    likeBtn.textContent = 'High5!';
-
-    // Append post data to list item element
-    dateTime.appendChild(date);
-    dateTime.appendChild(time);
-    li.appendChild(dateTime);
-
-    categoryDistance.appendChild(category);
-    
-    li.appendChild(categoryDistance);
-
-    li.appendChild(description);
-
-    buttons.appendChild(likeBtn);
-    li.appendChild(buttons);
-
-    // Display distance if user's position is available
-    if(userPos) {
-        // Calculate distance
-        let km = calculateDistance(doc.data().coordinates.latitude, doc.data().coordinates.longitude, userPos.coords.latitude, userPos.coords.longitude);
+    let name = document.createElement('p');
+    let nameDistanceTime = document.createElement('div');
+    nameDistanceTime.classList.add('name-distance-time');
+    nameDistanceTime.appendChild(name);
+    if(userPos) { // Display distance if user's position is available
+        let km = calculateDistance(doc.data().coordinates.latitude, doc.data().coordinates.longitude, userPos.coords.latitude, userPos.coords.longitude); // Calculate distance 
 
         // Create element
         let distance = document.createElement('p');
         distance.setAttribute('class', 'distance');
         distance.textContent = `${km}`;
-        categoryDistance.appendChild(distance);
+        nameDistanceTime.appendChild(distance)
     }
+    let timeCreated = document.createElement('p');
+    nameDistanceTime.appendChild(timeCreated);
+
+    let buttons = document.createElement('div');
+    buttons.classList.add('buttons');
+
+    let dateTime = document.createElement('p'); // Expected date and time
+    let description = document.createElement('p'); // Description
+    let category = document.createElement('p'); // Category
+    let likeBtn = document.createElement('button'); // Like button 
+
+    postDiv.appendChild(nameDistanceTime);
+    postDiv.appendChild(description);
+
+    if(doc.data().photoURL) {
+        let img = document.createElement('img');
+        img.setAttribute('src', doc.data().photoURL);
+        postDiv.appendChild(img);
+    }
+
+    postDiv.appendChild(category);
+    postDiv.appendChild(dateTime);
+    postDiv.appendChild(buttons);
+    buttons.appendChild(likeBtn)
+    
+    // Set class names
+    category.setAttribute('class', 'category');
+
+    // Contents for each element
+    let uid = doc.data().uid;
+    db.collection('users').doc(uid).get().then((user) => {
+        name.textContent = user.data().name;
+    });
+    timeCreated.textContent = '2d';
+    dateTime.textContent = `Expected Date & Time: ${doc.data().date} | ${doc.data().time}`;
+    category.textContent = `Category: ${doc.data().category}`;
+    description.textContent = `${doc.data().description}`;
+    likeBtn.textContent = 'High5!';
+
+    // Append post data to list item element
+    postList.appendChild(li);
 
     // Add 'Update' and 'Delete' buttons only for posts owned by the user
     if(auth.currentUser.uid === doc.data().uid) {
@@ -373,14 +399,16 @@ const renderPost = (doc) => {
             let postId = event.target.parentNode.id;
 
             // Fetch chat between logged in user and owner of post
-            db.collection('chats').where(`members.${auth.currentUser.uid}`, '==', true).where(`members.${doc.data().uid}`, '==', true).get().then((querySnapshot) => {
+            db.collection('chats').where(`members.${auth.currentUser.uid}`, '==', true).where(`members.${doc.data().uid}`, '==', true).get()
+            .then((querySnapshot) => {
                 if(!querySnapshot.empty) { // If chat already exists
                     querySnapshot.forEach((chat) => {
                         // Create chat form
                         let chatForm = createChatForm(chat);
 
                         // Get user's name
-                        db.collection('users').doc(doc.data().uid).get().then((user) => {
+                        db.collection('users').doc(doc.data().uid).get()
+                        .then((user) => {
                             chatUserName.innerText = user.data().name;
                         });
 
@@ -406,7 +434,8 @@ const renderPost = (doc) => {
                     // Create chat
                     db.collection('chats').add({
                         members: usersObj,
-                    }).then((chat) => {
+                    })
+                    .then((chat) => {
                         // Create chat form
                         let chatForm = createChatForm(chat);
 
@@ -452,27 +481,33 @@ const updatePost = (event) => {
 
 
     // Updating document in collection
-    db.collection('posts').doc(updateId).update(updateObj).then(() => {
+    db.collection('posts').doc(updateId).update(updateObj)
+    .then(() => {
         let file = updateForm.updatePostImage.files[0];
         if(file) {
 
-            db.collection('posts').doc(updateId).get().then((post) => {
+            db.collection('posts').doc(updateId).get()
+            .then((post) => {
                 photoURL = post.data().photoURL;
                 
                 let httpsReference = firebase.storage().refFromURL(photoURL);
-                httpsReference.delete().then(() => {
+                httpsReference.delete()
+                .then(() => {
                     let name = new Date() + '-' + file.name;
                     let metaData = {
                         contentType: file.type,
                     }
 
                     let task = ref.child(name).put(file, metaData);
-                    task.then(snapshot => {
-                        snapshot.ref.getDownloadURL().then(url => {
+                    task
+                    .then(snapshot => {
+                        snapshot.ref.getDownloadURL()
+                        .then(url => {
                             updateObj = {
                                 photoURL: url,
                             }
-                            db.collection('posts').doc(updateId).update(updateObj).then(() =>{
+                            db.collection('posts').doc(updateId).update(updateObj)
+                            .then(() =>{
                                 // Show message
                                 showAlert(`Post updated successfully!`, `success`);
                             });
@@ -486,7 +521,8 @@ const updatePost = (event) => {
             showAlert(`Post updated successfully!`, `success`);
         }
 
-    }).catch((err) => {
+    })
+    .catch((err) => {
         // Show message
         showAlert(err.message, `error`);
     });
@@ -498,11 +534,13 @@ const updatePost = (event) => {
 // Delete post
 const deletePost = () => {
     // Delete document from collection
-    db.collection('posts').doc(deleteId).delete().then(() => {
+    db.collection('posts').doc(deleteId).delete()
+    .then(() => {
         // Show message
         showAlert(`Post deleted successfully`, `success`)
 
-    }).catch((err) => {
+    })
+    .catch((err) => {
         // Show message
         showAlert(err.message, `error`);
     });
@@ -552,7 +590,8 @@ const outsideClick = (event) => {
 
 // Log the user out or show error message 
 const logUserOut = () => {
-    auth.signOut().catch((error) => {
+    auth.signOut()
+    .catch((error) => {
         // Show message
         showAlert(error.message, `error`);
     });
@@ -632,7 +671,8 @@ const changeSections = (index) => {
 const renderChat = (doc, uids) => {
     uids.forEach((uid) => {
         if(uid != auth.currentUser.uid) {
-            db.collection('users').doc(uid).get().then((user) => {
+            db.collection('users').doc(uid).get()
+            .then((user) => {
                 // Create elements to be rendered
                 let li = document.createElement('li');
                 let userName = document.createElement('p');
@@ -732,13 +772,15 @@ const addNewImage = (e) => {
         });
 
         // Display live stream in DOM
-        navigator.mediaDevices.getUserMedia({ video: true }).then((stream) => {
+        navigator.mediaDevices.getUserMedia({ video: true })
+        .then((stream) => {
             // Decide source of video element
             videoElement.srcObject = stream;
 
             // Play video element
             videoElement.play();
-        }).catch((err) => {
+        })
+        .catch((err) => {
             // Show message
             showAlert(err.message, `error`);
         });

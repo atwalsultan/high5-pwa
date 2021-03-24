@@ -32,11 +32,27 @@
                 <h2>Sign Up</h2>
 
                 <form id="signup-form">
-                    <input type="text" id="displayName" placeholder="Display Name" required>
-                    <input type="email" id="signupEmail" placeholder="Email" required />
-                    <input type="password" id="signupPassword" placeholder="Password" required />
-                    <input type="password" id="confirmPassword" placeholder="Confirm Password" required />
 
+                    <div>
+                        <label for="displayName">Display Name</label>
+                        <input type="text" id="displayName" placeholder="Enter your display name" required>
+                    </div>
+                    
+                    <div>
+                        <label for="signupEmail">E-Mail</label>
+                        <input type="email" id="signupEmail" placeholder="Enter your email" required />
+                    </div>
+                    
+                    <div>
+                        <label for="signupPassword">Password</label>
+                        <input type="password" id="signupPassword" placeholder="Enter your password" required />
+                    </div>
+                    
+                    <div>
+                        <label for="confirmPassword">Confirm Password</label>
+                        <input type="password" id="confirmPassword" placeholder="Confirm your password" required />
+                    </div>
+                    
                     <button type="submit">Sign Up</button>
                 </form>
 
