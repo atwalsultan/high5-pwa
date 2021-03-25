@@ -199,8 +199,7 @@ aside#sidebar.sidebar-hidden {
   height: 70px;
 }
 
-#index-main .form-wrapper form,
-#signup-main .form-wrapper form {
+#login-form, #signup-form {
   display: flex;
   flex-flow: column nowrap;
   gap: 1rem;
@@ -212,9 +211,10 @@ aside#sidebar.sidebar-hidden {
   font-size: 0.9rem;
   padding: 0.75rem;
   border-radius: 5px;
-  border: 1px solid gray;
+  border: 1px solid #737373;
   width: 100%;
   margin-top: .25rem;
+  color: #737373;
 }
 
 #index-main .form-wrapper input:focus,
@@ -250,8 +250,7 @@ aside#sidebar.sidebar-hidden {
   text-decoration: underline;
 }
 
-#index-main form label,
-#signup-main form label {
+form label {
   font-weight: 600;
 }
 
@@ -302,8 +301,8 @@ footer .fas {
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 8;
-  background-color: rgba(0, 0, 0, 0.7);
+  z-index: 20;
+  background-color: rgba(0, 0, 0, 0.8);
   display: none;
 }
 
@@ -327,7 +326,7 @@ footer .fas {
 
 /* Class Styles */
 .closeBtn {
-  font-size: 1.5rem;
+  font-size: 2rem;
   font-weight: bold;
 }
 
@@ -431,76 +430,115 @@ section > h2 {
 }
 
 /* Modals */
-
 .modal {
   border: 1px solid black;
   border-radius: 10px;
   box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 7px 20px 0 rgba(0, 0, 0, 0.2);
   background-color: white;
+  padding: .5rem 1.25rem 1.25rem 1.5rem;
+  position: relative;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  max-width: 75%;
 }
 
-#chatOverlay .modal, #createOverlay .modal, #updateOverlay .modal {
-  margin: 5% auto;
-  max-width: 60%;
-  max-height: 70%;
-}
-
-#deleteOverlay .modal, #logoutOverlay .modal {
-  margin: 45% auto;
-  max-width: 80%;
-  max-height: 60%;
-}
-
-#createHeader, #updateHeader, #deleteHeader, #logoutHeader {
+#createHeader {
   display: flex;
   flex-flow: row nowrap;
-  justify-content: space-between;
+  justify-content: flex-end;
   align-items: center;
-  padding: .5rem;
-  background-color: rgb(175, 175, 175);
   margin-bottom: 1rem;
-  border-radius: 10px 10px 0 0;
 }
 
-#createOverlay form, #updateOverlay form, .delete-logout-body {
+#createHeader h2 {
+  text-align: center;
+  flex-grow: 1;
+  justify-self: center;
+}
+
+.category-div, .description-div {
   display: flex;
   flex-flow: column nowrap;
-  gap: .5rem;
-  padding: .5rem;
 }
 
-#createOverlay input, #createOverlay select, #updateOverlay input, #updateOverlay select {
-  padding: .2rem;
-  border-radius: 5px;
-  border: 1px solid black;
-  font-family: inherit;
-  font-size: inherit;
+.image-div {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 1rem;
 }
 
-#createOverlay textarea, #updateOverlay textarea {
-  height: 6.5rem;
-  padding: .25rem;
-  border-radius: 5px;
-  border: 1px solid black;
+.image-div button {
+  margin-top: .25rem;
+  padding: 0 .75rem;
+  background-color: white;
+  border: 1px solid #737373;
+  color: #737373;
+
+  flex-grow: 1;
+}
+
+input[type="file"] {
+  max-width: 70%;
+}
+
+#postForm input, #postForm textarea, #postForm select {
+  margin-top: .25rem;
   font-family: inherit;
-  font-size: inherit;
+  font-size: 0.9rem;
+  padding: 0.5rem;
+  border-radius: 5px;
+  border: 1px solid #737373;
+  color: #737373;
+}
+
+#postForm input:focus, #postForm textarea:focus, #postForm select:focus {
+  outline-color: #053E95;
+}
+
+#postForm textarea {
+  height: 5rem;
   resize: none;
 }
 
-#createOverlay button, #updateOverlay button, .delete-logout-body button {
-  max-width: 50%;
-  align-self: center;
-  margin: .75rem 0;
+#postForm {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 1rem;
+}
+
+#postForm img {
+  height: 60px;
+  width: auto;
+  border: 1px solid lightgray;
+}
+
+#postForm button[type="submit"] {
+  padding: 0.75rem;
+  width: 100%;
+  border-radius: 5px;
+  border: 1px solid rgb(79, 79, 79);
+  cursor: pointer;
+  background-color: #032963;
+  color: #FBFBFB;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+.required-field {
+  color: red;
+  font-size: .8rem;
 }
 
 .expected-date-time {
   display: flex;
   flex-flow: row nowrap;
-  justify-content: space-between;
+  gap: 1rem;
+
 }
 
-.delete-logout-body {
-  text-align: center;
+.expected-date-time > input:last-of-type {
+  flex-grow: 1;
 }
 
 #cameraOverlay {
@@ -522,11 +560,6 @@ section > h2 {
   flex-flow: row nowrap;
   justify-content: center;
   background-color: transparent;
-}
-
-#postForm img {
-  width: 100px;
-  height: auto;
 }
 
 canvas {
