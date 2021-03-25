@@ -289,7 +289,6 @@ footer .fas {
   border-radius: 50%;
 }
 
-/* ID Styles */
 /* Overlays for modals */
 #updateOverlay,
 #deleteOverlay,
@@ -302,7 +301,7 @@ footer .fas {
   width: 100%;
   height: 100%;
   z-index: 20;
-  background-color: rgba(0, 0, 0, 0.8);
+  background-color: rgba(0, 0, 0, 0.85);
   display: none;
 }
 
@@ -443,7 +442,7 @@ section > h2 {
   max-width: 75%;
 }
 
-#createHeader {
+#createHeader, #updateHeader {
   display: flex;
   flex-flow: row nowrap;
   justify-content: flex-end;
@@ -451,7 +450,7 @@ section > h2 {
   margin-bottom: 1rem;
 }
 
-#createHeader h2 {
+#createHeader h2, #updateHeader h2 {
   text-align: center;
   flex-grow: 1;
   justify-self: center;
@@ -482,7 +481,7 @@ input[type="file"] {
   max-width: 70%;
 }
 
-#postForm input, #postForm textarea, #postForm select {
+#postForm input, #postForm textarea, #postForm select, #updateForm input, #updateForm textarea, #updateForm select {
   margin-top: .25rem;
   font-family: inherit;
   font-size: 0.9rem;
@@ -492,28 +491,28 @@ input[type="file"] {
   color: #737373;
 }
 
-#postForm input:focus, #postForm textarea:focus, #postForm select:focus {
+#postForm input:focus, #postForm textarea:focus, #postForm select:focus, #updateForm input:focus, #updateForm textarea:focus, #updateForm select:focus {
   outline-color: #053E95;
 }
 
-#postForm textarea {
+#postForm textarea, #updateForm textarea {
   height: 5rem;
   resize: none;
 }
 
-#postForm {
+#postForm, #updateForm {
   display: flex;
   flex-flow: column nowrap;
   gap: 1rem;
 }
 
-#postForm img {
+#postForm img, #uploadForm img {
   height: 60px;
   width: auto;
   border: 1px solid lightgray;
 }
 
-#postForm button[type="submit"] {
+#postForm button[type="submit"], #updateForm button[type="submit"] {
   padding: 0.75rem;
   width: 100%;
   border-radius: 5px;
@@ -539,6 +538,17 @@ input[type="file"] {
 
 .expected-date-time > input:last-of-type {
   flex-grow: 1;
+}
+
+.location-div {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: .5rem;
+  color: #737373;
+}
+
+.location-div > input {
+  margin: 0;
 }
 
 #cameraOverlay {

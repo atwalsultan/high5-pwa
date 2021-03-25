@@ -195,6 +195,11 @@
 
 				<div id="uploadPhoto"></div>
 
+				<div class="location-div">
+					<input type="checkbox" id="addLocation">
+					<p>Add my location</p>
+				</div>
+
 				<button type="submit">POST</button>
 			</form>
 		</div>
@@ -209,33 +214,54 @@
 			</div>
 
 			<form id="updateForm">
-				<input type="date" id="updateDate" placeholder="Date" />
-				<input type="time" id="updateTime" placeholder="Time" />
-				<textarea id="updateDesc" placeholder="Description" maxlength="300"></textarea>
 
-				<select name="updateCategory" id="updateCategory">
-					<option value="Art & Craft">Art & Craft</option>
-					<option value="Board Games">Board Games</option>
-					<option value="Buying / Selling">Buying / Selling</option>
-					<option value="Cooking">Cooking</option>
-					<option value="Dance">Dance</option>
-					<option value="Learning">Learning</option>
-					<option value="Movies">Movies</option>
-					<option value="Music">Music</option>
-					<option value="Outdoor & Adventure">Outdoor & Adventure</option>
-					<option value="Reading">Reading</option>
-					<option value="Renting">Renting</option>
-					<option value="Sports & Fitness">Sports & Fitness</option>
-					<option value="Virtual Games">Virtual Games</option>
-				</select>
-				<div class="update-location">
-					<input type="checkbox" id="updateLocation">
-					<label for="updateLocation">Update Location</label>
+				<div class="description-div">
+					<label for="updateDesc">Description</label>
+					<textarea id="updateDesc" placeholder="Description" maxlength="300"></textarea>
 				</div>
 
-				<input type="file" id="updatePostImage">
+				<label>
+					Expected Date & Time
+					<div class="expected-date-time">
+						<input type="date" id="updateDate"/>
+						<input type="time" id="updateTime"/>						
+					</div>
+				</label>
 
-				<button type="submit">Update</button>
+				<div class="category-div">
+					<label for="updateCategory">Category</label>
+					<select name="updateCategory" id="updateCategory">
+						<option value="Art & Craft">Art & Craft</option>
+						<option value="Board Games">Board Games</option>
+						<option value="Buying / Selling">Buying / Selling</option>
+						<option value="Cooking">Cooking</option>
+						<option value="Dance">Dance</option>
+						<option value="Learning">Learning</option>
+						<option value="Movies">Movies</option>
+						<option value="Music">Music</option>
+						<option value="Outdoor & Adventure">Outdoor & Adventure</option>
+						<option value="Reading">Reading</option>
+						<option value="Renting">Renting</option>
+						<option value="Sports & Fitness">Sports & Fitness</option>
+						<option value="Virtual Games">Virtual Games</option>
+					</select>
+				</div>
+
+				<label for="updatePostImage">Image
+					<div class="image-div">
+						<input type="file" id="updatePostImage">
+						<button id="updateImage">Camera</button>
+					</div>
+				</label>
+
+				<div id="updateUploadPhoto"></div>
+
+				<div class="location-div">
+					<input type="checkbox" id="updateLocation">
+					<p>Update my location</p>
+				</div>
+
+				<button type="submit">UPDATE</button>
 			</form>
 		</div>
 	</div>
