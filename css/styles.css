@@ -179,27 +179,26 @@ aside#sidebar.sidebar-hidden {
 
 #index-main .form-wrapper,
 #signup-main .form-wrapper {
-  max-height: 95vh;
-  padding: 2rem;
-  background-color: #f4f4f4;
-  border-radius: 10px;
-  box-shadow: 0 0 5px 5px rgba(0, 0, 0, 0.3);
-  flex-grow: 1;
-  max-width: 300px;
+  height: 90vh;
+  width: 400px;
 
   display: flex;
   flex-flow: column nowrap;
-  justify-content: center;
   gap: 1rem;
 }
 
-#index-main .form-wrapper h2,
-#signup-main .form-wrapper h2 {
+#index-main .form-wrapper .logo,
+#signup-main .form-wrapper .logo {
   flex-grow: 1;
   display: flex;
   flex-flow: row nowrap;
-  align-items: flex-end;
+  align-items: center;
   justify-content: center;
+}
+
+.logo img {
+  width: 70px;
+  height: 70px;
 }
 
 #index-main .form-wrapper form,
@@ -207,7 +206,6 @@ aside#sidebar.sidebar-hidden {
   display: flex;
   flex-flow: column nowrap;
   gap: 1rem;
-  align-items: center;
 }
 
 #index-main .form-wrapper input,
@@ -235,6 +233,8 @@ aside#sidebar.sidebar-hidden {
   cursor: pointer;
   background-color: #032963;
   color: #FBFBFB;
+  font-weight: 600;
+  font-size: 1rem;
 }
 
 #index-main .sign-up,
@@ -254,7 +254,7 @@ aside#sidebar.sidebar-hidden {
 
 #index-main form label,
 #signup-main form label {
-  font-weight: bold;
+  font-weight: 600;
 }
 
 #rememberMe {
