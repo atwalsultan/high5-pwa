@@ -159,6 +159,11 @@
 					<textarea id="activityDesc" placeholder="Enter the post description" maxlength="300" required></textarea>
 				</div>
 
+				<div class="location-div">
+					<label for="addLocation">Add my location</label>
+					<input type="checkbox" id="addLocation">
+				</div>
+
 				<label>
 					Expectected Date & Time
 					<div class="expected-date-time">
@@ -195,11 +200,6 @@
 
 				<div id="uploadPhoto"></div>
 
-				<div class="location-div">
-					<input type="checkbox" id="addLocation">
-					<p>Add my location</p>
-				</div>
-
 				<button type="submit">POST</button>
 			</form>
 		</div>
@@ -218,6 +218,11 @@
 				<div class="description-div">
 					<label for="updateDesc">Description</label>
 					<textarea id="updateDesc" placeholder="Description" maxlength="300"></textarea>
+				</div>
+
+				<div class="location-div">
+					<label for="updateLocation">Update my location</label>
+					<input type="checkbox" id="updateLocation">
 				</div>
 
 				<label>
@@ -256,11 +261,6 @@
 
 				<div id="updateUploadPhoto"></div>
 
-				<div class="location-div">
-					<input type="checkbox" id="updateLocation">
-					<p>Update my location</p>
-				</div>
-
 				<button type="submit">UPDATE</button>
 			</form>
 		</div>
@@ -270,14 +270,14 @@
 	<div id="deleteOverlay">
 		<div class="modal">
 			<div id="deleteHeader">
-				<h2>Delete Post</h2>
+				<h2>Delete This Post?</h2>
 				<span class="closeBtn">&times;</span>
 			</div>
 			<div class="delete-logout-body">
 				<p>
-					Are you sure you want to delete this post? This cannot be undone.
+					It will be gone forever.
 				</p>
-				<button id="confirmDelete">Delete Post</button>
+				<button id="confirmDelete">DELETE</button>
 			</div>
 		</div>
 	</div>
@@ -300,14 +300,14 @@
   <div id="logoutOverlay">
     <div class="modal">
 		<div id="logoutHeader">
-			<h2>Logout</h2>
+			<h2>Log Out?</h2>
 			<span class="closeBtn">&times;</span>
 		</div>
 		<div class="delete-logout-body">
 			<p>
-				Are you sure you want to logout ?
+				You will be navigated to the login screen.
 			</p>
-			<button id="confirmLogout">Logout</button>
+			<button id="confirmLogout">LOG OUT</button>
 		</div>
     </div>
   </div>

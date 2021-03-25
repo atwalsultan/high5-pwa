@@ -442,7 +442,7 @@ section > h2 {
   max-width: 75%;
 }
 
-#createHeader, #updateHeader {
+#createHeader, #updateHeader, #deleteHeader, #logoutHeader {
   display: flex;
   flex-flow: row nowrap;
   justify-content: flex-end;
@@ -450,7 +450,7 @@ section > h2 {
   margin-bottom: 1rem;
 }
 
-#createHeader h2, #updateHeader h2 {
+#createHeader h2, #updateHeader h2, #deleteHeader h2, #logoutHeader h2 {
   text-align: center;
   flex-grow: 1;
   justify-self: center;
@@ -500,7 +500,7 @@ input[type="file"] {
   resize: none;
 }
 
-#postForm, #updateForm {
+#postForm, #updateForm, .delete-logout-body {
   display: flex;
   flex-flow: column nowrap;
   gap: 1rem;
@@ -512,16 +512,24 @@ input[type="file"] {
   border: 1px solid lightgray;
 }
 
-#postForm button[type="submit"], #updateForm button[type="submit"] {
+#postForm button[type="submit"], #updateForm button[type="submit"], .delete-logout-body button {
   padding: 0.75rem;
   width: 100%;
   border-radius: 5px;
-  border: 1px solid rgb(79, 79, 79);
+  border: none;
   cursor: pointer;
   background-color: #032963;
   color: #FBFBFB;
   font-weight: 600;
   font-size: 1rem;
+}
+
+.delete-logout-body {
+  text-align: center;
+}
+
+.delete-logout-body button {
+  background-color: #FF0000;
 }
 
 .required-field {
@@ -544,7 +552,6 @@ input[type="file"] {
   display: flex;
   flex-flow: row nowrap;
   gap: .5rem;
-  color: #737373;
 }
 
 .location-div > input {
@@ -588,7 +595,7 @@ canvas {
 }
 
 #postList li {
-  padding: .75rem;
+  padding: .75rem .75rem .75rem 0;
   border-radius: 10px;
 
   display: flex;
