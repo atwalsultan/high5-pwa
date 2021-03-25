@@ -331,7 +331,7 @@ const renderPost = (doc) => {
         // Create element
         let distance = document.createElement('p');
         distance.setAttribute('class', 'distance');
-        distance.textContent = `${km}`;
+        distance.textContent = `${km} km`;
         nameDistanceTime.appendChild(distance)
     }
     let timeCreated = document.createElement('p');
