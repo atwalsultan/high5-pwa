@@ -486,8 +486,11 @@ section > h2 {
   background-color: white;
   border: 1px solid #737373;
   color: #737373;
-
   flex-grow: 1;
+}
+
+.image-div button:focus {
+  outline-color: #053E95;
 }
 
 input[type="file"] {
@@ -519,7 +522,7 @@ input[type="file"] {
   gap: 1rem;
 }
 
-#postForm img, #uploadForm img {
+#postForm img, #updateForm img {
   height: 50px;
   width: auto;
   border: 1px solid lightgray;

@@ -75,6 +75,8 @@ const uploadPhoto = document.getElementById('uploadPhoto');
 const cameraOverlay = document.getElementById('cameraOverlay');
 let blobToUpload = null;
 
+const newUpdateImageBtn = document.getElementById('newUpdateImage');
+
 //**************************************************************
 //      Function Declarations
 //**************************************************************
@@ -706,11 +708,23 @@ const newFileImage = () => {
     fr.onload = () => {
         image.src = fr.result;
     }
-    fr.readAsDataURL(postImage.files[0]);
 
-    // Render uploaded image in DOM
-    uploadPhoto.innerHTML = ``;
-    uploadPhoto.append(image);
+    if(createOverlay.style.display !== 'none') {
+        // Get image url
+        fr.readAsDataURL(postImage.files[0]);
+
+        // Render uploaded image in DOM
+        uploadPhoto.innerHTML = ``;
+        uploadPhoto.append(image);
+    }
+    else if(updateOverlay.style.display !== 'none') {
+        // Get image url
+        fr.readAsDataURL(updatePostImage.files[0]);
+
+        // Render uploaded image in DOM
+        updateUploadPhoto.innerHTML = ``;
+        updateUploadPhoto.append(image);
+    }
 }
 
 // On upload image button click
@@ -938,5 +952,13 @@ sidebar.querySelectorAll('input[type="checkbox"]').forEach((category) => {
 // When new post image button is clicked
 newPostImage.addEventListener('click', addNewImage);
 
-// When new file is added to input field
-postImage.addEventListener('change', newFileImage);
+// When new file is added to input field in create form
+postForm.postImage.addEventListener('change', newFileImage);
+
+// When new file is added to input field in create form
+updateForm.updatePostImage.addEventListener('change', newFileImage);
+
+// Do nothing when camera button is clicked in update modal
+newUpdateImageBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+})
