@@ -788,7 +788,7 @@ const addNewImage = (e) => {
         });
 
         // Display camera overlay and child elements
-        cameraOverlay.style.display = 'flex';
+        cameraOverlay.style.display = 'block';
         videoElement.style.display = 'block';
         snapButton.style.display = 'block';
 

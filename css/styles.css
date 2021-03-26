@@ -294,7 +294,8 @@ footer .fas {
 #deleteOverlay,
 #createOverlay,
 #chatOverlay,
-#logoutOverlay {
+#logoutOverlay,
+#cameraOverlay {
   position: fixed;
   top: 0;
   left: 0;
@@ -444,12 +445,22 @@ section > h2 {
   max-width: 75%;
 }
 
+#cameraOverlay {
+  background-color: rgba(0, 0, 0, 1);
+}
+
+#cameraOverlay .modal {
+  max-width: 100%;
+  background-color: rgba(0, 0, 0, 1);
+  padding: 0;
+}
+
 #createHeader, #updateHeader, #deleteHeader, #logoutHeader {
   display: flex;
   flex-flow: row nowrap;
   justify-content: flex-end;
   align-items: center;
-  margin-bottom: 1rem;
+  margin-bottom: .5rem;
 }
 
 #createHeader h2, #updateHeader h2, #deleteHeader h2, #logoutHeader h2 {
@@ -509,7 +520,7 @@ input[type="file"] {
 }
 
 #postForm img, #uploadForm img {
-  height: 60px;
+  height: 50px;
   width: auto;
   border: 1px solid lightgray;
 }
@@ -560,29 +571,23 @@ input[type="file"] {
   margin: 0;
 }
 
-#cameraOverlay {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  z-index: 100;
-  background-color: rgba(0, 0, 0, 0.7);
-  display: none;
-  flex-flow: row nowrap;
-  justify-content: center;
-  align-items: center;
-}
-
 #cameraButtons {
   display: flex;
   flex-flow: row nowrap;
   justify-content: center;
-  background-color: transparent;
+  position: relative;
+  top: -2rem;
 }
 
 canvas {
   display: none;
+  max-width: 100%;
+  height: auto;
+}
+
+video {
+  max-width: 100%;
+  height: auto;
 }
 
 #uploadButton {
