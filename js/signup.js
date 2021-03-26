@@ -31,14 +31,16 @@ const showAlert = (content, type) => {
 
     // Background colors
     if (type === 'success') {
-        alertDiv.style.backgroundColor = `rgba(0, 200, 0, 0.4)`;
+        alertDiv.style.border = `1px solid #4BB543`;
+        alertDiv.style.backgroundColor = `#ECFFEB`;
     }
     else if (type === 'error') {
-        alertDiv.style.backgroundColor = `rgba(200, 0, 0, 0.4)`
+        alertDiv.style.border = `1px solid #FF0000`;
+        alertDiv.style.backgroundColor = `#FFD6D6`;
     }
 
     // Slide alert div down
-    alertDiv.style.top = "1rem";
+    alertDiv.style.top = ".5rem";
 
     // Push alert div back up after 3 seconds
     setTimeout(() => {
@@ -49,7 +51,7 @@ const showAlert = (content, type) => {
     setTimeout(() => {
         alertContent.textContent = "";
     }, 3500);
-}
+};
 
 //**************************************************************
 //      Event Listeners
@@ -82,7 +84,7 @@ signupForm.addEventListener('submit', (e) => {
                 email: email,
                 name: name,
                 timestamp: new firebase.firestore.FieldValue.serverTimestamp(),
-                photoURL: 'https://firebasestorage.googleapis.com/v0/b/high5-pwa.appspot.com/o/default-pic.jpg?alt=media&token=67e9b9f8-c806-40bd-9872-d3d8951e69e6',
+                photoURL: 'https://firebasestorage.googleapis.com/v0/b/high5-pwa.appspot.com/o/default-profile-pic.jpeg?alt=media&token=ab798555-acc2-4748-8657-fcfb019f84de',
             }).then(() => {
                 // Show message
                 showAlert(`Account created successfully! Redirecting to home page.`, `success`);

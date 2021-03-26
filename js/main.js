@@ -331,7 +331,7 @@ const renderPost = (doc) => {
         // Create element
         let distance = document.createElement('p');
         distance.setAttribute('class', 'distance');
-        distance.textContent = `${km}`;
+        distance.textContent = `${km} km`;
         nameDistanceTime.appendChild(distance)
     }
     let timeCreated = document.createElement('p');
@@ -633,14 +633,16 @@ const showAlert = (content, type) => {
 
     // Background colors
     if (type === 'success') {
-        alertDiv.style.backgroundColor = `rgba(0, 200, 0, 0.4)`;
+        alertDiv.style.border = `1px solid #4BB543`;
+        alertDiv.style.backgroundColor = `#ECFFEB`;
     }
     else if (type === 'error') {
-        alertDiv.style.backgroundColor = `rgba(200, 0, 0, 0.4)`
+        alertDiv.style.border = `1px solid #FF0000`
+        alertDiv.style.backgroundColor = `#FFD6D6`;
     }
 
     // Slide alert div down
-    alertDiv.style.top = "1rem";
+    alertDiv.style.top = "4rem";
 
     // Push alert div back up after 3 seconds
     setTimeout(() => {
