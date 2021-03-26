@@ -644,11 +644,17 @@ button {
   gap: 1.5rem;
 }
 
-.name-distance-time p:first-of-type {
+.name-distance-time > span {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: .25rem;
+}
+
+.name-distance-time > p:first-of-type {
   font-weight: 600;
 }
 
-.name-distance-time p:last-of-type {
+.name-distance-time > p:last-of-type {
   flex-grow: 1;
   text-align: right;
 }

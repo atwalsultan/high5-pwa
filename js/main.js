@@ -331,10 +331,15 @@ const renderPost = (doc) => {
         let km = calculateDistance(doc.data().coordinates.latitude, doc.data().coordinates.longitude, userPos.coords.latitude, userPos.coords.longitude); // Calculate distance 
 
         // Create element
+        let distanceSpan = document.createElement('span');
+        let icon = document.createElement('img');
+        icon.setAttribute('src', '../images/location-icon.svg');
         let distance = document.createElement('p');
+        distanceSpan.appendChild(icon);
+        distanceSpan.appendChild(distance);
         distance.setAttribute('class', 'distance');
         distance.textContent = `${km} km`;
-        nameDistanceTime.appendChild(distance)
+        nameDistanceTime.appendChild(distanceSpan);
     }
     let timeCreated = document.createElement('p');
     nameDistanceTime.appendChild(timeCreated);
