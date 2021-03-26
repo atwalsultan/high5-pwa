@@ -327,7 +327,7 @@ footer .fas {
 }
 
 /* Class Styles */
-.closeBtn {
+.closeBtn:not(#cameraOverlay .closeBtn) {
   font-size: 2rem;
   font-weight: bold;
 }

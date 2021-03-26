@@ -747,6 +747,7 @@ const snapImage = () => {
     uploadButton.style.display = 'block';
     videoElement.style.display = 'none';
     snapButton.style.display = 'none';
+    flipButton.style.display = 'none';
     context.clearRect(0, 0, canvas.width, canvas.height);
     context.drawImage(videoElement, 0, 0, 640, 480);
 
