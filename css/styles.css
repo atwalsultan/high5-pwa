@@ -282,11 +282,15 @@ footer nav {
   border-top: 1px solid #000;
 }
 
-footer .fas {
+footer button {
   font-size: 1.25rem;
-  background-color: rgb(200, 200, 200);
-  padding: 0.5rem;
   border-radius: 50%;
+  background-color: rgb(200, 200, 200);
+  /* background-color: #053E95; */
+}
+
+footer button img {
+  padding: .25rem .2rem 0 .2rem;
 }
 
 /* Overlays for modals */
@@ -647,6 +651,7 @@ button {
 .name-distance-time > span {
   display: flex;
   flex-flow: row nowrap;
+  align-items: flex-end;
   gap: .25rem;
 }
 

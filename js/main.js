@@ -53,7 +53,7 @@ const sidebar = document.getElementById('sidebar');
 const sidebarBtn = document.getElementById('sidebar-btn');
 
 // Sections
-let icons = document.querySelectorAll('footer .fas');
+let icons = document.querySelectorAll('footer li button');
 let sections = document.querySelectorAll('main > section');
 
 // Chats
@@ -674,6 +674,7 @@ const changeSections = (index) => {
     });
 
     sections[index].classList.remove('section-hidden');
+    // console.log(icons[index].querySelector('img'));
 };
 
 // Create elements and render chat
