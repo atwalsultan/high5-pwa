@@ -421,10 +421,20 @@ const renderPost = (doc) => {
     // Add 'Update' and 'Delete' buttons only for posts owned by the user
     if(auth.currentUser.uid === doc.data().uid) {
         let updateBtn = document.createElement('button');
-        let deleteBtn = document.createElement('button');
+        let updateIcon = document.createElement('img');
+        updateIcon.setAttribute('src', '../images/update-icon.svg');
+        let updateText = document.createElement('span');
+        updateText.textContent = `Update`;
+        updateBtn.append(updateIcon)
+        updateBtn.append(updateText);
 
-        updateBtn.textContent = `Update`;
-        deleteBtn.textContent = `Delete`;
+        let deleteBtn = document.createElement('button');
+        let deleteIcon = document.createElement('img');
+        deleteIcon.setAttribute('src', '../images/delete-icon.svg');
+        let deleteText = document.createElement('span');
+        deleteText.textContent = `Delete`
+        deleteBtn.append(deleteIcon);
+        deleteBtn.append(deleteText);
 
         // Add event listeners to buttons
         addButtonListeners(updateBtn, deleteBtn, doc);
