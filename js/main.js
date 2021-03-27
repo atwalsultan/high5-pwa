@@ -376,6 +376,17 @@ const renderPost = (doc) => {
     likeBtn.appendChild(likeIcon);
     likeBtn.appendChild(likeText);
 
+    likeBtn.addEventListener('click', (e) => {
+        likeBtn.classList.toggle('active');
+        let url = likeBtn.querySelector('img').src.split('/images/')[1];
+        if(url === "high5-icon.svg") {
+            likeBtn.querySelector('img').src = `../images/high5-icon-active.svg`;
+        }
+        else if(url === "high5-icon-active.svg") {
+            likeBtn.querySelector('img').src = `../images/high5-icon.svg`;
+        }
+    });
+
     postDiv.appendChild(nameDistanceTime);
     postDiv.appendChild(description);
 

@@ -64,6 +64,10 @@ footer button:active {
   outline: none;
 }
 
+footer button:active {
+  transform: scale(.8);
+}
+
 button:hover {
   cursor: pointer;
 }
@@ -278,11 +282,12 @@ footer button {
   font-size: 1.25rem;
   border-radius: 50%;
   background-color: #E5E5E5;
-  transition: all 0.25s ease-in;
+  transition: all 0.15s ease-in;
 }
 
 footer button img {
   padding: .25rem .2rem 0 .2rem;
+  transform: scale(1.25);
 }
 
 .footer-btn-active {
@@ -736,4 +741,15 @@ button {
 
 .buttons button img {
   transform: scale(1.25);
+  border-radius: 50%;
+  padding: .1rem;
+  margin-right: .2rem;
+}
+
+.buttons .active img {
+  background-color: #FA812A;
+}
+
+.buttons .active span {
+  color: black;
 }
