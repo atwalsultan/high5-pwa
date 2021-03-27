@@ -141,6 +141,7 @@ header .fas {
   display: flex;
   flex-flow: column nowrap;
   gap: 0.25rem;
+  color: #737373;
 }
 
 aside#sidebar.sidebar-hidden {
@@ -285,12 +286,16 @@ footer nav {
 footer button {
   font-size: 1.25rem;
   border-radius: 50%;
-  background-color: rgb(200, 200, 200);
-  /* background-color: #053E95; */
+  background-color: #E5E5E5;
+  transition: all 0.25s ease-in;
 }
 
 footer button img {
   padding: .25rem .2rem 0 .2rem;
+}
+
+.footer-btn-active {
+  background-color: #053E95;
 }
 
 /* Overlays for modals */
@@ -662,6 +667,7 @@ button {
 .name-distance-time > p:last-of-type {
   flex-grow: 1;
   text-align: right;
+  color: #737373;
 }
 
 .buttons {

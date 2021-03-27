@@ -669,12 +669,52 @@ const toggleSidebar = () => {
 
 // Change sections
 const changeSections = (index) => {
+    // Hide all sections
     sections.forEach((section) => {
         section.classList.add('section-hidden');
     });
 
+    // Reset all footer icons to normal
+    icons.forEach((icon) => {
+        icon.classList.remove('footer-btn-active');
+    });
+
+    // Show relevant section
     sections[index].classList.remove('section-hidden');
-    // console.log(icons[index].querySelector('img'));
+
+    // Activate relevant footer icon
+    icons[index].classList.add('footer-btn-active');
+    let icon = icons[index].querySelector('img');
+    
+    switch(index) {
+        case 0: 
+            icons[0].querySelector('img').src = "../images/home-icon-active.svg";
+            icons[1].querySelector('img').src = "../images/notification-icon.svg";
+            icons[2].querySelector('img').src = "../images/message-icon.svg";
+            icons[3].querySelector('img').src = "../images/profile-icon.svg";
+            break;
+
+        case 1: 
+            icons[0].querySelector('img').src = "../images/home-icon.svg";
+            icons[1].querySelector('img').src = "../images/notification-icon-active.svg";
+            icons[2].querySelector('img').src = "../images/message-icon.svg";
+            icons[3].querySelector('img').src = "../images/profile-icon.svg";
+            break;
+
+        case 2: 
+            icons[0].querySelector('img').src = "../images/home-icon.svg";
+            icons[1].querySelector('img').src = "../images/notification-icon.svg";
+            icons[2].querySelector('img').src = "../images/message-icon-active.svg";
+            icons[3].querySelector('img').src = "../images/profile-icon.svg";
+            break;
+
+        case 3: 
+            icons[0].querySelector('img').src = "../images/home-icon.svg";
+            icons[1].querySelector('img').src = "../images/notification-icon.svg";
+            icons[2].querySelector('img').src = "../images/message-icon.svg";
+            icons[3].querySelector('img').src = "../images/profile-icon-active.svg";
+            break;
+    }
 };
 
 // Create elements and render chat
