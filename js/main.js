@@ -350,9 +350,23 @@ const renderPost = (doc) => {
     let buttons = document.createElement('div');
     buttons.classList.add('buttons');
 
-    let dateTime = document.createElement('p'); // Expected date and time
+    let dateTimeDiv = document.createElement('div');
+    dateTimeDiv.setAttribute('id', 'dateTimeDiv');
+    let dateTimeIcon = document.createElement('img');
+    dateTimeIcon.setAttribute('src', '../images/calendar-icon.svg');
+    dateTimeDiv.appendChild(dateTimeIcon);
+    let dateTime = document.createElement('span');
+    dateTimeDiv.appendChild(dateTime);
+
     let description = document.createElement('p'); // Description
-    let category = document.createElement('p'); // Category
+
+    let categoryDiv = document.createElement('div');
+    categoryDiv.setAttribute('id', 'categoryDiv');
+    let categoryIcon = document.createElement('img');
+    categoryIcon.setAttribute('src', '../images/category-icon.svg');
+    categoryDiv.appendChild(categoryIcon);
+    let category = document.createElement('span');
+    categoryDiv.appendChild(category);
     let likeBtn = document.createElement('button'); // Like button 
 
     postDiv.appendChild(nameDistanceTime);
@@ -364,8 +378,8 @@ const renderPost = (doc) => {
         postDiv.appendChild(img);
     }
 
-    postDiv.appendChild(category);
-    postDiv.appendChild(dateTime);
+    postDiv.appendChild(categoryDiv);
+    postDiv.appendChild(dateTimeDiv);
     postDiv.appendChild(buttons);
     buttons.appendChild(likeBtn)
     
