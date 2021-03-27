@@ -234,12 +234,15 @@ const createChatForm = (chat) => {
     let messageInput = document.createElement('input');
     messageInput.setAttribute('type', 'text');
     messageInput.setAttribute('id', 'message');
+    messageInput.setAttribute('placeholder', 'Type your message here...');
     messageInput.setAttribute('required', 'required')
 
     // Create submit button
     let sendBtn = document.createElement('button');
     sendBtn.setAttribute('type', 'submit');
-    sendBtn.textContent = 'Send';
+    let sendIcon = document.createElement('img');
+    sendIcon.setAttribute('src', '../images/send-message-icon.svg');
+    sendBtn.appendChild(sendIcon);
 
     // Append input and button to form
     chatForm.append(messageInput);
@@ -910,13 +913,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
             else if(change.type === 'modified') {
-                // let li = document.getElementById(change.doc.id);
-                // chatListener.removeChild(li);
-                // renderChat(change.doc);
+                
             }
             else if(change.type === 'removed') {
-                // let li = document.getElementById(change.doc.id);
-                // chatList.removeChild(li);
+                
             }
         });            
     });

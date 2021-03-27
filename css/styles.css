@@ -9,18 +9,9 @@
   font-family: "Open Sans", sans-serif;
 }
 
-/* html *::-webkit-scrollbar {
-  width: fit-content;
+#previousMessages::-webkit-scrollbar, section::-webkit-scrollbar {
+  width: 0;
 }
-
-html *::-webkit-scrollbar-track {
-  border-radius: 10px;
-}
-
-html *::-webkit-scrollbar-thumb {
-  border-radius: 7px;
-  background-color: gray;
-} */
 
 img {
   max-width: 100%;
@@ -357,79 +348,82 @@ footer button img {
 }
 
 /* Chat */
-#previousMessages {
-  display: flex;
-  flex-flow: column nowrap;
-  gap: .5rem;
-  margin: 1rem 0;
-  padding: 0 .25rem 0 .4rem;
-}
-
 .message {
-  background-color: lightgray;
-  border-radius: 10px;
+  background-color: #ECEBE4;
+  border-radius: 2px;
   width: max-content;
-  max-width: 50%;
+  max-width: 70%;
   word-wrap: break-word;
-  padding: .45rem .45rem;
+  padding: .5rem .7rem;
+  margin-bottom: .35rem;
 }
 
  .my-message {
   align-self: flex-end;
+  background-color: #053E95;
+  color: white;
+}
+
+#previousMessages {
+  min-height: 10vh;
+  max-height: 70vh;
+  overflow-y: scroll;
+  display: flex;
+  flex-flow: column nowrap;
+  margin: .25rem 0;
+  padding: 0 1rem;
+}
+
+#chatOverlay .modal {
+  padding: 0;
+}
+
+#chatHeader {
+  margin-bottom: 0;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  padding: .5rem .75rem;
+}
+
+#chatFooter {
+  padding: 1rem;
+  box-shadow: 0 -4px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
 #newMessage form {
   display: flex;
   flex-flow: row nowrap;
+  gap: 1rem;
   justify-content: space-between;
-  align-items: center;
-  gap: .75rem;
 }
 
 #newMessage input {
-  flex-grow: 1;
-  padding: .2rem .25rem;
+  font-family: inherit;
+  font-size: 0.9rem;
+  padding: 0.5rem;
   border-radius: 5px;
-  border: 1px solid black;
+  border: 1px solid #737373;
+  color: #737373;
+  flex-grow: 1;
+}
+
+#newMessage input:focus {
+  outline-color: #053E95;
 }
 
 #newMessage button {
-  padding: .2rem .5rem;
-  border-radius: 5px;
-  border: 1px solid black;
+  border: none;
+  transform: scale(1.25);
+  background-color: transparent;
+  transition: all .2s ease-in;
 }
 
-#chatOverlay .modal {
-  position: relative;
+#newMessage button:focus {
+  outline: none;
 }
 
-#chatHeader {
-  position: sticky;
-  top: 0;
-  left: 0;
-  width: 100%;
-  background-color: rgb(175, 175, 175);
-  box-sizing: border-box;
-  padding: .5rem;
-
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: space-between;
-  align-items: center;
-}
-
-#chatFooter {
-  position: sticky;
-  bottom: 1px;
-  left: 0;
-  width: 100%;
-  background-color: rgb(175, 175, 175);
-  box-sizing: border-box;
-  padding: .5rem;
-}
-
-#chatOverlay .modal {
-  overflow-y: scroll;
+#newMessage button:active {
+  outline: none;
+  transform: scale(.8);
 }
 
 /* Sections */
@@ -452,6 +446,7 @@ section > h2 {
   left: 50%;
   transform: translate(-50%, -50%);
   max-width: 75%;
+  max-height: 95%;
 }
 
 #cameraOverlay {
@@ -478,7 +473,7 @@ section > h2 {
 #cameraButtons button {
   border-radius: 50%;
   max-width: 60px;
-  box-shadow: 2px 2px 4px 1px rgba(97, 97, 97, 0.5);
+  box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   transition: all .15s ease-in;
 }
 
@@ -498,7 +493,7 @@ section > h2 {
   padding-top: .18rem;
 }
 
-#createHeader, #updateHeader, #deleteHeader, #logoutHeader {
+#createHeader, #updateHeader, #deleteHeader, #logoutHeader, #chatHeader {
   display: flex;
   flex-flow: row nowrap;
   justify-content: flex-end;
@@ -506,7 +501,7 @@ section > h2 {
   margin-bottom: .5rem;
 }
 
-#createHeader h2, #updateHeader h2, #deleteHeader h2, #logoutHeader h2 {
+#createHeader h2, #updateHeader h2, #deleteHeader h2, #logoutHeader h2, #chatHeader h2 {
   text-align: center;
   flex-grow: 1;
   justify-self: center;
@@ -640,7 +635,7 @@ video {
 }
 
 #postList li {
-  padding: .75rem .75rem .75rem 0;
+  padding: .75rem 1.5rem .75rem 0;
   border-radius: 10px;
 
   display: flex;
