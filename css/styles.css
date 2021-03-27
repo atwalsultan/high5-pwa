@@ -464,6 +464,40 @@ section > h2 {
   padding: 0;
 }
 
+#cameraButtons {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  padding: 0 1rem;
+  gap: 1rem;
+  position: relative;
+  top: -5rem;
+}
+
+
+#cameraButtons button {
+  border-radius: 50%;
+  max-width: 60px;
+  box-shadow: 2px 2px 4px 1px rgba(97, 97, 97, 0.5);
+  transition: all .15s ease-in;
+}
+
+#cameraButtons button:active {
+  transform: scale(.8);
+}
+
+#cameraButtons button:focus {
+  outline: none;
+}
+
+#snapButton {
+  transform: scale(1.4);
+}
+
+#snapButton img {
+  padding-top: .18rem;
+}
+
 #createHeader, #updateHeader, #deleteHeader, #logoutHeader {
   display: flex;
   flex-flow: row nowrap;
@@ -581,14 +615,6 @@ input[type="file"] {
 
 .location-div > input {
   margin: 0;
-}
-
-#cameraButtons {
-  display: flex;
-  flex-flow: row nowrap;
-  justify-content: center;
-  position: relative;
-  top: -2rem;
 }
 
 canvas {

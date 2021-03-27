@@ -852,6 +852,7 @@ const addNewImage = (e) => {
         cameraOverlay.style.display = 'block';
         videoElement.style.display = 'block';
         snapButton.style.display = 'block';
+        flipButton.style.display = 'block';
 
         // On snap button click
         snapButton.addEventListener('click', snapImage);
