@@ -414,7 +414,7 @@ footer button img {
   border: none;
   transform: scale(1.25);
   background-color: transparent;
-  transition: all .2s ease-in;
+  transition: all .15s ease-in;
 }
 
 #newMessage button:focus {
@@ -422,7 +422,6 @@ footer button img {
 }
 
 #newMessage button:active {
-  outline: none;
   transform: scale(.8);
 }
 
@@ -695,7 +694,7 @@ button {
   display: flex;
   flex-flow: row nowrap;
   gap: .35rem;
-  justify-content: center;
+  margin-top: .5rem;
 }
 
 #categoryDiv, #dateTimeDiv {
@@ -712,4 +711,29 @@ button {
 
 #dateTimeDiv img {
   transform: scaleX(1.2);
+}
+
+.buttons button {
+  background-color: transparent;
+  border: none;
+  font-family: inherit;
+  font-size: inherit;
+  display: flex;
+  flex-flow: row nowrap;
+  gap: .25rem;
+  align-items: center;
+  color: #737373;
+  transition: all .15s ease-in;
+}
+
+.buttons button:focus {
+  outline: none;
+}
+
+.buttons button:active {
+  transform: scale(0.8);
+}
+
+.buttons button img {
+  transform: scale(1.25);
 }

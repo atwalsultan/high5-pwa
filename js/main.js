@@ -367,7 +367,14 @@ const renderPost = (doc) => {
     categoryDiv.appendChild(categoryIcon);
     let category = document.createElement('span');
     categoryDiv.appendChild(category);
-    let likeBtn = document.createElement('button'); // Like button 
+
+    let likeBtn = document.createElement('button');
+    let likeIcon = document.createElement('img');
+    let likeText = document.createElement('span');
+    likeText.textContent = `High5!`;
+    likeIcon.setAttribute('src', '../images/high5-icon.svg');
+    likeBtn.appendChild(likeIcon);
+    likeBtn.appendChild(likeText);
 
     postDiv.appendChild(nameDistanceTime);
     postDiv.appendChild(description);
@@ -395,7 +402,7 @@ const renderPost = (doc) => {
     dateTime.textContent = `Expected Date & Time: ${doc.data().date} | ${doc.data().time}`;
     category.textContent = `Category: ${doc.data().category}`;
     description.textContent = `${doc.data().description}`;
-    likeBtn.textContent = 'High5!';
+    // likeBtn.textContent = 'High5!';
 
     // Append post data to list item element
     postList.appendChild(li);
@@ -416,9 +423,13 @@ const renderPost = (doc) => {
     }
     else {
         let chatBtn = document.createElement('button');
+        let chatIcon = document.createElement('img');
+        chatIcon.setAttribute('src', '../images/send-message-icon-2.svg');
+        let chatText = document.createElement('span');
+        chatText.textContent = `Chat`;
+        chatBtn.appendChild(chatIcon);
+        chatBtn.appendChild(chatText);
         
-        chatBtn.textContent = 'Chat';
-
         chatBtn.addEventListener('click', (event) => {
             let postId = event.target.parentNode.id;
 
