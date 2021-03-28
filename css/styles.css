@@ -385,13 +385,13 @@ footer button img {
 
 #chatHeader {
   margin-bottom: 0;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.2);
   padding: .5rem .75rem;
 }
 
 #chatFooter {
   padding: 1rem;
-  box-shadow: 0 -4px 8px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: 0 -3px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
 #newMessage form {
@@ -479,6 +479,8 @@ section > h2 {
   max-width: 60px;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   transition: all .15s ease-in;
+  border: none;
+  background-color: white;
 }
 
 #cameraButtons button:active {
