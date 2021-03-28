@@ -280,9 +280,14 @@ const createChatListener = (chat) => {
             if(change.type === 'added') {
                 // Create element
                 let message = document.createElement('li');
+                let content = document.createElement('span');
+                content.textContent = `${change.doc.data().content}`;
+                message.append(content);
 
-                // Add content
-                message.textContent = `${change.doc.data().content}`;
+                let time = document.createElement('span');
+                let dt = new Date (change.doc.data().timestamp.seconds * 1000);
+                time.textContent =  dt.getHours() + ':'+ dt.getMinutes();
+                message.append(time);
 
                 // Add class
                 message.classList.add('message');
