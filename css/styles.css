@@ -44,12 +44,10 @@ header {
   top: 0;
   left: 0;
   z-index: 10;
-}
-
-header nav {
   background-color: white;
-  padding: 0.75rem 1rem;
-  box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.2)
+  padding: 1rem 1rem;
+  box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.2);
+  text-align: center;
 }
 
 header nav ul,
@@ -156,8 +154,7 @@ aside#sidebar.sidebar-hidden {
   left: 0;
   z-index: 7;
   padding-bottom: 1rem;
-
-  height: 80vh;
+  height: 90vh;
   overflow-y: scroll;
 }
 
@@ -332,7 +329,6 @@ footer button img {
 }
 
 #home-main {
-  margin-bottom: 4rem;
   position: relative;
 }
 
@@ -641,6 +637,40 @@ video {
 #uploadButton {
   display: none;
 }
+/* Notifications */
+#notificationList {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+#notificationList li {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: .5rem;
+  padding: 1rem;
+  border-bottom: 1px solid lightgray;
+}
+
+#notificationList li img {
+  max-height: 50px;
+  width: auto;
+  border-radius: 50%;
+}
+
+#notificationList li > div:nth-of-type(2) {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: .25rem;
+}
+
+#notificationList li > div:nth-of-type(2) p:first-of-type {
+  font-weight: 600;
+}
+
+#notificationList li > div:last-of-type {
+  flex-grow: 1;
+  text-align: right;
+}
 
 /* Posts */
 #postList {
@@ -672,8 +702,8 @@ video {
 }
 
 .profile-pic-div img {
-  width: 40px;
-  height: 40px;
+  max-height: 40px;
+  width: auto;
   border-radius: 50%;
 }
 
