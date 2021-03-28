@@ -1,5 +1,4 @@
 /* Importing Google Fonts */
-@import url("https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap");
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap');
 
 * {
@@ -44,7 +43,7 @@ header {
 header nav {
   background-color: white;
   padding: 0.75rem 1rem;
-  border-bottom: 1px solid #000;
+  box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.2)
 }
 
 header nav ul,
@@ -64,7 +63,18 @@ footer button:active {
   outline: none;
 }
 
-footer button:active {
+header button {
+  transform: scale(1.15);
+  transition: all .15s ease-in;
+  padding: .2rem .3rem .1rem .3rem;
+}
+
+#createBtn {
+  background-color: #FA812A;
+  border-radius: 50%;
+}
+
+footer button:active, header button:active {
   transform: scale(.8);
 }
 
@@ -275,7 +285,7 @@ footer {
 footer nav {
   background-color: white;
   padding: 0.65rem 1rem;
-  border-top: 1px solid #000;
+  box-shadow: 0 -3px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
 footer button {
