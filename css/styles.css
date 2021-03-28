@@ -44,7 +44,7 @@ header {
   top: 0;
   left: 0;
   z-index: 10;
-  background-color: white;
+  background-color: #FBFBFB;
   padding: 1rem 1rem;
   box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.2);
   text-align: center;
@@ -637,13 +637,13 @@ video {
 #uploadButton {
   display: none;
 }
-/* Notifications */
-#notificationList {
+/* Notifications and Chat */
+#notificationList, #chatList {
   display: flex;
   flex-flow: column nowrap;
 }
 
-#notificationList li {
+#notificationList li, #chatList li {
   display: flex;
   flex-flow: row nowrap;
   gap: .5rem;
@@ -651,25 +651,30 @@ video {
   border-bottom: 1px solid lightgray;
 }
 
-#notificationList li img {
+#notificationList li img, #chatList li img {
   max-height: 50px;
   width: auto;
   border-radius: 50%;
 }
 
-#notificationList li > div:nth-of-type(2) {
+#notificationList li > div, #chatList li > div {
   display: flex;
   flex-flow: column nowrap;
   gap: .25rem;
 }
 
-#notificationList li > div:nth-of-type(2) p:first-of-type {
+#notificationList li > div > p:first-of-type, #chatList li > div > p:first-of-type {
   font-weight: 600;
 }
 
-#notificationList li > div:last-of-type {
+#notificationList li > p:last-of-type, #chatList li > span {
   flex-grow: 1;
   text-align: right;
+}
+
+#notificationList li:hover, #chatList li:hover {
+  cursor: pointer;
+  background-color: #E5E5E5;
 }
 
 /* Posts */
@@ -702,7 +707,7 @@ video {
 }
 
 .profile-pic-div img {
-  max-height: 40px;
+  max-height: 50px;
   width: auto;
   border-radius: 50%;
 }

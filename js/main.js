@@ -285,8 +285,10 @@ const createChatListener = (chat) => {
                 message.append(content);
 
                 let time = document.createElement('span');
-                let dt = new Date (change.doc.data().timestamp.seconds * 1000);
-                time.textContent =  dt.getHours() + ':'+ dt.getMinutes();
+                let dt = new Date (change.doc.data().timestamp * 1000);
+                let hours = ('0' + dt.getHours()).slice(-2);
+                let minutes = ('0' + dt.getMinutes()).slice(-2);
+                time.textContent =  hours + ': ' + minutes;
                 message.append(time);
 
                 // Add class
@@ -779,15 +781,39 @@ const renderChat = (doc, uids) => {
             .then((user) => {
                 // Create elements to be rendered
                 let li = document.createElement('li');
+                let picture = document.createElement('img');
+                picture.setAttribute('src', user.data().photoURL);
+
+
+                let contentDiv = document.createElement('div');
                 let userName = document.createElement('p');
 
                 let name = user.data().name;
-                
                 userName.textContent = name;
-                li.append(userName);
+                contentDiv.append(userName);
+
+                let time = document.createElement('span');
+
+                doc.ref.collection('messages').orderBy("timestamp", "desc").limit(1).get()
+                .then((snapshot) => {
+                    snapshot.forEach((message) => {
+                        let lastMessage = document.createElement('p');
+                        lastMessage.textContent = message.data().content;
+                        contentDiv.append(lastMessage);
+
+                        let dt = new Date(message.data().timestamp * 1000);
+                        let hours = ('0' + dt.getHours()).slice(-2);
+                        let minutes = ('0' + dt.getMinutes()).slice(-2);
+                        time.textContent = hours + `: ` + minutes;
+                    });
+                });
                 
                 // Set unique ID for each list item
                 li.setAttribute('id', `ch-${doc.id}`);
+
+                li.append(picture);
+                li.append(contentDiv);
+                li.append(time);
 
                 chatList.append(li);
             });
@@ -962,12 +988,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 if(uids.includes(auth.currentUser.uid)) {
                     renderChat(change.doc, uids);
                 }
-            }
-            else if(change.type === 'modified') {
-                
-            }
-            else if(change.type === 'removed') {
-                
             }
         });            
     });
