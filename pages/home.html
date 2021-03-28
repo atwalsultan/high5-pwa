@@ -255,7 +255,7 @@
 				<label for="updatePostImage">Image
 					<div class="image-div">
 						<input type="file" id="updatePostImage">
-						<button id="updateImage">Camera</button>
+						<button id="newUpdateImage">Camera</button>
 					</div>
 				</label>
 
@@ -317,9 +317,20 @@
 		<video id="video" width="640" height="480" autoplay></video>
 		<canvas id="canvas" width="640" height="480"></canvas>
 		<div id="cameraButtons">
-			<button id="snapButton">Capture</button>
-			<button id="flipButton">Flip</button>
-			<button id="uploadButton">Upload</button>
+			<button class="closeBtn">
+				<img src="../images/cancel.svg" alt="Cancel Button">
+			</button>
+
+			<button id="snapButton">
+				<img src="../images/capture.svg" alt="Capture Button">
+			</button>
+
+			<button id="flipButton">
+				<img src="../images/flip.svg" alt="Flip Button">
+			</button>
+			<button id="uploadButton">
+				<img src="../images/confirm.svg" alt="Confirm Button">
+			</button>
 		</div>
 	</div>
   </div>
@@ -355,29 +366,29 @@
 			<ul>
 				<!-- Home Button -->
 				<li>
-					<button>
-						<span class="fas fa-home"></span>
+					<button class="footer-btn-active">
+						<img src="../images/home-icon-active.svg" alt="Home Icon">
 						<span class="visually-hidden">Home</span>
 					</button>
 				</li>
 				<!-- Notifications Button -->
 				<li>
 					<button>
-						<span class="fas fa-bell"></span>
+						<img src="../images/notification-icon.svg" alt="Notification Icon">
 						<span class="visually-hidden">Notifications</span>
 					</button>
 				</li>
 				<!-- Messages Button -->
 				<li>
 					<button>
-						<span class="fas fa-comments"></span>
+						<img src="../images/message-icon.svg" alt="Message Icon">
 						<span class="visually-hidden">Messages</span>
 					</button>
 				</li>
 				<!-- Profile Button -->
 				<li>
 					<button>
-						<span class="fas fa-user"></span>
+						<img src="../images/profile-icon.svg" alt="Profile Icon">
 						<span class="visually-hidden">My Profile</span>
 					</button>
 				</li>

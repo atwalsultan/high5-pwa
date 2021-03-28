@@ -53,7 +53,7 @@ const sidebar = document.getElementById('sidebar');
 const sidebarBtn = document.getElementById('sidebar-btn');
 
 // Sections
-let icons = document.querySelectorAll('footer .fas');
+let icons = document.querySelectorAll('footer li button');
 let sections = document.querySelectorAll('main > section');
 
 // Chats
@@ -74,6 +74,8 @@ const snapButton = document.getElementById('snapButton');
 const uploadPhoto = document.getElementById('uploadPhoto');
 const cameraOverlay = document.getElementById('cameraOverlay');
 let blobToUpload = null;
+
+const newUpdateImageBtn = document.getElementById('newUpdateImage');
 
 //**************************************************************
 //      Function Declarations
@@ -232,12 +234,15 @@ const createChatForm = (chat) => {
     let messageInput = document.createElement('input');
     messageInput.setAttribute('type', 'text');
     messageInput.setAttribute('id', 'message');
+    messageInput.setAttribute('placeholder', 'Type your message here...');
     messageInput.setAttribute('required', 'required')
 
     // Create submit button
     let sendBtn = document.createElement('button');
     sendBtn.setAttribute('type', 'submit');
-    sendBtn.textContent = 'Send';
+    let sendIcon = document.createElement('img');
+    sendIcon.setAttribute('src', '../images/send-message-icon.svg');
+    sendBtn.appendChild(sendIcon);
 
     // Append input and button to form
     chatForm.append(messageInput);
@@ -329,10 +334,15 @@ const renderPost = (doc) => {
         let km = calculateDistance(doc.data().coordinates.latitude, doc.data().coordinates.longitude, userPos.coords.latitude, userPos.coords.longitude); // Calculate distance 
 
         // Create element
+        let distanceSpan = document.createElement('span');
+        let icon = document.createElement('img');
+        icon.setAttribute('src', '../images/location-icon.svg');
         let distance = document.createElement('p');
+        distanceSpan.appendChild(icon);
+        distanceSpan.appendChild(distance);
         distance.setAttribute('class', 'distance');
         distance.textContent = `${km} km`;
-        nameDistanceTime.appendChild(distance)
+        nameDistanceTime.appendChild(distanceSpan);
     }
     let timeCreated = document.createElement('p');
     nameDistanceTime.appendChild(timeCreated);
@@ -340,10 +350,42 @@ const renderPost = (doc) => {
     let buttons = document.createElement('div');
     buttons.classList.add('buttons');
 
-    let dateTime = document.createElement('p'); // Expected date and time
+    let dateTimeDiv = document.createElement('div');
+    dateTimeDiv.setAttribute('id', 'dateTimeDiv');
+    let dateTimeIcon = document.createElement('img');
+    dateTimeIcon.setAttribute('src', '../images/calendar-icon.svg');
+    dateTimeDiv.appendChild(dateTimeIcon);
+    let dateTime = document.createElement('span');
+    dateTimeDiv.appendChild(dateTime);
+
     let description = document.createElement('p'); // Description
-    let category = document.createElement('p'); // Category
-    let likeBtn = document.createElement('button'); // Like button 
+
+    let categoryDiv = document.createElement('div');
+    categoryDiv.setAttribute('id', 'categoryDiv');
+    let categoryIcon = document.createElement('img');
+    categoryIcon.setAttribute('src', '../images/category-icon.svg');
+    categoryDiv.appendChild(categoryIcon);
+    let category = document.createElement('span');
+    categoryDiv.appendChild(category);
+
+    let likeBtn = document.createElement('button');
+    let likeIcon = document.createElement('img');
+    let likeText = document.createElement('span');
+    likeText.textContent = `High5!`;
+    likeIcon.setAttribute('src', '../images/high5-icon.svg');
+    likeBtn.appendChild(likeIcon);
+    likeBtn.appendChild(likeText);
+
+    likeBtn.addEventListener('click', (e) => {
+        likeBtn.classList.toggle('active');
+        let url = likeBtn.querySelector('img').src.split('/images/')[1];
+        if(url === "high5-icon.svg") {
+            likeBtn.querySelector('img').src = `../images/high5-icon-active.svg`;
+        }
+        else if(url === "high5-icon-active.svg") {
+            likeBtn.querySelector('img').src = `../images/high5-icon.svg`;
+        }
+    });
 
     postDiv.appendChild(nameDistanceTime);
     postDiv.appendChild(description);
@@ -354,8 +396,8 @@ const renderPost = (doc) => {
         postDiv.appendChild(img);
     }
 
-    postDiv.appendChild(category);
-    postDiv.appendChild(dateTime);
+    postDiv.appendChild(categoryDiv);
+    postDiv.appendChild(dateTimeDiv);
     postDiv.appendChild(buttons);
     buttons.appendChild(likeBtn)
     
@@ -371,7 +413,7 @@ const renderPost = (doc) => {
     dateTime.textContent = `Expected Date & Time: ${doc.data().date} | ${doc.data().time}`;
     category.textContent = `Category: ${doc.data().category}`;
     description.textContent = `${doc.data().description}`;
-    likeBtn.textContent = 'High5!';
+    // likeBtn.textContent = 'High5!';
 
     // Append post data to list item element
     postList.appendChild(li);
@@ -379,10 +421,20 @@ const renderPost = (doc) => {
     // Add 'Update' and 'Delete' buttons only for posts owned by the user
     if(auth.currentUser.uid === doc.data().uid) {
         let updateBtn = document.createElement('button');
-        let deleteBtn = document.createElement('button');
+        let updateIcon = document.createElement('img');
+        updateIcon.setAttribute('src', '../images/update-icon.svg');
+        let updateText = document.createElement('span');
+        updateText.textContent = `Update`;
+        updateBtn.append(updateIcon)
+        updateBtn.append(updateText);
 
-        updateBtn.textContent = `Update`;
-        deleteBtn.textContent = `Delete`;
+        let deleteBtn = document.createElement('button');
+        let deleteIcon = document.createElement('img');
+        deleteIcon.setAttribute('src', '../images/delete-icon.svg');
+        let deleteText = document.createElement('span');
+        deleteText.textContent = `Delete`
+        deleteBtn.append(deleteIcon);
+        deleteBtn.append(deleteText);
 
         // Add event listeners to buttons
         addButtonListeners(updateBtn, deleteBtn, doc);
@@ -392,9 +444,13 @@ const renderPost = (doc) => {
     }
     else {
         let chatBtn = document.createElement('button');
+        let chatIcon = document.createElement('img');
+        chatIcon.setAttribute('src', '../images/send-message-icon-2.svg');
+        let chatText = document.createElement('span');
+        chatText.textContent = `Chat`;
+        chatBtn.appendChild(chatIcon);
+        chatBtn.appendChild(chatText);
         
-        chatBtn.textContent = 'Chat';
-
         chatBtn.addEventListener('click', (event) => {
             let postId = event.target.parentNode.id;
 
@@ -662,11 +718,52 @@ const toggleSidebar = () => {
 
 // Change sections
 const changeSections = (index) => {
+    // Hide all sections
     sections.forEach((section) => {
         section.classList.add('section-hidden');
     });
 
+    // Reset all footer icons to normal
+    icons.forEach((icon) => {
+        icon.classList.remove('footer-btn-active');
+    });
+
+    // Show relevant section
     sections[index].classList.remove('section-hidden');
+
+    // Activate relevant footer icon
+    icons[index].classList.add('footer-btn-active');
+    let icon = icons[index].querySelector('img');
+    
+    switch(index) {
+        case 0: 
+            icons[0].querySelector('img').src = "../images/home-icon-active.svg";
+            icons[1].querySelector('img').src = "../images/notification-icon.svg";
+            icons[2].querySelector('img').src = "../images/message-icon.svg";
+            icons[3].querySelector('img').src = "../images/profile-icon.svg";
+            break;
+
+        case 1: 
+            icons[0].querySelector('img').src = "../images/home-icon.svg";
+            icons[1].querySelector('img').src = "../images/notification-icon-active.svg";
+            icons[2].querySelector('img').src = "../images/message-icon.svg";
+            icons[3].querySelector('img').src = "../images/profile-icon.svg";
+            break;
+
+        case 2: 
+            icons[0].querySelector('img').src = "../images/home-icon.svg";
+            icons[1].querySelector('img').src = "../images/notification-icon.svg";
+            icons[2].querySelector('img').src = "../images/message-icon-active.svg";
+            icons[3].querySelector('img').src = "../images/profile-icon.svg";
+            break;
+
+        case 3: 
+            icons[0].querySelector('img').src = "../images/home-icon.svg";
+            icons[1].querySelector('img').src = "../images/notification-icon.svg";
+            icons[2].querySelector('img').src = "../images/message-icon.svg";
+            icons[3].querySelector('img').src = "../images/profile-icon-active.svg";
+            break;
+    }
 };
 
 // Create elements and render chat
@@ -706,11 +803,23 @@ const newFileImage = () => {
     fr.onload = () => {
         image.src = fr.result;
     }
-    fr.readAsDataURL(postImage.files[0]);
 
-    // Render uploaded image in DOM
-    uploadPhoto.innerHTML = ``;
-    uploadPhoto.append(image);
+    if(createOverlay.style.display !== 'none') {
+        // Get image url
+        fr.readAsDataURL(postImage.files[0]);
+
+        // Render uploaded image in DOM
+        uploadPhoto.innerHTML = ``;
+        uploadPhoto.append(image);
+    }
+    else if(updateOverlay.style.display !== 'none') {
+        // Get image url
+        fr.readAsDataURL(updatePostImage.files[0]);
+
+        // Render uploaded image in DOM
+        updateUploadPhoto.innerHTML = ``;
+        updateUploadPhoto.append(image);
+    }
 }
 
 // On upload image button click
@@ -747,6 +856,7 @@ const snapImage = () => {
     uploadButton.style.display = 'block';
     videoElement.style.display = 'none';
     snapButton.style.display = 'none';
+    flipButton.style.display = 'none';
     context.clearRect(0, 0, canvas.width, canvas.height);
     context.drawImage(videoElement, 0, 0, 640, 480);
 
@@ -788,9 +898,10 @@ const addNewImage = (e) => {
         });
 
         // Display camera overlay and child elements
-        cameraOverlay.style.display = 'flex';
+        cameraOverlay.style.display = 'block';
         videoElement.style.display = 'block';
         snapButton.style.display = 'block';
+        flipButton.style.display = 'block';
 
         // On snap button click
         snapButton.addEventListener('click', snapImage);
@@ -848,13 +959,10 @@ document.addEventListener('DOMContentLoaded', () => {
                 }
             }
             else if(change.type === 'modified') {
-                // let li = document.getElementById(change.doc.id);
-                // chatListener.removeChild(li);
-                // renderChat(change.doc);
+                
             }
             else if(change.type === 'removed') {
-                // let li = document.getElementById(change.doc.id);
-                // chatList.removeChild(li);
+                
             }
         });            
     });
@@ -937,5 +1045,13 @@ sidebar.querySelectorAll('input[type="checkbox"]').forEach((category) => {
 // When new post image button is clicked
 newPostImage.addEventListener('click', addNewImage);
 
-// When new file is added to input field
-postImage.addEventListener('change', newFileImage);
+// When new file is added to input field in create form
+postForm.postImage.addEventListener('change', newFileImage);
+
+// When new file is added to input field in create form
+updateForm.updatePostImage.addEventListener('change', newFileImage);
+
+// Do nothing when camera button is clicked in update modal
+newUpdateImageBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+})
