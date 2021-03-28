@@ -27,13 +27,19 @@ a {
   color: initial;
 }
 
-h1 {
-  font-family: "Caveat", sans-serif;
+button {
+  padding: .25rem .45rem;
+  border-radius: 5px;
+  border: 1px solid black;
+}
+
+button:hover {
+  cursor: pointer;
 }
 
 /* Header */
 header {
-  position: fixed;
+  position: sticky;
   width: 100%;
   top: 0;
   left: 0;
@@ -54,19 +60,12 @@ footer nav ul {
   align-items: center;
 }
 
-header button,
-header button:active,
-footer button,
-footer button:active {
-  background-color: initial;
-  border: none;
-  outline: none;
-}
-
 header button {
   transform: scale(1.15);
   transition: all .15s ease-in;
   padding: .2rem .3rem .1rem .3rem;
+  border: none;
+  background-color: transparent;
 }
 
 #createBtn {
@@ -74,16 +73,12 @@ header button {
   border-radius: 50%;
 }
 
-footer button:active, header button:active {
+#newMessage button:focus, #cameraButtons button:focus, .buttons button:focus, header button:focus, footer button:focus {
+  outline: none;
+}
+
+footer button:active, header button:active, #newMessage button:active, #cameraButtons button:active, .buttons button:active {
   transform: scale(.8);
-}
-
-button:hover {
-  cursor: pointer;
-}
-
-header .fas {
-  font-size: 1.5rem;
 }
 
 /* Sidebar */
@@ -289,10 +284,10 @@ footer nav {
 }
 
 footer button {
-  font-size: 1.25rem;
   border-radius: 50%;
   background-color: #E5E5E5;
   transition: all 0.15s ease-in;
+  border: none;
 }
 
 footer button img {
@@ -337,7 +332,7 @@ footer button img {
 }
 
 #home-main {
-  margin: 4rem 0 4rem .75rem;
+  margin-bottom: 4rem;
   position: relative;
 }
 
@@ -432,14 +427,6 @@ footer button img {
   transition: all .15s ease-in;
 }
 
-#newMessage button:focus {
-  outline: none;
-}
-
-#newMessage button:active {
-  transform: scale(.8);
-}
-
 /* Sections */
 section > h2 {
   max-width: max-content;
@@ -491,14 +478,6 @@ section > h2 {
   transition: all .15s ease-in;
   border: none;
   background-color: white;
-}
-
-#cameraButtons button:active {
-  transform: scale(.8);
-}
-
-#cameraButtons button:focus {
-  outline: none;
 }
 
 #snapButton {
@@ -651,7 +630,7 @@ video {
 }
 
 #postList li {
-  padding: .75rem 1.5rem .75rem 0;
+  padding: 1rem 1.5rem .75rem .75rem;
   border-radius: 10px;
 
   display: flex;
@@ -676,12 +655,6 @@ video {
   width: 40px;
   height: 40px;
   border-radius: 50%;
-}
-
-button {
-  padding: .25rem .45rem;
-  border-radius: 5px;
-  border: 1px solid black;
 }
 
 .name-distance-time {
@@ -741,14 +714,6 @@ button {
   align-items: center;
   color: #737373;
   transition: all .15s ease-in;
-}
-
-.buttons button:focus {
-  outline: none;
-}
-
-.buttons button:active {
-  transform: scale(0.8);
 }
 
 .buttons button img {
