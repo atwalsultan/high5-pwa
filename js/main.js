@@ -77,6 +77,8 @@ let blobToUpload = null;
 
 const newUpdateImageBtn = document.getElementById('newUpdateImage');
 
+const profileInfo = document.getElementById('profileInfo');
+
 //**************************************************************
 //      Function Declarations
 //**************************************************************
@@ -987,6 +989,28 @@ const addNewImage = (e) => {
     }
 }
 
+// Render a user's profile
+const renderProfile = () => {
+    db.collection('users').doc(auth.currentUser.uid).get().then((user) => {
+        let profileImg = document.createElement('img');
+        profileImg.setAttribute('src', user.data().photoURL);
+
+        let profileDisplayName = document.createElement('p');
+        profileDisplayName.textContent = user.data().name;
+
+        let profileEmail = document.createElement('p');
+        profileEmail.textContent = user.data().email;
+
+        let profileBio = document.createElement('p');
+        profileBio.textContent = user.data().bio ? user.data().bio : `"Hello there! Nice to meet you!"`;
+
+        profileInfo.append(profileImg);
+        profileInfo.append(profileDisplayName);
+        profileInfo.append(profileEmail);
+        profileInfo.append(profileBio);
+    });
+}
+
 //**************************************************************
 //      Event Listeners
 //**************************************************************
@@ -1045,6 +1069,10 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });            
     });
+
+    setTimeout(() => {
+        renderProfile();
+    }, 1000)
 });
 
 // Create form submission

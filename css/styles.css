@@ -364,6 +364,7 @@ footer button img {
   width: max-content;
   word-wrap: break-word;
   padding: .5rem .7rem;
+  max-width: 225px;
 }
 
 .my-message {
@@ -682,11 +683,73 @@ video {
 #notificationList li > p:last-of-type, #chatList li > span {
   flex-grow: 1;
   text-align: right;
+  min-width: 15%;
 }
 
 #notificationList li:hover, #chatList li:hover {
   cursor: pointer;
   background-color: #E5E5E5;
+}
+
+/* Profile */
+#profileBody {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 2rem;
+}
+
+
+
+#profileBody button {
+  margin: auto;
+  padding: 0.75rem;
+  width: 70%;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: white;
+  font-weight: 600;
+  font-size: 1rem;
+}
+
+#profileList li {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+  padding: .5rem 1rem;
+}
+
+#profileList li:hover {
+  background-color: #E5E5E5;
+}
+
+#profileInfo {
+  padding: 2rem;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  gap: 0.4rem;
+  flex-grow: 1;
+
+  border-bottom: 1px solid lightgray;
+}
+
+#profileInfo img {
+  max-width: 80px;
+  height: auto;
+  border-radius: 50%;
+}
+
+#profileInfo > p:last-of-type {
+  padding-top: 2rem;
+}
+
+#profileInfo > p:first-of-type {
+  font-weight: 600;
+}
+
+#profileInfo > p:nth-of-type(2) {
+  font-size: .9rem;
+  color: #737373;
 }
 
 /* Posts */
