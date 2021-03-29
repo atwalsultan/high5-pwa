@@ -458,9 +458,7 @@ const renderPost = (doc) => {
         chatBtn.appendChild(chatIcon);
         chatBtn.appendChild(chatText);
         
-        chatBtn.addEventListener('click', (event) => {
-            let postId = event.target.parentNode.id;
-
+        chatBtn.addEventListener('click', () => {
             // Fetch chat between logged in user and owner of post
             db.collection('chats').where(`members.${auth.currentUser.uid}`, '==', true).where(`members.${doc.data().uid}`, '==', true).get()
             .then((querySnapshot) => {
@@ -825,11 +823,39 @@ const renderChat = (doc, uids) => {
                     li.append(time);
                     chatList.append(li);
                 }
+
+                li.addEventListener('click', (e) => {
+                    // Create chat form
+                    let chatForm = createChatForm(doc);
+
+                    let members = doc.data().members;
+                    let uids = Object.keys(members);
+                    uids.forEach((uid) => {
+                        if(uid !== auth.currentUser.uid) {
+                            db.collection('users').doc(uid).get().then((user) => {
+                                chatUserName.innerText = user.data().name;
+                            });
+                        }
+                    });
+
+                    // let parent = e.target.parentElement;
+                    // chatUserName.innerText = parent.querySelector('div p:first-of-type').textContent;
+
+                    // Append form to div in DOM
+                    newMessage.append(chatForm);
+
+                    // Display previous messages from chat
+                    chatListener = createChatListener(doc);
+
+                    // Display chat modal
+                    chatOverlay.style.display = 'block';
+
+                    // Focus on input field
+                    chatForm.message.focus();
+                });
             });
         }
     });
-
-    
 };
 
 // On file input field change
