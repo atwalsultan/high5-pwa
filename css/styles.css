@@ -680,6 +680,10 @@ video {
   font-weight: 600;
 }
 
+#chatList li > div > p:nth-of-type(2) > span {
+  color: #737373;
+}
+
 #notificationList li > p:last-of-type, #chatList li > span {
   flex-grow: 1;
   text-align: right;

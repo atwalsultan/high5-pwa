@@ -802,10 +802,13 @@ const renderChat = (doc, uids) => {
 
                 let time = document.createElement('span');
 
+                let lastMessage = document.createElement('p');
+                lastMessage.innerHTML = '<span>No messages yet.</span>';
+                contentDiv.append(lastMessage);
+
                 doc.ref.collection('messages').orderBy("timestamp", "desc").limit(1).get()
                 .then((snapshot) => {
                     snapshot.forEach((message) => {
-                        let lastMessage = document.createElement('p');
                         lastMessage.textContent = message.data().content;
                         contentDiv.append(lastMessage);
 
@@ -816,23 +819,44 @@ const renderChat = (doc, uids) => {
                     });
                 });
 
-                // Create elements to be rendered
-                if(document.getElementById(`ch-` + doc.id) !== null) {
-                    li = document.getElementById(`ch-` + doc.id);
-                    li.textContent = ``;
-                    li.append(picture);
-                    li.append(contentDiv);
-                    li.append(time);
-                    chatList.prepend(li);
-                }
-                else {
-                    // Set unique ID for each list item
-                    li.setAttribute('id', `ch-${doc.id}`);
-                    li.append(picture);
-                    li.append(contentDiv);
-                    li.append(time);
-                    chatList.append(li);
-                }
+                // Set unique ID for each list item
+                li.setAttribute('id', `ch-${doc.id}`);
+                li.append(picture);
+                li.append(contentDiv);
+                li.append(time);
+
+                li.addEventListener('click', () => {
+                    let userId;
+
+                    // Create chat form
+                    let chatForm = createChatForm(doc);
+
+                    // Get user's name
+                    uids.forEach((uid) => {
+                        if(uid !== auth.currentUser.uid) {
+                            userId = uid;
+                        }
+                    });
+
+                    db.collection('users').doc(userId).get()
+                    .then((user) => {
+                        chatUserName.innerText = user.data().name;
+                    });
+
+                    // Append form to div in DOM
+                    newMessage.append(chatForm);
+
+                    // Display previous messages from chat
+                    chatListener = createChatListener(doc);
+
+                    // Display chat modal
+                    chatOverlay.style.display = 'block';
+
+                    // Focus on input field
+                    chatForm.message.focus();
+                })
+
+                chatList.prepend(li);
             });
         }
     });
@@ -1015,28 +1039,26 @@ document.addEventListener('DOMContentLoaded', () => {
         showAlert(err.message, `error`);
     });
 
-    // Real time listener for chats
-    db.collection('chats').onSnapshot((snapshot) => {
-        let changes = snapshot.docChanges();
-        changes.forEach((change) => {
-            if(change.type === 'added')
-            {
-                db.collection('chats').doc(change.doc.id).collection('messages').onSnapshot((messagesSnapshot) => {
-                    let messagesChanges = messagesSnapshot.docChanges();
-                    let flag = 0;
-                    messagesChanges.forEach((messageChange) => {
-                        if(messageChange.type === 'added' && flag === 0) {
-                            let members = change.doc.data().members;
-                            let uids = Object.keys(members);
-                            if(uids.includes(auth.currentUser.uid)) {
-                                renderChat(change.doc, uids);
-                                flag = 1;
-                            }
+    db.collection('chats').get().then((querySnapshot) => {
+        querySnapshot.docs.forEach((doc) => {
+            let members = doc.data().members;
+            let uids = Object.keys(members);
+
+            if(uids.includes(auth.currentUser.uid)) {
+                renderChat(doc, uids);
+
+                db.collection('chats').doc(doc.id).collection('messages').onSnapshot((snapshot) => {
+                    let changes = snapshot.docChanges();
+                    changes.forEach((change) => {
+                        if (change.type === 'modified') {
+                            let previousChat = document.getElementById(`ch-${doc.id}`);
+                            chatList.removeChild(previousChat);
+                            renderChat(doc, uids);
                         }
                     });
                 });
             }
-        });            
+        });
     });
 
     setTimeout(() => {
