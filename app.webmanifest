@@ -1,0 +1,28 @@
+{
+  "short_name": "High5",
+  "name": "High5",
+  "icons": [
+    {
+      "src":"images/logo.jpeg", "sizes": "144x144", "purpose": "any", "type": "image/png" 
+      },
+      {
+        "src":"images/logo.jpeg", "sizes": "512x512", "purpose": "maskable", "type": "image/png" 
+        }
+  ],
+  "start_url": "/index.html"  ,
+  "background_color": "#Fa802a",
+  "display": "standalone",
+  "orientation":"portrait-primary",
+  "scope": ".", 
+  "lang":"en-US",
+  "theme_color": "#Fa802a",
+  
+  "description": "High-five to strangers!",
+  "screenshots": [
+   
+      
+  ]
+}
+
+
+

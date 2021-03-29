@@ -6,7 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- External CSS file -->
-    <link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/styles.css" />
+    <link rel="manifest" href="../app.webmanifest" />
 
     <!-- Firebase -->
     <!-- The core Firebase JS SDK is always required and must be listed first -->
@@ -21,16 +22,29 @@
     <!-- External JS file -->
     <script src="js/auth.js" defer></script>
     <script src="js/index.js" defer></script>
+    <script>
+      if ("serviceWorker" in navigator) {
+        navigator.serviceWorker
+          .register("/sw_cached_pages.js")
+
+          .then((registration) => {
+            console.log("registration successfull", registration.scope);
+          })
+          .catch((err) => {
+            console.log("registration failed oh NO!" + err);
+          });
+      }
+    </script>
 
     <title>High5! | Log In</title>
   </head>
   <body>
     <div id="alerts"></div>
-    
+
     <main id="index-main">
       <div class="form-wrapper">
         <div class="logo">
-          <img src="images/logo.jpeg" alt="High5 Logo">
+          <img src="images/logo.jpeg" alt="High5 Logo" />
         </div>
 
         <p>Great to see you back. Keep High5'ing to strangers!</p>
@@ -38,19 +52,29 @@
         <form id="login-form">
           <div>
             <label for="loginEmail">E-Mail</label>
-            <input type="email" id="loginEmail" placeholder="Enter your e-mail" required />
+            <input
+              type="email"
+              id="loginEmail"
+              placeholder="Enter your e-mail"
+              required
+            />
           </div>
 
           <div>
             <label for="loginPassword">Password</label>
-            <input type="password" id="loginPassword" placeholder="Enter your password" required />
+            <input
+              type="password"
+              id="loginPassword"
+              placeholder="Enter your password"
+              required
+            />
           </div>
 
           <div id="rememberMe">
-            <input type="checkbox" id="rememberMeCheck">
+            <input type="checkbox" id="rememberMeCheck" />
             <label for="rememberMeCheck">Remember me</label>
           </div>
-          
+
           <button type="submit">LOG IN</button>
         </form>
 
@@ -59,6 +83,5 @@
         </div>
       </div>
     </main>
-
   </body>
 </html>
