@@ -406,7 +406,7 @@ footer button img {
 }
 
 #previousMessages li:first-of-type {
-  margin-top: .75rem;
+  padding-top: 0.75rem;
 }
 
 #chatOverlay .modal {

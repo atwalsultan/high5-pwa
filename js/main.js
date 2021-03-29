@@ -316,7 +316,9 @@ const createChatListener = (chat) => {
 
         // Scroll to bottom of chat
         let lastMessage = previousMessages.querySelector('li:last-of-type');
-        lastMessage.scrollIntoView();
+        if(lastMessage) {
+            lastMessage.scrollIntoView();
+        }
     });
 
     return listener;
