@@ -374,7 +374,7 @@ footer button img {
 
 #previousMessages {
   min-height: 10vh;
-  max-height: 70vh;
+  height: 70vh;
   overflow-y: scroll;
   display: flex;
   flex-flow: column nowrap;
@@ -461,7 +461,6 @@ section > h2 {
   border-radius: 10px;
   box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 7px 20px 0 rgba(0, 0, 0, 0.2);
   background-color: white;
-  padding: .5rem 1.25rem 1.25rem 1.5rem;
   position: relative;
   top: 50%;
   left: 50%;
@@ -514,6 +513,10 @@ section > h2 {
   justify-content: flex-end;
   align-items: center;
   margin-bottom: .5rem;
+  box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.2);
+  padding: .5rem .75rem;
+  background-color: #FBFBFB;
+  border-radius: 10px 10px 0 0;
 }
 
 #createHeader h2, #updateHeader h2, #deleteHeader h2, #logoutHeader h2, #chatHeader h2 {
@@ -573,6 +576,7 @@ input[type="file"] {
   display: flex;
   flex-flow: column nowrap;
   gap: 1rem;
+  padding: .5rem 1.25rem 1.25rem 1.5rem;
 }
 
 #postForm img, #updateForm img {
