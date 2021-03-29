@@ -779,8 +779,8 @@ const renderChat = (doc, uids) => {
         if(uid != auth.currentUser.uid) {
             db.collection('users').doc(uid).get()
             .then((user) => {
-                // Create elements to be rendered
                 let li = document.createElement('li');
+
                 let picture = document.createElement('img');
                 picture.setAttribute('src', user.data().photoURL);
 
@@ -807,15 +807,24 @@ const renderChat = (doc, uids) => {
                         time.textContent = hours + `: ` + minutes;
                     });
                 });
-                
-                // Set unique ID for each list item
-                li.setAttribute('id', `ch-${doc.id}`);
 
-                li.append(picture);
-                li.append(contentDiv);
-                li.append(time);
-
-                chatList.append(li);
+                // Create elements to be rendered
+                if(document.getElementById(`ch-` + doc.id) !== null) {
+                    li = document.getElementById(`ch-` + doc.id);
+                    li.textContent = ``;
+                    li.append(picture);
+                    li.append(contentDiv);
+                    li.append(time);
+                    chatList.prepend(li);
+                }
+                else {
+                    // Set unique ID for each list item
+                    li.setAttribute('id', `ch-${doc.id}`);
+                    li.append(picture);
+                    li.append(contentDiv);
+                    li.append(time);
+                    chatList.append(li);
+                }
             });
         }
     });
@@ -982,12 +991,22 @@ document.addEventListener('DOMContentLoaded', () => {
     db.collection('chats').onSnapshot((snapshot) => {
         let changes = snapshot.docChanges();
         changes.forEach((change) => {
-            if(change.type === 'added') {
-                let members = change.doc.data().members;
-                let uids = Object.keys(members);
-                if(uids.includes(auth.currentUser.uid)) {
-                    renderChat(change.doc, uids);
-                }
+            if(change.type === 'added')
+            {
+                db.collection('chats').doc(change.doc.id).collection('messages').onSnapshot((messagesSnapshot) => {
+                    let messagesChanges = messagesSnapshot.docChanges();
+                    let flag = 0;
+                    messagesChanges.forEach((messageChange) => {
+                        if(messageChange.type === 'added' && flag === 0) {
+                            let members = change.doc.data().members;
+                            let uids = Object.keys(members);
+                            if(uids.includes(auth.currentUser.uid)) {
+                                renderChat(change.doc, uids);
+                                flag = 1;
+                            }
+                        }
+                    });
+                });
             }
         });            
     });

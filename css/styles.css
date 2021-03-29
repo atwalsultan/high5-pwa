@@ -397,7 +397,11 @@ footer button img {
 }
 
 #previousMessages li:last-of-type {
-  margin-bottom: .25rem;
+  margin-bottom: 1.25rem;
+}
+
+#previousMessages li:first-of-type {
+  margin-top: .75rem;
 }
 
 #chatOverlay .modal {
