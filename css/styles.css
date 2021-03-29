@@ -1,5 +1,4 @@
 /* Importing Google Fonts */
-@import url("https://fonts.googleapis.com/css2?family=Caveat:wght@700&display=swap");
 @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap');
 
 * {
@@ -28,23 +27,27 @@ a {
   color: initial;
 }
 
-h1 {
-  font-family: "Caveat", sans-serif;
+button {
+  padding: .25rem .45rem;
+  border-radius: 5px;
+  border: 1px solid black;
+}
+
+button:hover {
+  cursor: pointer;
 }
 
 /* Header */
 header {
-  position: fixed;
+  position: sticky;
   width: 100%;
   top: 0;
   left: 0;
   z-index: 10;
-}
-
-header nav {
-  background-color: white;
-  padding: 0.75rem 1rem;
-  border-bottom: 1px solid #000;
+  background-color: #FBFBFB;
+  padding: 1rem 1rem;
+  box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.2);
+  text-align: center;
 }
 
 header nav ul,
@@ -55,25 +58,25 @@ footer nav ul {
   align-items: center;
 }
 
-header button,
-header button:active,
-footer button,
-footer button:active {
-  background-color: initial;
+header button {
+  transform: scale(1.15);
+  transition: all .15s ease-in;
+  padding: .25rem .3rem .1rem .32rem;
   border: none;
+  background-color: transparent;
+}
+
+#createBtn {
+  background-color: #FA812A;
+  border-radius: 50%;
+}
+
+#newMessage button:focus, #cameraButtons button:focus, .buttons button:focus, header button:focus, footer button:focus, #profileBody button:focus, .delete-logout-body button:focus, #postForm button:focus, #updateForm button:focus {
   outline: none;
 }
 
-footer button:active {
+footer button:active, header button:active, #newMessage button:active, #cameraButtons button:active, .buttons button:active, #profileBody button:active, #postForm button:active, #updateForm button:active, .delete-logout-body button:active {
   transform: scale(.8);
-}
-
-button:hover {
-  cursor: pointer;
-}
-
-header .fas {
-  font-size: 1.5rem;
 }
 
 /* Sidebar */
@@ -151,8 +154,7 @@ aside#sidebar.sidebar-hidden {
   left: 0;
   z-index: 7;
   padding-bottom: 1rem;
-
-  height: 80vh;
+  height: 90vh;
   overflow-y: scroll;
 }
 
@@ -274,15 +276,15 @@ footer {
 
 footer nav {
   background-color: white;
-  padding: 0.65rem 1rem;
-  border-top: 1px solid #000;
+  padding: 0.65rem 2rem;
+  box-shadow: 0 -3px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
 footer button {
-  font-size: 1.25rem;
   border-radius: 50%;
   background-color: #E5E5E5;
   transition: all 0.15s ease-in;
+  border: none;
 }
 
 footer button img {
@@ -327,7 +329,6 @@ footer button img {
 }
 
 #home-main {
-  margin: 4rem 0 4rem .75rem;
   position: relative;
 }
 
@@ -354,29 +355,58 @@ footer button img {
 
 /* Chat */
 .message {
+  transition: all .4s ease-in-out;
+}
+
+.message > span:first-of-type {
   background-color: #ECEBE4;
   border-radius: 2px;
   width: max-content;
-  max-width: 70%;
   word-wrap: break-word;
   padding: .5rem .7rem;
-  margin-bottom: .35rem;
+  max-width: 225px;
 }
 
- .my-message {
+.my-message {
   align-self: flex-end;
+}
+
+.my-message > span:first-of-type {
   background-color: #053E95;
   color: white;
+  order: 2;
 }
 
 #previousMessages {
   min-height: 10vh;
-  max-height: 70vh;
+  height: 70vh;
   overflow-y: scroll;
   display: flex;
   flex-flow: column nowrap;
   margin: .25rem 0;
+  gap: 1.35rem;
   padding: 0 1rem;
+}
+
+#previousMessages li {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: 1rem;
+  align-items: flex-end;
+}
+
+#previousMessages li > span:last-of-type {
+  font-size: .7rem;
+  margin-bottom: .1rem;
+  color: #737373;
+}
+
+#previousMessages li:last-of-type {
+  margin-bottom: 1.25rem;
+}
+
+#previousMessages li:first-of-type {
+  padding-top: 0.75rem;
 }
 
 #chatOverlay .modal {
@@ -385,13 +415,13 @@ footer button img {
 
 #chatHeader {
   margin-bottom: 0;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.2);
   padding: .5rem .75rem;
 }
 
 #chatFooter {
   padding: 1rem;
-  box-shadow: 0 -4px 8px 0 rgba(0, 0, 0, 0.2);
+  box-shadow: 0 -3px 8px 0 rgba(0, 0, 0, 0.2);
 }
 
 #newMessage form {
@@ -422,14 +452,6 @@ footer button img {
   transition: all .15s ease-in;
 }
 
-#newMessage button:focus {
-  outline: none;
-}
-
-#newMessage button:active {
-  transform: scale(.8);
-}
-
 /* Sections */
 section > h2 {
   max-width: max-content;
@@ -444,7 +466,6 @@ section > h2 {
   border-radius: 10px;
   box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 7px 20px 0 rgba(0, 0, 0, 0.2);
   background-color: white;
-  padding: .5rem 1.25rem 1.25rem 1.5rem;
   position: relative;
   top: 50%;
   left: 50%;
@@ -479,14 +500,8 @@ section > h2 {
   max-width: 60px;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
   transition: all .15s ease-in;
-}
-
-#cameraButtons button:active {
-  transform: scale(.8);
-}
-
-#cameraButtons button:focus {
-  outline: none;
+  border: none;
+  background-color: white;
 }
 
 #snapButton {
@@ -503,6 +518,10 @@ section > h2 {
   justify-content: flex-end;
   align-items: center;
   margin-bottom: .5rem;
+  box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.2);
+  padding: .5rem .75rem;
+  background-color: #FBFBFB;
+  border-radius: 10px 10px 0 0;
 }
 
 #createHeader h2, #updateHeader h2, #deleteHeader h2, #logoutHeader h2, #chatHeader h2 {
@@ -529,6 +548,7 @@ section > h2 {
   border: 1px solid #737373;
   color: #737373;
   flex-grow: 1;
+  transition: all .15s ease-in;
 }
 
 .image-div button:focus {
@@ -562,6 +582,7 @@ input[type="file"] {
   display: flex;
   flex-flow: column nowrap;
   gap: 1rem;
+  padding: .5rem 1.25rem 1.25rem 1.5rem;
 }
 
 #postForm img, #updateForm img {
@@ -580,6 +601,7 @@ input[type="file"] {
   color: #FBFBFB;
   font-weight: 600;
   font-size: 1rem;
+  transition: all .15s ease-in;
 }
 
 .delete-logout-body {
@@ -630,6 +652,108 @@ video {
 #uploadButton {
   display: none;
 }
+/* Notifications and Chat */
+#notificationList, #chatList {
+  display: flex;
+  flex-flow: column nowrap;
+}
+
+#notificationList li, #chatList li {
+  display: flex;
+  flex-flow: row nowrap;
+  gap: .5rem;
+  padding: 1rem;
+  border-bottom: 1px solid lightgray;
+}
+
+#notificationList li img, #chatList li img {
+  max-height: 50px;
+  width: auto;
+  border-radius: 50%;
+}
+
+#notificationList li > div, #chatList li > div {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: .25rem;
+}
+
+#notificationList li > div > p:first-of-type, #chatList li > div > p:first-of-type {
+  font-weight: 600;
+}
+
+#chatList li > div > p:nth-of-type(2) > span {
+  color: #737373;
+}
+
+#notificationList li > p:last-of-type, #chatList li > span {
+  flex-grow: 1;
+  text-align: right;
+  min-width: 15%;
+}
+
+#notificationList li:hover, #chatList li:hover {
+  cursor: pointer;
+  background-color: #E5E5E5;
+}
+
+/* Profile */
+#profileBody {
+  display: flex;
+  flex-flow: column nowrap;
+  gap: 2rem;
+  height: 85%;
+}
+
+#profileBody button {
+  margin: auto;
+  background-color: transparent;
+  border: none;
+  font-family: inherit;
+  font-size: inherit;
+  display: flex;
+  flex-flow: row nowrap;
+  gap: .25rem;
+  align-items: center;
+  color: #737373;
+  transition: all .15s ease-in;
+}
+
+#profileBody button img {
+  transform: scale(1.25);
+  padding: .1rem;
+  margin-right: .2rem;
+}
+
+#profileInfo {
+  padding: 2rem;
+  display: flex;
+  flex-flow: column nowrap;
+  align-items: center;
+  gap: 0.4rem;
+  flex-grow: 1;
+
+  /* border-bottom: 1px solid lightgray; */
+}
+
+#profileInfo img {
+  max-width: 80px;
+  height: auto;
+  border-radius: 50%;
+}
+
+#profileInfo > p:last-of-type {
+  padding-top: 2rem;
+}
+
+#profileInfo > p:first-of-type {
+  font-weight: 600;
+}
+
+#profileInfo > p:nth-of-type(2) {
+  font-size: .9rem;
+  color: #737373;
+}
 
 /* Posts */
 #postList {
@@ -639,7 +763,7 @@ video {
 }
 
 #postList li {
-  padding: .75rem 1.5rem .75rem 0;
+  padding: 1rem 1.5rem .75rem .75rem;
   border-radius: 10px;
 
   display: flex;
@@ -661,20 +785,15 @@ video {
 }
 
 .profile-pic-div img {
-  width: 40px;
-  height: 40px;
+  max-height: 50px;
+  width: auto;
   border-radius: 50%;
-}
-
-button {
-  padding: .25rem .45rem;
-  border-radius: 5px;
-  border: 1px solid black;
 }
 
 .name-distance-time {
   display: flex;
   flex-flow: row nowrap;
+  align-items: flex-end;
   gap: 1.5rem;
 }
 
@@ -729,14 +848,6 @@ button {
   align-items: center;
   color: #737373;
   transition: all .15s ease-in;
-}
-
-.buttons button:focus {
-  outline: none;
-}
-
-.buttons button:active {
-  transform: scale(0.8);
 }
 
 .buttons button img {

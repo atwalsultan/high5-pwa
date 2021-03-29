@@ -77,6 +77,8 @@ let blobToUpload = null;
 
 const newUpdateImageBtn = document.getElementById('newUpdateImage');
 
+const profileInfo = document.getElementById('profileInfo');
+
 //**************************************************************
 //      Function Declarations
 //**************************************************************
@@ -280,12 +282,22 @@ const createChatListener = (chat) => {
             if(change.type === 'added') {
                 // Create element
                 let message = document.createElement('li');
+                let content = document.createElement('span');
+                content.textContent = `${change.doc.data().content}`;
+                message.append(content);
 
-                // Add content
-                message.textContent = `${change.doc.data().content}`;
+                let time = document.createElement('span');
+                let dt = new Date (change.doc.data().timestamp * 1000);
+                let hours = ('0' + dt.getHours()).slice(-2);
+                let minutes = ('0' + dt.getMinutes()).slice(-2);
+                time.textContent =  hours + ': ' + minutes;
+                message.append(time);
 
                 // Add class
                 message.classList.add('message');
+
+                message.style.opacity = '0';
+                message.style.marginTop = '4rem';
 
                 // Identify messages sent by logged in user
                 if (change.doc.data().sender === auth.currentUser.uid) {
@@ -294,12 +306,19 @@ const createChatListener = (chat) => {
 
                 // Add to DOM
                 previousMessages.append(message);
+
+                setTimeout(() => {
+                    message.style.opacity = '1';
+                    message.style.marginTop = '0';
+                }, 200);
             }
         })
 
         // Scroll to bottom of chat
         let lastMessage = previousMessages.querySelector('li:last-of-type');
-        lastMessage.scrollIntoView();
+        if(lastMessage) {
+            lastMessage.scrollIntoView();
+        }
     });
 
     return listener;
@@ -451,9 +470,7 @@ const renderPost = (doc) => {
         chatBtn.appendChild(chatIcon);
         chatBtn.appendChild(chatText);
         
-        chatBtn.addEventListener('click', (event) => {
-            let postId = event.target.parentNode.id;
-
+        chatBtn.addEventListener('click', () => {
             // Fetch chat between logged in user and owner of post
             db.collection('chats').where(`members.${auth.currentUser.uid}`, '==', true).where(`members.${doc.data().uid}`, '==', true).get()
             .then((querySnapshot) => {
@@ -772,24 +789,79 @@ const renderChat = (doc, uids) => {
         if(uid != auth.currentUser.uid) {
             db.collection('users').doc(uid).get()
             .then((user) => {
-                // Create elements to be rendered
                 let li = document.createElement('li');
+
+                let picture = document.createElement('img');
+                picture.setAttribute('src', user.data().photoURL);
+
+
+                let contentDiv = document.createElement('div');
                 let userName = document.createElement('p');
 
                 let name = user.data().name;
-                
                 userName.textContent = name;
-                li.append(userName);
-                
+                contentDiv.append(userName);
+
+                let time = document.createElement('span');
+
+                let lastMessage = document.createElement('p');
+                lastMessage.innerHTML = '<span>No messages yet.</span>';
+                contentDiv.append(lastMessage);
+
+                doc.ref.collection('messages').orderBy("timestamp", "desc").limit(1).get()
+                .then((snapshot) => {
+                    snapshot.forEach((message) => {
+                        lastMessage.textContent = message.data().content;
+                        contentDiv.append(lastMessage);
+
+                        let dt = new Date(message.data().timestamp * 1000);
+                        let hours = ('0' + dt.getHours()).slice(-2);
+                        let minutes = ('0' + dt.getMinutes()).slice(-2);
+                        time.textContent = hours + `: ` + minutes;
+                    });
+                });
+
                 // Set unique ID for each list item
                 li.setAttribute('id', `ch-${doc.id}`);
+                li.append(picture);
+                li.append(contentDiv);
+                li.append(time);
 
-                chatList.append(li);
+                li.addEventListener('click', () => {
+                    let userId;
+
+                    // Create chat form
+                    let chatForm = createChatForm(doc);
+
+                    // Get user's name
+                    uids.forEach((uid) => {
+                        if(uid !== auth.currentUser.uid) {
+                            userId = uid;
+                        }
+                    });
+
+                    db.collection('users').doc(userId).get()
+                    .then((user) => {
+                        chatUserName.innerText = user.data().name;
+                    });
+
+                    // Append form to div in DOM
+                    newMessage.append(chatForm);
+
+                    // Display previous messages from chat
+                    chatListener = createChatListener(doc);
+
+                    // Display chat modal
+                    chatOverlay.style.display = 'block';
+
+                    // Focus on input field
+                    chatForm.message.focus();
+                })
+
+                chatList.prepend(li);
             });
         }
     });
-
-    
 };
 
 // On file input field change
@@ -912,6 +984,28 @@ const addNewImage = (e) => {
     }
 }
 
+// Render a user's profile
+const renderProfile = () => {
+    db.collection('users').doc(auth.currentUser.uid).get().then((user) => {
+        let profileImg = document.createElement('img');
+        profileImg.setAttribute('src', user.data().photoURL);
+
+        let profileDisplayName = document.createElement('p');
+        profileDisplayName.textContent = user.data().name;
+
+        let profileEmail = document.createElement('p');
+        profileEmail.textContent = user.data().email;
+
+        let profileBio = document.createElement('p');
+        profileBio.textContent = user.data().bio ? user.data().bio : `"Hello there! Nice to meet you!"`;
+
+        profileInfo.append(profileImg);
+        profileInfo.append(profileDisplayName);
+        profileInfo.append(profileEmail);
+        profileInfo.append(profileBio);
+    });
+}
+
 //**************************************************************
 //      Event Listeners
 //**************************************************************
@@ -947,25 +1041,31 @@ document.addEventListener('DOMContentLoaded', () => {
         showAlert(err.message, `error`);
     });
 
-    // Real time listener for chats
-    db.collection('chats').onSnapshot((snapshot) => {
-        let changes = snapshot.docChanges();
-        changes.forEach((change) => {
-            if(change.type === 'added') {
-                let members = change.doc.data().members;
-                let uids = Object.keys(members);
-                if(uids.includes(auth.currentUser.uid)) {
-                    renderChat(change.doc, uids);
-                }
+    db.collection('chats').get().then((querySnapshot) => {
+        querySnapshot.docs.forEach((doc) => {
+            let members = doc.data().members;
+            let uids = Object.keys(members);
+
+            if(uids.includes(auth.currentUser.uid)) {
+                renderChat(doc, uids);
+
+                db.collection('chats').doc(doc.id).collection('messages').onSnapshot((snapshot) => {
+                    let changes = snapshot.docChanges();
+                    changes.forEach((change) => {
+                        if (change.type === 'modified') {
+                            let previousChat = document.getElementById(`ch-${doc.id}`);
+                            chatList.removeChild(previousChat);
+                            renderChat(doc, uids);
+                        }
+                    });
+                });
             }
-            else if(change.type === 'modified') {
-                
-            }
-            else if(change.type === 'removed') {
-                
-            }
-        });            
+        });
     });
+
+    setTimeout(() => {
+        renderProfile();
+    }, 1500)
 });
 
 // Create form submission

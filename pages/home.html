@@ -5,9 +5,6 @@
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-	<!-- Font Awesome -->
-	<script src="https://kit.fontawesome.com/df6bb686cb.js" crossorigin="anonymous"></script>
-
 	<!-- External CSS file -->
 	<link rel="stylesheet" href="../css/styles.css" />
 
@@ -32,31 +29,6 @@
 
 	<!-- Alerts -->
 	<div id="alerts"></div>
-
-	<header>
-		<nav>
-			<ul>
-				<!-- Side Menu Button -->
-				<li>
-					<button>
-						<span class="fas fa-bars" id="sidebar-btn"></span>
-						<span class="visually-hidden">Open Side Menu</span>
-						<button>
-				</li>
-				<!-- Site Title -->
-				<li><a href="#">
-						<h1>High5!</h1>
-					</a></li>
-				<!-- New Post Button -->
-				<li>
-					<button>
-						<span class="fas fa-plus" id="createBtn"></span>
-						<span class="visually-hidden">Create New Post</span>
-						<button>
-				</li>
-			</ul>
-		</nav>
-	</header>
 
 	<aside id="sidebar" class="sidebar-hidden">
 
@@ -337,27 +309,142 @@
 
 
 	<main id="home-main">
+		
 		<!-- Posts -->
 		<section id="posts">
+			<header>
+				<nav>
+					<ul>
+						<!-- Side Menu Button -->
+						<li>
+							<button id="sidebar-btn">
+								<img src="../images/filter-icon.svg" alt="Filter Icon">
+								<span class="visually-hidden">Open Side Menu</span>
+							</button>
+						</li>
+		
+						<!-- New Post Button -->
+						<li>
+							<button id="createBtn">
+								<img src="../images/create-icon.svg" alt="Create Post Icon">
+								<span class="visually-hidden">Create New Post</span>
+							</button>
+						</li>
+					</ul>
+				</nav>
+			</header>
 			<ul id="postList"></ul>
 		</section>
 
 		<!-- Notifications -->
 		<section id="notification" class="section-hidden">
-			<h2>Notifications Section</h2>
+			<header>
+				<h2>Notifications</h2>
+			</header>
+
+			<ul id="notificationList">
+				<li>
+					<img src="../images/logo.jpeg" alt="Profile Picture">
+					
+					<div>
+						<p>Rocky High5'ed your post</p>
+						<p>Appreciation received from Rocky on your "Renting Drone" post</p>
+					</div>
+
+					<p>12m</p>
+				</li>
+
+				<li>
+					<img src="../images/logo.jpeg" alt="Profile Picture">
+
+					<div>
+						<p>Chris added their first post</p>
+						<p>Click to view Chris' new post. Show your appreciation by High5'ing!</p>
+					</div>
+
+					<p>15m</p>
+				</li>
+
+				<li>
+					<img src="../images/logo.jpeg" alt="Profile Picture">
+
+					<div>
+						<p>Pauli High5'ed your post</p>
+						<p>Appreciation received from Pauli on your "Renting Drone" post</p>
+					</div>
+
+					<p>25m</p>
+				</li>
+
+				<li>
+					<img src="../images/logo.jpeg" alt="Profile Picture">
+
+					<div>
+						<p>Marshall added their first post</p>
+						<p>Click to view Marshall's new post. Show your appreciation by High5'ing!</p>
+					</div>
+
+					<p>28m</p>
+				</li>
+			
+					
+				<li>
+					<img src="../images/logo.jpeg" alt="Profile Picture">
+
+					<div>
+						<p>Jane High5'ed your post</p>
+						<p>Appreciation received from Jane on your "Hiking on Fraser" post</p>
+					</div>
+
+					<p>30m</p>
+				</li>
+
+				<li>
+					<img src="../images/logo.jpeg" alt="Profile Picture">
+
+					<div>
+						<p>John added their first post</p>
+						<p>Click to view John's new post. Show your appreciation by High5'ing!</p>
+					</div>
+
+					<p>35m</p>
+				</li>
+
+				<li>
+					<img src="../images/logo.jpeg" alt="Profile Picture">
+
+					<div>
+						<p>Amy High5'ed your post</p>
+						<p>Appreciation received from Amy on your "Hiking on Fraser River Trail" post</p>
+					</div>
+
+					<p>35m</p>
+				</li>
+			</ul>
 		</section>
 
 		<!-- Chats -->
 		<section id="chats" class="section-hidden">
-			<h2>Chats Section</h2>
+			<header>
+				<h2>Chats</h2>
+			</header>
 			
 			<ul id="chatList"></ul>
 		</section>
 
 		<!-- Profile -->
 		<section id="profile" class="section-hidden">
-			<h2>Profile Section</h2>
-			<button id="logoutBtn">Log Out</button>
+			<header>
+				<h2>My Profile</h2>
+			</header>
+			
+			<div id="profileBody">
+				<div id="profileInfo"></div>
+				<button id="logoutBtn">
+					<img src="../images/logout-icon.svg" alt="Logout Icon">
+					<span>LOG OUT</span>
+				</button>
+			</div>
 		</section>
 	</main>
 
