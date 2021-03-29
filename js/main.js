@@ -833,37 +833,6 @@ const renderChat = (doc, uids) => {
                     li.append(time);
                     chatList.append(li);
                 }
-
-                // li.addEventListener('click', (e) => {
-                //     // Create chat form
-                //     let chatForm = createChatForm(doc);
-
-                //     let members = doc.data().members;
-                //     let uids = Object.keys(members);
-                //     uids.forEach((uid) => {
-                //         if(uid !== auth.currentUser.uid) {
-                //             db.collection('users').doc(uid).get().then((user) => {
-                //                 chatUserName.innerText = user.data().name;
-                //             });
-                //         }
-                //     });
-
-                //     // let parent = e.target.parentElement;
-                //     // chatUserName.innerText = parent.querySelector('div p:first-of-type').textContent;
-
-                //     // Append form to div in DOM
-                //     newMessage.innerText = ``;
-                //     newMessage.append(chatForm);
-
-                //     // Display previous messages from chat
-                //     chatListener = createChatListener(doc);
-
-                //     // Display chat modal
-                //     chatOverlay.style.display = 'block';
-
-                //     // Focus on input field
-                //     chatForm.message.focus();
-                // });
             });
         }
     });
@@ -1072,7 +1041,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     setTimeout(() => {
         renderProfile();
-    }, 1000)
+    }, 1500)
 });
 
 // Create form submission
