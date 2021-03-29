@@ -71,11 +71,11 @@ header button {
   border-radius: 50%;
 }
 
-#newMessage button:focus, #cameraButtons button:focus, .buttons button:focus, header button:focus, footer button:focus, #profileBody button:focus {
+#newMessage button:focus, #cameraButtons button:focus, .buttons button:focus, header button:focus, footer button:focus, #profileBody button:focus, .delete-logout-body button:focus, #postForm button:focus, #updateForm button:focus {
   outline: none;
 }
 
-footer button:active, header button:active, #newMessage button:active, #cameraButtons button:active, .buttons button:active, #profileBody button:active {
+footer button:active, header button:active, #newMessage button:active, #cameraButtons button:active, .buttons button:active, #profileBody button:active, #postForm button:active, #updateForm button:active, .delete-logout-body button:active {
   transform: scale(.8);
 }
 
@@ -548,6 +548,7 @@ section > h2 {
   border: 1px solid #737373;
   color: #737373;
   flex-grow: 1;
+  transition: all .15s ease-in;
 }
 
 .image-div button:focus {
@@ -600,6 +601,7 @@ input[type="file"] {
   color: #FBFBFB;
   font-weight: 600;
   font-size: 1rem;
+  transition: all .15s ease-in;
 }
 
 .delete-logout-body {
@@ -700,6 +702,7 @@ video {
   display: flex;
   flex-flow: column nowrap;
   gap: 2rem;
+  height: 85%;
 }
 
 #profileBody button {
@@ -730,7 +733,7 @@ video {
   gap: 0.4rem;
   flex-grow: 1;
 
-  border-bottom: 1px solid lightgray;
+  /* border-bottom: 1px solid lightgray; */
 }
 
 #profileInfo img {
@@ -790,6 +793,7 @@ video {
 .name-distance-time {
   display: flex;
   flex-flow: row nowrap;
+  align-items: flex-end;
   gap: 1.5rem;
 }
 
