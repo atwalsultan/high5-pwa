@@ -183,7 +183,7 @@ const createPost = (event) => {
     });
 
     // Clear form and close modal
-    // closeModals();
+    closeModal(createOverlay);
 }
 
 // Add event listeners to update and delete buttons
@@ -601,7 +601,7 @@ const updatePost = (event) => {
     });
 
     // Clear form and close modal
-    // closeModals();
+    closeModal(updateOverlay);
 };
 
 // Delete post
@@ -619,45 +619,94 @@ const deletePost = () => {
     });
 
     // Close modal
-    closeModals();
-};
-
-// Close modals
-const closeModals = () => {
-
-    // Clear forms
-    postForm.reset();
-    updateForm.reset();
-
-    // Close modals
-    createOverlay.style.display = 'none';
-    updateOverlay.style.display = 'none';
-    deleteOverlay.style.display = 'none';
-    chatOverlay.style.display = 'none';
-    newMessage.innerHTML = '';
-    previousMessages.innerHTML = '';
-    if(chatListener != null) {
-        chatListener();
-        chatListener = null;
-    }
-    logoutOverlay.style.display = 'none';
-
-    cameraOverlay.style.display = 'none';
-    uploadPhoto.innerHTML = ``;
-    blobToUpload = null;
-
-    videoElement.srcObject.getVideoTracks().forEach(track => track.stop());
-    context.clearRect(0, 0, canvas.width, canvas.height);
-    canvas.style.display = 'none';
-    uploadButton.style.display = 'none';
-
+    closeModal(deleteOverlay);
 };
 
 // Close modals on clicking outside
+const closeModal = (overlay) => {
+
+    switch(overlay) {
+        case updateOverlay:
+            updateForm.reset(); // Reset form in modal
+            updateOverlay.style.display = 'none';  // Close modal
+            break;
+
+        case deleteOverlay:
+            deleteOverlay.style.display = 'none'; // Close modal
+            break;
+
+        case createOverlay:
+            postForm.reset(); // Reset form in modal
+            createOverlay.style.display = 'none'; // Close modal
+            break;
+
+        case chatOverlay:
+            chatOverlay.style.display = 'none'; // Close modal
+
+            // Remove new message form and chat history from modal
+            newMessage.innerHTML = '';
+            previousMessages.innerHTML = '';
+
+            // Remove real time listener for chat messages
+            if(chatListener != null) {
+                chatListener();
+                chatListener = null;
+            }
+            break;
+
+        case logoutOverlay:
+            logoutOverlay.style.display = 'none'; // Close modal
+            break;
+
+        case cameraOverlay:
+            cameraOverlay.style.display = 'none'; // Close modal
+            uploadPhoto.innerHTML = ``; // Clear any photo that might have been selected
+            blobToUpload = null; // Remove any photo that was selected but not uploaded
+            
+            // Stop live video and prepare canvas for next time the modal opens
+            videoElement.srcObject.getVideoTracks().forEach(track => track.stop());
+            context.clearRect(0, 0, canvas.width, canvas.height);
+
+            canvas.style.display = 'none'; // Close modal
+            uploadButton.style.display = 'none'; // Hide upload button until photo is captured
+            break;
+    }
+}
+
 const outsideClick = (event) => {
-    if(event.target === updateOverlay || event.target === deleteOverlay || event.target === createOverlay || event.target === chatOverlay || event.target ===logoutOverlay || event.target === cameraOverlay) {
-        // Clear form and close modal
-        closeModals();
+    // Get overlay that has open modal
+    let target = event.target;
+    
+    switch(target) {
+        case updateOverlay:
+            // Close modal
+            closeModal(updateOverlay);
+            break;
+
+        case deleteOverlay:
+            // Close modal
+            closeModal(deleteOverlay);
+            break;
+
+        case createOverlay:
+            // Close modal
+            closeModal(createOverlay);
+            break;
+
+        case chatOverlay:
+            // Close modal
+            closeModal(chatOverlay);
+            break;
+
+        case logoutOverlay:
+            // Close modal
+            closeModal(logoutOverlay);
+            break;
+
+        case cameraOverlay:
+            // Close modal
+            closeModal(cameraOverlay);
+            break;
     }
 };
 
@@ -1079,7 +1128,10 @@ confirmDelete.addEventListener('click', deletePost);
 
 // 'X' button on modals
 for(let i = 0; i<closeBtns.length; i++) {
-    closeBtns[i].addEventListener('click', closeModals);
+    closeBtns[i].addEventListener('click', (e) => {
+        closeModal(e.target.parentElement.parentElement.parentElement);
+        closeModal(e.target.parentElement.parentElement.parentElement.parentElement); // For camera modals
+    });
 }
 
 // Click outside modal
