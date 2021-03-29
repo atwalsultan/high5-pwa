@@ -294,6 +294,9 @@ const createChatListener = (chat) => {
                 // Add class
                 message.classList.add('message');
 
+                message.style.opacity = '0';
+                message.style.marginTop = '4rem';
+
                 // Identify messages sent by logged in user
                 if (change.doc.data().sender === auth.currentUser.uid) {
                     message.classList.add('my-message');
@@ -301,6 +304,11 @@ const createChatListener = (chat) => {
 
                 // Add to DOM
                 previousMessages.append(message);
+
+                setTimeout(() => {
+                    message.style.opacity = '1';
+                    message.style.marginTop = '0';
+                }, 200);
             }
         })
 
@@ -824,35 +832,36 @@ const renderChat = (doc, uids) => {
                     chatList.append(li);
                 }
 
-                li.addEventListener('click', (e) => {
-                    // Create chat form
-                    let chatForm = createChatForm(doc);
+                // li.addEventListener('click', (e) => {
+                //     // Create chat form
+                //     let chatForm = createChatForm(doc);
 
-                    let members = doc.data().members;
-                    let uids = Object.keys(members);
-                    uids.forEach((uid) => {
-                        if(uid !== auth.currentUser.uid) {
-                            db.collection('users').doc(uid).get().then((user) => {
-                                chatUserName.innerText = user.data().name;
-                            });
-                        }
-                    });
+                //     let members = doc.data().members;
+                //     let uids = Object.keys(members);
+                //     uids.forEach((uid) => {
+                //         if(uid !== auth.currentUser.uid) {
+                //             db.collection('users').doc(uid).get().then((user) => {
+                //                 chatUserName.innerText = user.data().name;
+                //             });
+                //         }
+                //     });
 
-                    // let parent = e.target.parentElement;
-                    // chatUserName.innerText = parent.querySelector('div p:first-of-type').textContent;
+                //     // let parent = e.target.parentElement;
+                //     // chatUserName.innerText = parent.querySelector('div p:first-of-type').textContent;
 
-                    // Append form to div in DOM
-                    newMessage.append(chatForm);
+                //     // Append form to div in DOM
+                //     newMessage.innerText = ``;
+                //     newMessage.append(chatForm);
 
-                    // Display previous messages from chat
-                    chatListener = createChatListener(doc);
+                //     // Display previous messages from chat
+                //     chatListener = createChatListener(doc);
 
-                    // Display chat modal
-                    chatOverlay.style.display = 'block';
+                //     // Display chat modal
+                //     chatOverlay.style.display = 'block';
 
-                    // Focus on input field
-                    chatForm.message.focus();
-                });
+                //     // Focus on input field
+                //     chatForm.message.focus();
+                // });
             });
         }
     });

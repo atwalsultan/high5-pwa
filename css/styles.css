@@ -354,6 +354,10 @@ footer button img {
 }
 
 /* Chat */
+.message {
+  transition: all .4s ease-in-out;
+}
+
 .message > span:first-of-type {
   background-color: #ECEBE4;
   border-radius: 2px;
