@@ -328,76 +328,155 @@ const createChatListener = (chat) => {
 const renderPost = (doc) => {
     
     // Create elements to be rendered
-    let li = document.createElement('li');
-    li.setAttribute('id', doc.id); // Set unique ID for each list item
 
+    // Outermost container for the post
+    let li = document.createElement('li');
+    li.setAttribute('id', doc.id);
+    postList.appendChild(li); // Append to post list
+
+    // Container for profile picture
     let profilePicDiv = document.createElement('div');
     profilePicDiv.classList.add('profile-pic-div');
-    let postDiv = document.createElement('div');
-    postDiv.classList.add('post-div');
-    li.appendChild(profilePicDiv);
-    li.appendChild(postDiv);
+    li.appendChild(profilePicDiv); // Append to container
 
+    // Profile picture
     let profilePic = document.createElement('img');
     profilePicDiv.appendChild(profilePic);
-
     db.collection('users').doc(doc.data().uid).get().then((user) => {
+        // Set source
         profilePic.setAttribute('src', user.data().photoURL);
     });
 
-    let name = document.createElement('p');
+    // Container for post content and buttons
+    let postDiv = document.createElement('div');
+    postDiv.classList.add('post-div');
+    li.appendChild(postDiv); // Append to container
+
+    // Container for user name, distance and time of post
     let nameDistanceTime = document.createElement('div');
     nameDistanceTime.classList.add('name-distance-time');
-    nameDistanceTime.appendChild(name);
-    if(userPos) { // Display distance if user's position is available
-        let km = calculateDistance(doc.data().coordinates.latitude, doc.data().coordinates.longitude, userPos.coords.latitude, userPos.coords.longitude); // Calculate distance 
+    postDiv.appendChild(nameDistanceTime); // Append to container
 
-        // Create element
+    // User name
+    let name = document.createElement('p');
+    name.textContent = `Anonymous User`; // Set generic name
+    db.collection('users').doc(doc.data().uid).get().then((user) => {
+        name.textContent = user.data().name; // Set actual name
+    });
+    nameDistanceTime.appendChild(name);
+
+    // Display distance if user's position is available
+    if(userPos) {
+        // Calculate distance
+        let km = calculateDistance(doc.data().coordinates.latitude, doc.data().coordinates.longitude, userPos.coords.latitude, userPos.coords.longitude);
+
+        // Icon and distance container
         let distanceSpan = document.createElement('span');
+
+        // Icon
         let icon = document.createElement('img');
         icon.setAttribute('src', '../images/location-icon.svg');
+
+        // Distance
         let distance = document.createElement('p');
-        distanceSpan.appendChild(icon);
-        distanceSpan.appendChild(distance);
         distance.setAttribute('class', 'distance');
         distance.textContent = `${km} km`;
+
+        distanceSpan.appendChild(icon);
+        distanceSpan.appendChild(distance);
+        
         nameDistanceTime.appendChild(distanceSpan);
     }
+
+    // Time since creation
     let timeCreated = document.createElement('p');
+    timeCreated.textContent = '2d';
     nameDistanceTime.appendChild(timeCreated);
 
-    let buttons = document.createElement('div');
-    buttons.classList.add('buttons');
+    // Description
+    let description = document.createElement('p');
+    description.textContent = `${doc.data().description}`;
+    postDiv.appendChild(description); // Append to container
 
-    let dateTimeDiv = document.createElement('div');
-    dateTimeDiv.setAttribute('id', 'dateTimeDiv');
-    let dateTimeIcon = document.createElement('img');
-    dateTimeIcon.setAttribute('src', '../images/calendar-icon.svg');
-    dateTimeDiv.appendChild(dateTimeIcon);
-    let dateTime = document.createElement('span');
-    dateTimeDiv.appendChild(dateTime);
+    // Add post image if it exists
+    if(doc.data().photoURL) {
+        let img = document.createElement('img');
+        img.setAttribute('src', doc.data().photoURL); // Set source
+        postDiv.appendChild(img); // Append to container
+    }
 
-    let description = document.createElement('p'); // Description
-
+    // Container for category icon and text
     let categoryDiv = document.createElement('div');
     categoryDiv.setAttribute('id', 'categoryDiv');
+
+    // Icon
     let categoryIcon = document.createElement('img');
     categoryIcon.setAttribute('src', '../images/category-icon.svg');
     categoryDiv.appendChild(categoryIcon);
-    let category = document.createElement('span');
-    categoryDiv.appendChild(category);
 
+    // Category
+    let category = document.createElement('span');
+    category.setAttribute('class', 'category');
+    category.textContent = `Category: ${doc.data().category}`;
+    categoryDiv.appendChild(category);
+    postDiv.appendChild(categoryDiv); // Append to container
+
+    // Container for expected date and time
+    let dateTimeDiv = document.createElement('div');
+    dateTimeDiv.setAttribute('id', 'dateTimeDiv');
+
+    // Calendar icon for date and time
+    let dateTimeIcon = document.createElement('img');
+    dateTimeIcon.setAttribute('src', '../images/calendar-icon.svg');
+    dateTimeDiv.appendChild(dateTimeIcon); // Append to container
+
+    // Date and time
+    let dateTime = document.createElement('span');
+
+    // Check if any values have not been provided
+    if(doc.data().date === "Unspecified" && doc.data().time !== "Unspecified") {
+        dateTime.textContent = `Expected Date & Time: ${doc.data().time}`;
+        dateTimeDiv.appendChild(dateTime); // Append to container
+        postDiv.appendChild(dateTimeDiv); // Append to container
+
+    }
+    else if(doc.data().date !== "Unspecified" && doc.data().time === "Unspecified") {
+        dateTime.textContent = `Expected Date & Time: ${doc.data().date}`;
+        dateTimeDiv.appendChild(dateTime); // Append to container
+        postDiv.appendChild(dateTimeDiv); // Append to container
+
+    }
+    else if(doc.data().date !== "Unspecified" && doc.data().time !== "Unspecified") {
+        dateTime.textContent = `Expected Date & Time: ${doc.data().date} | ${doc.data().time}`;
+        dateTimeDiv.appendChild(dateTime); // Append to container
+        postDiv.appendChild(dateTimeDiv); // Append to container
+    }
+
+    // Container for buttons
+    let buttons = document.createElement('div');
+    buttons.classList.add('buttons');
+    postDiv.appendChild(buttons); // Append to container
+
+    // Container for like icon and button
     let likeBtn = document.createElement('button');
+    buttons.appendChild(likeBtn); // Append to container
+
+    // Icon
     let likeIcon = document.createElement('img');
-    let likeText = document.createElement('span');
-    likeText.textContent = `High5!`;
     likeIcon.setAttribute('src', '../images/high5-icon.svg');
     likeBtn.appendChild(likeIcon);
+
+    // Text
+    let likeText = document.createElement('span');
+    likeText.textContent = `High5!`;
     likeBtn.appendChild(likeText);
 
+    // Event listener for like button
     likeBtn.addEventListener('click', (e) => {
-        likeBtn.classList.toggle('active');
-        let url = likeBtn.querySelector('img').src.split('/images/')[1];
+        likeBtn.classList.toggle('active'); // Add active class
+        let url = likeBtn.querySelector('img').src.split('/images/')[1]; // Get url of current icon
+        
+        // Toggle icon
         if(url === "high5-icon.svg") {
             likeBtn.querySelector('img').src = `../images/high5-icon-active.svg`;
         }
@@ -405,37 +484,6 @@ const renderPost = (doc) => {
             likeBtn.querySelector('img').src = `../images/high5-icon.svg`;
         }
     });
-
-    postDiv.appendChild(nameDistanceTime);
-    postDiv.appendChild(description);
-
-    if(doc.data().photoURL) {
-        let img = document.createElement('img');
-        img.setAttribute('src', doc.data().photoURL);
-        postDiv.appendChild(img);
-    }
-
-    postDiv.appendChild(categoryDiv);
-    postDiv.appendChild(dateTimeDiv);
-    postDiv.appendChild(buttons);
-    buttons.appendChild(likeBtn)
-    
-    // Set class names
-    category.setAttribute('class', 'category');
-
-    // Contents for each element
-    let uid = doc.data().uid;
-    db.collection('users').doc(uid).get().then((user) => {
-        name.textContent = user.data().name;
-    });
-    timeCreated.textContent = '2d';
-    dateTime.textContent = `Expected Date & Time: ${doc.data().date} | ${doc.data().time}`;
-    category.textContent = `Category: ${doc.data().category}`;
-    description.textContent = `${doc.data().description}`;
-    // likeBtn.textContent = 'High5!';
-
-    // Append post data to list item element
-    postList.appendChild(li);
 
     // Add 'Update' and 'Delete' buttons only for posts owned by the user
     if(auth.currentUser.uid === doc.data().uid) {
