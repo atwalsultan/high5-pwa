@@ -33,91 +33,6 @@
 	<!-- Alerts -->
 	<div id="alerts"></div>
 
-	<aside id="sidebar" class="sidebar-hidden">
-
-		<!-- Category -->
-		<div class="category-filters">
-			<h3>Category</h3>
-			<div class="category">
-				<input type="checkbox" id="Art & Craft" value="Art & Craft">
-				<label for="categoryA">Art & Craft</label>
-			</div>
-
-			<div class="category">
-				<input type="checkbox" id="Board Games" value="Board Games">
-				<label for="categoryB">Board Games</label>
-			</div>
-
-			<div class="category">
-				<input type="checkbox" id="Buying / Selling" value="Buying / Selling">
-				<label for="categoryC">Buying / Selling</label>
-			</div>
-
-			<div class="category">
-				<input type="checkbox" id="Cooking" value="Cooking">
-				<label for="categoryD">Cooking</label>
-			</div>
-
-			<div class="category">
-				<input type="checkbox" id="Dance" value="Dance">
-				<label for="categoryD">Dance</label>
-			</div>
-
-			<div class="category">
-				<input type="checkbox" id="Learning" value="Learning">
-				<label for="categoryD">Learning</label>
-			</div>
-
-			<div class="category">
-				<input type="checkbox" id="Movies" value="Movies">
-				<label for="categoryD">Movies</label>
-			</div>
-
-			<div class="category">
-				<input type="checkbox" id="Music" value="Music">
-				<label for="categoryD">Music</label>
-			</div>
-
-			<div class="category">
-				<input type="checkbox" id="Outdoor & Adventure" value="Outdoor & Adventure">
-				<label for="categoryD">Outdoor & Adventure</label>
-			</div>
-
-			<div class="category">
-				<input type="checkbox" id="Reading" value="Reading">
-				<label for="categoryD">Reading</label>
-			</div>
-
-			<div class="category">
-				<input type="checkbox" id="Renting" value="Renting">
-				<label for="categoryD">Renting</label>
-			</div>
-
-			<div class="category">
-				<input type="checkbox" id="Sports & Fitness" value="Sports & Fitness">
-				<label for="categoryD">Sports & Fitness</label>
-			</div>
-
-			<div class="category">
-				<input type="checkbox" id="Virtual Games" value="Virtual Games">
-				<label for="categoryD">Virtual Games</label>
-			</div>
-		</div>
-		
-		<form id="filter-form">
-			<!-- Distance -->
-			<div class="distance-filter">
-				<h3>Distance</h3>
-				<div class="distance">
-					<label for="distance">Show posts created within (km): </label>
-					<input type="number" min="0" id="distance" placeholder="Infinite">
-				</div>
-			</div>
-
-			<button type="submit">Apply</button>
-		</form>
-	</aside>
-
 	<!-- Create markup  -->
 	<div id="createOverlay">
 		<div class="modal">
@@ -336,6 +251,136 @@
 					</ul>
 				</nav>
 			</header>
+
+			<aside id="sidebar" class="sidebar-hidden">
+				<div id="sidebarHeader">
+					<h2>Filters</h2>
+					<span class="closeBtn">&times;</span>
+				</div>
+
+				<!-- Category -->
+				<div class="category-wrapper">
+					<h3>CATEGORIES</h3>
+					<ul class="category-filters">
+						<li class="category">
+							<button>
+								<input type="checkbox" id="Art & Craft" value="Art & Craft">
+								<img src="../images/art-icon.svg" alt="Art & Craft Icon">
+								<label for="categoryA">Art & Craft</label>
+							</button>
+						</li>
+			
+						<li class="category">
+							<button>
+								<input type="checkbox" id="Board Games" value="Board Games">
+								<img src="../images/board-game-icon.svg" alt="Board Games Icon">
+								<label for="categoryB">Board Games</label>
+							</button>
+						</li>
+			
+						<li class="category">
+							<button>
+								<input type="checkbox" id="Buying / Selling" value="Buying / Selling">
+								<img src="../images/selling-icon.svg" alt="Buying / Selling Icon">
+								<label for="categoryC">Buying / Selling</label>
+							</button>
+						</li>
+			
+						<li class="category">
+							<button>
+								<input type="checkbox" id="Cooking" value="Cooking">
+								<img src="../images/cooking-icon.svg" alt="Cooking Icon">
+								<label for="categoryD">Cooking</label>
+							</button>
+						</li>
+			
+						<li class="category">
+							<button>
+								<input type="checkbox" id="Dance" value="Dance">
+								<img src="../images/dance-icon.svg" alt="Dance Icon">
+								<label for="categoryD">Dance</label>
+							</button>
+						</li>
+			
+						<li class="category">
+							<button>
+								<input type="checkbox" id="Learning" value="Learning">
+								<img src="../images/learning-icon.svg" alt="Learning Icon">
+								<label for="categoryD">Learning</label>
+							</button>
+						</li>
+			
+						<li class="category">
+							<button>
+								<input type="checkbox" id="Movies" value="Movies">
+								<img src="../images/movie-icon.svg" alt="Movies Icon">
+								<label for="categoryD">Movies</label>
+							</button>
+						</li>
+			
+						<li class="category">
+							<button>
+								<input type="checkbox" id="Music" value="Music">
+								<img src="../images/music-icon.svg" alt="Music Icon">
+								<label for="categoryD">Music</label>
+							</button>
+						</li>
+			
+						<li class="category">
+							<button>
+								<input type="checkbox" id="Outdoor & Adventure" value="Outdoor & Adventure">
+								<img src="../images/hiking-icon.svg" alt="Outdoor & Adventure Icon">
+								<label for="categoryD">Outdoor & Adventure</label>
+							</button>
+						</li>
+			
+						<li class="category">
+							<button>
+								<input type="checkbox" id="Reading" value="Reading">
+								<img src="../images/read-icon.svg" alt="Reading Icon">
+								<label for="categoryD">Reading</label>
+							</button>
+						</li>
+			
+						<li class="category">
+							<button>
+								<input type="checkbox" id="Renting" value="Renting">
+								<img src="../images/renting-icon.svg" alt="Renting Icon">
+								<label for="categoryD">Renting</label>
+							</button>
+						</li>
+			
+						<li class="category">
+							<button>
+								<input type="checkbox" id="Sports & Fitness" value="Sports & Fitness">
+								<img src="../images/sports-icon.svg" alt="Sports & Fitness Icon">
+								<label for="categoryD">Sports & Fitness</label>
+							</button>
+						</li>
+			
+						<li class="category">
+							<button>
+								<input type="checkbox" id="Virtual Games" value="Virtual Games">
+								<img src="../images/virtual-game-icon.svg" alt="Virtual Games Icon">
+								<label for="categoryD">Virtual Games</label>
+							</button>
+						</li>
+					</ul>
+					<div class="scroll-for-more">
+						<p>Scroll down to see more categories</p>
+					</div>
+				</div>
+				
+				<!-- Distance -->
+				<div class="distance-wrapper">
+					<h3>DISTANCE (KM)</h3>
+					<form id="filter-form">
+						<input type="number" min="0" id="distance" placeholder="Infinite">
+						<button type="submit">APPLY</button>
+					</form>
+				</div>	
+			</aside>
+
 			<ul id="postList"></ul>
 		</section>
 

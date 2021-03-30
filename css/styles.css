@@ -8,7 +8,7 @@
   font-family: "Open Sans", sans-serif;
 }
 
-#previousMessages::-webkit-scrollbar, section::-webkit-scrollbar {
+#previousMessages::-webkit-scrollbar, section::-webkit-scrollbar, .category-filters::-webkit-scrollbar {
   width: 0;
 }
 
@@ -43,11 +43,11 @@ header {
   width: 100%;
   top: 0;
   left: 0;
-  z-index: 10;
   background-color: #FBFBFB;
   padding: 1rem 1rem;
   box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.2);
-  text-align: center;
+  text-align: center; 
+  z-index: 60;
 }
 
 header nav ul,
@@ -71,68 +71,130 @@ header button {
   border-radius: 50%;
 }
 
-#newMessage button:focus, #cameraButtons button:focus, .buttons button:focus, header button:focus, footer button:focus, #profileBody button:focus, .delete-logout-body button:focus, #postForm button:focus, #updateForm button:focus {
+#newMessage button:focus, #cameraButtons button:focus, .buttons button:focus, header button:focus, footer button:focus, #profileBody button:focus, .delete-logout-body button:focus, #postForm button:focus, #updateForm button:focus, .category button:focus {
   outline: none;
 }
 
-footer button:active, header button:active, #newMessage button:active, #cameraButtons button:active, .buttons button:active, #profileBody button:active, #postForm button:active, #updateForm button:active, .delete-logout-body button:active {
+footer button:active, header button:active, #newMessage button:active, #cameraButtons button:active, .buttons button:active, #profileBody button:active, #postForm button:active, #updateForm button:active, .delete-logout-body button:active, .category button:active {
   transform: scale(.8);
 }
 
 /* Sidebar */
 #sidebar {
-  background-color: black;
-  color: white;
-  padding: 0.75rem 1.25rem;
-  box-sizing: border-box;
-  overflow-y: auto;
+  background-color: white;
+  padding: .5rem 0;
   transition: all 0.5s ease-out;
-
-  /* Position Properties */
   position: fixed;
-  top: 3.25rem;
+  top: 0;
   left: 0;
-  bottom: 3.25rem;
-  height: calc(100vh - 3.25rem - 3.25rem);
-  width: 55vw;
-  z-index: 9;
-}
-
-#sidebar h3 {
-  border-bottom: 1px solid white;
-  text-align: center;
-}
-
-#filter-form {
+  height: 100vh;
+  width: 60vw;
+  z-index: 80;
   display: flex;
   flex-flow: column nowrap;
-  justify-content: center;
   gap: 1rem;
 }
 
-#filter-form button {
-  margin: 1rem 0rem;
-  padding: 0.25rem 1rem;
-  max-width: 50%;
-  margin: auto;
+#sidebarHeader, .category-wrapper h3, .category-filters {
+  padding: 0 0.75rem;
+}
+
+#sidebar > div:first-of-type {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: space-between;
+}
+
+.distance-wrapper {
+  padding: 0 0.75rem;
 }
 
 .category-filters {
   display: flex;
   flex-flow: column nowrap;
-  gap: 0.35rem;
+  gap: 2px;
+  height: 40vh;
+  overflow-y: auto;
+  margin-top: .25rem;
 }
 
-.distance-filter {
+.scroll-for-more {
+  display: flex;
+  flex-flow: row nowrap;
+  justify-content: center;
+  align-items: center;
+  padding: .5rem;
+  border: 1px solid lightgray;
+  box-shadow: 0 -3px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
+#filter-form {
   display: flex;
   flex-flow: column nowrap;
-  gap: 0.35rem;
+  gap: 1rem;
+  padding-top: .5rem;
 }
 
-.category {
+#filter-form input {
+  font-family: inherit;
+  font-size: 0.9rem;
+  padding: 0.5rem;
+  border-radius: 5px;
+  border: 1px solid #737373;
+  width: 100%;
+  color: #737373;
+}
+
+#filter-form input:focus {
+  outline-color: #053E95;
+}
+
+#filter-form button {
+  padding: 0.75rem;
+  width: 80%;
+  border-radius: 5px;
+  cursor: pointer;
+  background-color: #032963;
+  color: #FBFBFB;
+  font-weight: 600;
+  font-size: 1rem;
+  margin: auto;
+}
+
+.category button {
   display: flex;
   flex-flow: row nowrap;
   gap: 1rem;
+  color: #737373;
+  padding: .5rem;
+  font-size: 1.15rem;
+  width: 100%;
+  border-radius: 0;
+  border: none;
+  background-color: transparent;
+  transition: all .15s ease-in;
+}
+
+.category button > * {
+  transition: all .15s ease-in;
+}
+
+.category button:hover, .category button > *:hover {
+  cursor: pointer;
+  background-color: #E5E5E5;
+}
+
+.category.active-category button, .category.active-category button > *:hover {
+  background-color: #FA812A;
+  color: white;
+}
+
+.category > button input {
+  display: none;
+}
+
+.category img {
+  transform: scale(1.25);
 }
 
 .distance {
@@ -143,7 +205,7 @@ footer button:active, header button:active, #newMessage button:active, #cameraBu
 }
 
 aside#sidebar.sidebar-hidden {
-  left: -60vw;
+  left: -85vw;
 }
 
 /* Main Sections */
@@ -152,7 +214,7 @@ aside#sidebar.sidebar-hidden {
   width: 100%;
   transition: all 0.75s ease-out;
   left: 0;
-  z-index: 7;
+  z-index: 50;
   padding-bottom: 1rem;
   height: 90vh;
   overflow-y: scroll;
@@ -274,7 +336,6 @@ footer {
   bottom: 0;
   left: 0;
   width: 100%;
-  z-index: 10;
 }
 
 footer nav {
@@ -311,7 +372,7 @@ footer button img {
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 20;
+  z-index: 90;
   background-color: rgba(0, 0, 0, 0.85);
   display: none;
 }
@@ -325,7 +386,7 @@ footer button img {
   transform: translate(-50%, 0);
   transition: all 0.5s ease-out;
   border-radius: 10px;
-  z-index: 11;
+  z-index: 100;
   width: 80%;
   text-align: center;
   box-shadow: 0px 2px 6px 1px rgb(97, 97, 97);

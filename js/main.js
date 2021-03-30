@@ -718,6 +718,10 @@ const closeModal = (overlay) => {
             canvas.style.display = 'none'; // Close modal
             uploadButton.style.display = 'none'; // Hide upload button until photo is captured
             break;
+
+        case sidebar:
+            sidebar.classList.add('sidebar-hidden');
+            break;
     }
 }
 
@@ -828,6 +832,7 @@ const showAlert = (content, type) => {
 // Toggle sidebar
 const toggleSidebar = () => {
     sidebar.classList.toggle('sidebar-hidden');
+    sidebarOverlay.style.display = 'block';
 };
 
 // Change sections
@@ -1179,6 +1184,10 @@ for(let i = 0; i<closeBtns.length; i++) {
     closeBtns[i].addEventListener('click', (e) => {
         closeModal(e.target.parentElement.parentElement.parentElement);
         closeModal(e.target.parentElement.parentElement.parentElement.parentElement); // For camera modals
+        
+        if(e.target.parentElement.id === "sidebarHeader") {
+            closeModal(sidebar);
+        }
     });
 }
 
@@ -1212,35 +1221,49 @@ icons.forEach((icon, index) => {
     });
 });
 
-// On category filter click
-sidebar.querySelectorAll('input[type="checkbox"]').forEach((category) => {
-    category.addEventListener('change', (event) => {
-        let checked = sidebar.querySelectorAll('input[type="checkbox"]:checked');
+// // On category filter click
+// sidebar.querySelectorAll('input[type="checkbox"]').forEach((category) => {
+//     category.addEventListener('change', (event) => {
+//         let checked = sidebar.querySelectorAll('input[type="checkbox"]:checked');
 
-        if(checked.length === 0) {
-            // Display all posts
-            document.querySelectorAll('#postList li').forEach((post) => {
-                post.style.display = 'flex';
-            });
+//         if(checked.length === 0) {
+//             // Display all posts
+//             document.querySelectorAll('#postList li').forEach((post) => {
+//                 post.style.display = 'flex';
+//             });
+//         }
+//         else {
+//             let checkedCategories = [];
+
+//             checked.forEach((category) => {
+//                 checkedCategories.push(category.value);
+//             });
+
+//             document.querySelectorAll('#postList li').forEach((post) => {
+//                 if (checkedCategories.includes(post.querySelector('.category').textContent)) {
+//                     post.style.display = 'flex';
+//                 }
+//                 else {
+//                     post.style.display = 'none';
+//                 }
+//             });
+//         }
+//     });
+// });
+
+sidebar.querySelectorAll('.category-filters li').forEach((category) => {
+    category.addEventListener('click', () => {
+
+        category.classList.toggle('active-category');
+
+        if(category.querySelector('input[type="checkbox"]').checked) {
+            category.querySelector('input[type="checkbox"]').checked = false;
         }
         else {
-            let checkedCategories = [];
-
-            checked.forEach((category) => {
-                checkedCategories.push(category.value);
-            });
-
-            document.querySelectorAll('#postList li').forEach((post) => {
-                if (checkedCategories.includes(post.querySelector('.category').textContent)) {
-                    post.style.display = 'flex';
-                }
-                else {
-                    post.style.display = 'none';
-                }
-            });
+            category.querySelector('input[type="checkbox"]').checked = true;
         }
-    });
-});
+    })
+})
 
 // When new post image button is clicked
 newPostImage.addEventListener('click', addNewImage);
