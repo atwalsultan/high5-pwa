@@ -51,6 +51,7 @@ const alertDiv = document.getElementById('alerts');
 // Sidebar
 const sidebar = document.getElementById('sidebar');
 const sidebarBtn = document.getElementById('sidebar-btn');
+const sidebarOverlay = document.getElementById('sidebarOverlay');
 
 // Sections
 let icons = document.querySelectorAll('footer li button');
@@ -721,6 +722,11 @@ const closeModal = (overlay) => {
 
         case sidebar:
             sidebar.classList.add('sidebar-hidden');
+
+            setTimeout(() => {
+                sidebarOverlay.style.display = 'none';
+            }, 500);
+
             break;
     }
 }
@@ -759,6 +765,11 @@ const outsideClick = (event) => {
             // Close modal
             closeModal(cameraOverlay);
             break;
+
+        case sidebarOverlay:
+            // Close sidebar
+            closeModal(sidebar);
+            break;
     }
 };
 
@@ -789,7 +800,7 @@ const filter = (event) => {
             post.style.display = 'none';
         }
         else {
-            post.style.display = 'list-item';
+            post.style.display = 'flex';
         }
     });
 };
@@ -831,7 +842,11 @@ const showAlert = (content, type) => {
 
 // Toggle sidebar
 const toggleSidebar = () => {
-    sidebar.classList.toggle('sidebar-hidden');
+    sidebarOverlay.style.display = 'block'
+
+    setTimeout(() => {
+        sidebar.classList.remove('sidebar-hidden');
+    }, 10)
 };
 
 // Change sections
