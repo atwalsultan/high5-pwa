@@ -83,6 +83,7 @@ signupForm.addEventListener('submit', (e) => {
             db.collection('users').doc(user.uid).set({
                 email: email,
                 name: name,
+                bio: "Hello there! Nice to meet you!!",
                 timestamp: new firebase.firestore.FieldValue.serverTimestamp(),
                 photoURL: 'https://firebasestorage.googleapis.com/v0/b/high5-pwa.appspot.com/o/default-profile-pic.jpeg?alt=media&token=ab798555-acc2-4748-8657-fcfb019f84de',
             }).then(() => {

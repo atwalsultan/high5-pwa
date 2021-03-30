@@ -1046,7 +1046,7 @@ const renderProfile = () => {
         profileEmail.textContent = user.data().email;
 
         let profileBio = document.createElement('p');
-        profileBio.textContent = user.data().bio ? user.data().bio : `"Hello there! Nice to meet you!"`;
+        profileBio.textContent = `" ${user.data().bio} "`;
 
         profileInfo.append(profileImg);
         profileInfo.append(profileDisplayName);
