@@ -764,7 +764,7 @@ const showAlert = (content, type) => {
     }
 
     // Slide alert div down
-    alertDiv.style.top = "4rem";
+    alertDiv.style.top = ".5rem";
 
     // Push alert div back up after 3 seconds
     setTimeout(() => {

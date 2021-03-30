@@ -171,6 +171,7 @@ aside#sidebar.sidebar-hidden {
   flex-flow: row nowrap;
   align-items: center;
   justify-content: center;
+  padding: 1rem;
 }
 
 #index-main .form-wrapper,
@@ -195,6 +196,8 @@ aside#sidebar.sidebar-hidden {
 .logo img {
   width: 70px;
   height: 70px;
+  transform: scale(1.25);
+  border-radius: 50%;
 }
 
 #login-form, #signup-form {
@@ -689,7 +692,9 @@ video {
 #notificationList li > p:last-of-type, #chatList li > span {
   flex-grow: 1;
   text-align: right;
-  min-width: 15%;
+  min-width: 12%;
+  color: #737373;
+  font-size: .9rem;
 }
 
 #notificationList li:hover, #chatList li:hover {
@@ -717,6 +722,7 @@ video {
   align-items: center;
   color: #737373;
   transition: all .15s ease-in;
+  border: 1px solid gray;
 }
 
 #profileBody button img {
