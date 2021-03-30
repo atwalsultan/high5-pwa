@@ -832,7 +832,6 @@ const showAlert = (content, type) => {
 // Toggle sidebar
 const toggleSidebar = () => {
     sidebar.classList.toggle('sidebar-hidden');
-    sidebarOverlay.style.display = 'block';
 };
 
 // Change sections
@@ -1221,40 +1220,37 @@ icons.forEach((icon, index) => {
     });
 });
 
-// // On category filter click
-// sidebar.querySelectorAll('input[type="checkbox"]').forEach((category) => {
-//     category.addEventListener('change', (event) => {
-//         let checked = sidebar.querySelectorAll('input[type="checkbox"]:checked');
-
-//         if(checked.length === 0) {
-//             // Display all posts
-//             document.querySelectorAll('#postList li').forEach((post) => {
-//                 post.style.display = 'flex';
-//             });
-//         }
-//         else {
-//             let checkedCategories = [];
-
-//             checked.forEach((category) => {
-//                 checkedCategories.push(category.value);
-//             });
-
-//             document.querySelectorAll('#postList li').forEach((post) => {
-//                 if (checkedCategories.includes(post.querySelector('.category').textContent)) {
-//                     post.style.display = 'flex';
-//                 }
-//                 else {
-//                     post.style.display = 'none';
-//                 }
-//             });
-//         }
-//     });
-// });
-
+// On category filter click
 sidebar.querySelectorAll('.category-filters li').forEach((category) => {
-    category.addEventListener('click', () => {
 
+    category.addEventListener('click', () => {
         category.classList.toggle('active-category');
+
+        let checked = sidebar.querySelectorAll('.active-category');
+
+        if(checked.length === 0) {
+            // Display all posts
+            document.querySelectorAll('#postList li').forEach((post) => {
+                post.style.display = 'flex';
+            });
+        }
+        else {
+            let checkedCategories = [];
+
+            checked.forEach((checkedCategory) => {
+                checkedCategories.push(checkedCategory.querySelector('input[type="checkbox"]').value);
+            });
+
+            document.querySelectorAll('#postList li').forEach((post) => {
+                let postCategory = post.querySelector('.category').textContent.split('Category: ')[1];
+                if (checkedCategories.includes(postCategory)) {
+                    post.style.display = 'flex';
+                }
+                else {
+                    post.style.display = 'none';
+                }
+            });
+        }
 
         if(category.querySelector('input[type="checkbox"]').checked) {
             category.querySelector('input[type="checkbox"]').checked = false;
