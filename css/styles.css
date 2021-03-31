@@ -1013,6 +1013,10 @@ video {
   transition: all 0.15s ease-in;
 }
 
+.buttons button:first-of-type {
+  padding-left: 0;
+}
+
 .buttons button img {
   transform: scale(1.25);
   border-radius: 50%;

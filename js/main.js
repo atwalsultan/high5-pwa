@@ -112,6 +112,7 @@ const createPost = (event) => {
     postForm.activityTime.value === "" ? createObj.time = "Unspecified" : createObj.time = postForm.activityTime.value; // time = 'Unspedified' if user leaves it empty
     createObj.description = postForm.activityDesc.value;
     createObj.category = postForm.activityCategory.value;
+    console.log(postForm.activityCategory.value);
     createObj.uid = auth.currentUser.uid;
     createObj.timestamp = new firebase.firestore.FieldValue.serverTimestamp();
     createObj.updated = new firebase.firestore.FieldValue.serverTimestamp();
@@ -429,7 +430,11 @@ const renderPost = (doc) => {
     category.setAttribute('class', 'category');
     category.textContent = `Category: ${doc.data().category}`;
     categoryDiv.appendChild(category);
-    postDiv.appendChild(categoryDiv); // Append to container
+
+    // Check if category has been provided
+    if (doc.data().category !== 'Unspecified') {
+        postDiv.appendChild(categoryDiv); // Append to container
+    }
 
     // Container for expected date and time
     let dateTimeDiv = document.createElement('div');
