@@ -409,8 +409,9 @@ footer button {
 }
 
 footer button img {
-  padding: 0.25rem 0.2rem 0 0.2rem;
+  padding: 0.25rem;
   transform: scale(1.25);
+  padding-top: 0.3rem;
 }
 
 .footer-btn-active {
@@ -931,6 +932,11 @@ video {
   gap: 0.5rem;
 
   flex-grow: 1;
+}
+
+.post-div > img {
+  max-height: 313px;
+  width: auto;
 }
 
 .profile-pic-div {
