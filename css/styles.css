@@ -1,5 +1,5 @@
 /* Importing Google Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap");
 
 * {
   margin: 0;
@@ -8,7 +8,9 @@
   font-family: "Open Sans", sans-serif;
 }
 
-#previousMessages::-webkit-scrollbar, section::-webkit-scrollbar, .category-filters::-webkit-scrollbar {
+#previousMessages::-webkit-scrollbar,
+section::-webkit-scrollbar,
+.category-filters::-webkit-scrollbar {
   width: 0;
 }
 
@@ -28,7 +30,7 @@ a {
 }
 
 button {
-  padding: .25rem .45rem;
+  padding: 0.25rem 0.45rem;
   border-radius: 5px;
   border: 1px solid black;
 }
@@ -43,10 +45,10 @@ header {
   width: 100%;
   top: 0;
   left: 0;
-  background-color: #FBFBFB;
+  background-color: #fbfbfb;
   padding: 1rem 1rem;
   box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.2);
-  text-align: center; 
+  text-align: center;
   z-index: 60;
 }
 
@@ -60,23 +62,43 @@ footer nav ul {
 
 header button {
   transform: scale(1.15);
-  transition: all .15s ease-in;
-  padding: .25rem .3rem .1rem .32rem;
+  transition: all 0.15s ease-in;
+  padding: 0.25rem 0.3rem 0.1rem 0.32rem;
   border: none;
   background-color: transparent;
 }
 
 #createBtn {
-  background-color: #FA812A;
+  background-color: #fa812a;
   border-radius: 50%;
 }
 
-#newMessage button:focus, #cameraButtons button:focus, .buttons button:focus, header button:focus, footer button:focus, #profileBody button:focus, .delete-logout-body button:focus, #postForm button:focus, #updateForm button:focus, .category button:focus, #filter-form button:focus {
+#newMessage button:focus,
+#cameraButtons button:focus,
+.buttons button:focus,
+header button:focus,
+footer button:focus,
+#profileBody button:focus,
+.delete-logout-body button:focus,
+#postForm button:focus,
+#updateForm button:focus,
+.category button:focus,
+#filter-form button:focus {
   outline: none;
 }
 
-footer button:active, header button:active, #newMessage button:active, #cameraButtons button:active, .buttons button:active, #profileBody button:active, #postForm button:active, #updateForm button:active, .delete-logout-body button:active, .category button:active, #filter-form button:active {
-  transform: scale(.8);
+footer button:active,
+header button:active,
+#newMessage button:active,
+#cameraButtons button:active,
+.buttons button:active,
+#profileBody button:active,
+#postForm button:active,
+#updateForm button:active,
+.delete-logout-body button:active,
+.category button:active,
+#filter-form button:active {
+  transform: scale(0.8);
 }
 
 /* Sidebar */
@@ -93,7 +115,7 @@ footer button:active, header button:active, #newMessage button:active, #cameraBu
 
 #sidebar {
   background-color: white;
-  padding: .5rem 0;
+  padding: 0.5rem 0;
   transition: all 0.5s ease-out;
   position: relative;
   top: 0;
@@ -105,13 +127,16 @@ footer button:active, header button:active, #newMessage button:active, #cameraBu
   gap: 1rem;
 }
 
-#sidebarHeader, .category-wrapper h3, .category-filters {
+#sidebarHeader,
+.category-wrapper h3,
+.category-filters {
   padding: 0 0.75rem;
 }
 
 #sidebar > div:first-of-type {
   display: flex;
   flex-flow: row nowrap;
+  align-items: center;
   justify-content: space-between;
 }
 
@@ -125,24 +150,35 @@ footer button:active, header button:active, #newMessage button:active, #cameraBu
   gap: 2px;
   height: 40vh;
   overflow-y: auto;
-  margin-top: .25rem;
+  margin-top: 0.25rem;
+}
+
+.category-filters button {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
 }
 
 .scroll-for-more {
   display: flex;
-  flex-flow: row nowrap;
+  flex-flow: column nowrap;
   justify-content: center;
   align-items: center;
-  padding: .5rem;
+  gap: 0.5rem;
+  padding: 0.5rem;
   border-bottom: 1px solid lightgray;
   box-shadow: 0 -3px 4px 0 rgba(0, 0, 0, 0.2);
+}
+
+.scroll-for-more img {
+  transform: scale(1.25);
 }
 
 #filter-form {
   display: flex;
   flex-flow: column nowrap;
   gap: 1rem;
-  padding-top: .5rem;
+  padding-top: 0.5rem;
 }
 
 #filter-form input {
@@ -156,7 +192,7 @@ footer button:active, header button:active, #newMessage button:active, #cameraBu
 }
 
 #filter-form input:focus {
-  outline-color: #053E95;
+  outline-color: #053e95;
 }
 
 #filter-form button {
@@ -165,11 +201,11 @@ footer button:active, header button:active, #newMessage button:active, #cameraBu
   border-radius: 5px;
   cursor: pointer;
   background-color: #032963;
-  color: #FBFBFB;
+  color: #fbfbfb;
   font-weight: 600;
   font-size: 1rem;
   margin: auto;
-  transition: all .15s ease-in;
+  transition: all 0.15s ease-in;
   border: none;
 }
 
@@ -178,26 +214,28 @@ footer button:active, header button:active, #newMessage button:active, #cameraBu
   flex-flow: row nowrap;
   gap: 1rem;
   color: #737373;
-  padding: .5rem;
+  padding: 0.5rem;
   font-size: 1.15rem;
   width: 100%;
   border-radius: 0;
   border: none;
   background-color: transparent;
-  transition: all .15s ease-in;
+  transition: all 0.15s ease-in;
 }
 
 .category button > * {
-  transition: all .15s ease-in;
+  transition: all 0.15s ease-in;
 }
 
-.category button:hover, .category button > *:hover {
+.category button:hover,
+.category button > *:hover {
   cursor: pointer;
-  background-color: #E5E5E5;
+  background-color: #e5e5e5;
 }
 
-.category.active-category button, .category.active-category button > *:hover {
-  background-color: #FA812A;
+.category.active-category button,
+.category.active-category button > *:hover {
+  background-color: #fa812a;
   color: white;
 }
 
@@ -280,7 +318,8 @@ aside#sidebar.sidebar-hidden {
   border-radius: 50%;
 }
 
-#login-form, #signup-form {
+#login-form,
+#signup-form {
   display: flex;
   flex-flow: column nowrap;
   gap: 1rem;
@@ -294,13 +333,13 @@ aside#sidebar.sidebar-hidden {
   border-radius: 5px;
   border: 1px solid #737373;
   width: 100%;
-  margin-top: .25rem;
+  margin-top: 0.25rem;
   color: #737373;
 }
 
 #index-main .form-wrapper input:focus,
 #signup-main .form-wrapper input:focus {
-  outline-color: #053E95;
+  outline-color: #053e95;
 }
 
 #index-main .form-wrapper button,
@@ -311,7 +350,7 @@ aside#sidebar.sidebar-hidden {
   border: 1px solid rgb(79, 79, 79);
   cursor: pointer;
   background-color: #032963;
-  color: #FBFBFB;
+  color: #fbfbfb;
   font-weight: 600;
   font-size: 1rem;
 }
@@ -327,7 +366,7 @@ aside#sidebar.sidebar-hidden {
 
 #index-main .sign-up a,
 #signup-main .login a {
-  color: #FA812A;
+  color: #fa812a;
   text-decoration: underline;
 }
 
@@ -341,7 +380,7 @@ form label {
 
 #index-main form #rememberMe label {
   font-weight: normal;
-  margin-left: .2rem;
+  margin-left: 0.2rem;
 }
 
 .form-wrapper input#rememberMeCheck {
@@ -364,18 +403,18 @@ footer nav {
 
 footer button {
   border-radius: 50%;
-  background-color: #E5E5E5;
+  background-color: #e5e5e5;
   transition: all 0.15s ease-in;
   border: none;
 }
 
 footer button img {
-  padding: .25rem .2rem 0 .2rem;
+  padding: 0.25rem 0.2rem 0 0.2rem;
   transform: scale(1.25);
 }
 
 .footer-btn-active {
-  background-color: #053E95;
+  background-color: #053e95;
 }
 
 /* Overlays for modals */
@@ -437,15 +476,15 @@ footer button img {
 
 /* Chat */
 .message {
-  transition: all .4s ease-in-out;
+  transition: all 0.4s ease-in-out;
 }
 
 .message > span:first-of-type {
-  background-color: #ECEBE4;
+  background-color: #ecebe4;
   border-radius: 2px;
   width: max-content;
   word-wrap: break-word;
-  padding: .5rem .7rem;
+  padding: 0.5rem 0.7rem;
   max-width: 225px;
 }
 
@@ -454,7 +493,7 @@ footer button img {
 }
 
 .my-message > span:first-of-type {
-  background-color: #053E95;
+  background-color: #053e95;
   color: white;
   order: 2;
 }
@@ -465,7 +504,7 @@ footer button img {
   overflow-y: scroll;
   display: flex;
   flex-flow: column nowrap;
-  margin: .25rem 0;
+  margin: 0.25rem 0;
   gap: 1.35rem;
   padding: 0 1rem;
 }
@@ -478,8 +517,8 @@ footer button img {
 }
 
 #previousMessages li > span:last-of-type {
-  font-size: .7rem;
-  margin-bottom: .1rem;
+  font-size: 0.7rem;
+  margin-bottom: 0.1rem;
   color: #737373;
 }
 
@@ -498,7 +537,7 @@ footer button img {
 #chatHeader {
   margin-bottom: 0;
   box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.2);
-  padding: .5rem .75rem;
+  padding: 0.5rem 0.75rem;
 }
 
 #chatFooter {
@@ -524,21 +563,21 @@ footer button img {
 }
 
 #newMessage input:focus {
-  outline-color: #053E95;
+  outline-color: #053e95;
 }
 
 #newMessage button {
   border: none;
   transform: scale(1.25);
   background-color: transparent;
-  transition: all .15s ease-in;
+  transition: all 0.15s ease-in;
 }
 
 /* Sections */
 section > h2 {
   max-width: max-content;
-  padding: 0rem .25rem;
-  margin-bottom: .75rem;
+  padding: 0rem 0.25rem;
+  margin-bottom: 0.75rem;
   border-bottom: 1px solid gray;
 }
 
@@ -576,12 +615,11 @@ section > h2 {
   top: -5rem;
 }
 
-
 #cameraButtons button {
   border-radius: 50%;
   max-width: 60px;
   box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-  transition: all .15s ease-in;
+  transition: all 0.15s ease-in;
   border: none;
   background-color: white;
 }
@@ -591,28 +629,37 @@ section > h2 {
 }
 
 #snapButton img {
-  padding-top: .18rem;
+  padding-top: 0.18rem;
 }
 
-#createHeader, #updateHeader, #deleteHeader, #logoutHeader, #chatHeader {
+#createHeader,
+#updateHeader,
+#deleteHeader,
+#logoutHeader,
+#chatHeader {
   display: flex;
   flex-flow: row nowrap;
   justify-content: flex-end;
   align-items: center;
-  margin-bottom: .5rem;
+  margin-bottom: 0.5rem;
   box-shadow: 0 3px 8px 0 rgba(0, 0, 0, 0.2);
-  padding: .5rem .75rem;
-  background-color: #FBFBFB;
+  padding: 0.5rem 0.75rem;
+  background-color: #fbfbfb;
   border-radius: 10px 10px 0 0;
 }
 
-#createHeader h2, #updateHeader h2, #deleteHeader h2, #logoutHeader h2, #chatHeader h2 {
+#createHeader h2,
+#updateHeader h2,
+#deleteHeader h2,
+#logoutHeader h2,
+#chatHeader h2 {
   text-align: center;
   flex-grow: 1;
   justify-self: center;
 }
 
-.category-div, .description-div {
+.category-div,
+.description-div {
   display: flex;
   flex-flow: column nowrap;
 }
@@ -624,25 +671,30 @@ section > h2 {
 }
 
 .image-div button {
-  margin-top: .25rem;
-  padding: 0 .75rem;
+  margin-top: 0.25rem;
+  padding: 0 0.75rem;
   background-color: white;
   border: 1px solid #737373;
   color: #737373;
   flex-grow: 1;
-  transition: all .15s ease-in;
+  transition: all 0.15s ease-in;
 }
 
 .image-div button:focus {
-  outline-color: #053E95;
+  outline-color: #053e95;
 }
 
 input[type="file"] {
   max-width: 70%;
 }
 
-#postForm input, #postForm textarea, #postForm select, #updateForm input, #updateForm textarea, #updateForm select {
-  margin-top: .25rem;
+#postForm input,
+#postForm textarea,
+#postForm select,
+#updateForm input,
+#updateForm textarea,
+#updateForm select {
+  margin-top: 0.25rem;
   font-family: inherit;
   font-size: 0.9rem;
   padding: 0.5rem;
@@ -651,39 +703,50 @@ input[type="file"] {
   color: #737373;
 }
 
-#postForm input:focus, #postForm textarea:focus, #postForm select:focus, #updateForm input:focus, #updateForm textarea:focus, #updateForm select:focus {
-  outline-color: #053E95;
+#postForm input:focus,
+#postForm textarea:focus,
+#postForm select:focus,
+#updateForm input:focus,
+#updateForm textarea:focus,
+#updateForm select:focus {
+  outline-color: #053e95;
 }
 
-#postForm textarea, #updateForm textarea {
+#postForm textarea,
+#updateForm textarea {
   height: 5rem;
   resize: none;
 }
 
-#postForm, #updateForm, .delete-logout-body {
+#postForm,
+#updateForm,
+.delete-logout-body {
   display: flex;
   flex-flow: column nowrap;
   gap: 1rem;
-  padding: .5rem 1.25rem 1.25rem 1.5rem;
+  padding: 0.5rem 1.25rem 1.25rem 1.5rem;
 }
 
-#postForm img, #updateForm img {
+#postForm img,
+#updateForm img {
   height: 50px;
   width: auto;
   border: 1px solid lightgray;
 }
 
-#postForm button[type="submit"], #updateForm button[type="submit"], .delete-logout-body button {
+#postForm button[type="submit"],
+#updateForm button[type="submit"],
+.delete-logout-body button {
   padding: 0.75rem;
   width: 100%;
   border-radius: 5px;
   border: none;
   cursor: pointer;
   background-color: #032963;
-  color: #FBFBFB;
+  color: #fbfbfb;
   font-weight: 600;
   font-size: 1rem;
-  transition: all .15s ease-in;
+  transition: all 0.15s ease-in;
 }
 
 .delete-logout-body {
@@ -691,19 +754,18 @@ input[type="file"] {
 }
 
 .delete-logout-body button {
-  background-color: #FF0000;
+  background-color: #ff0000;
 }
 
 .required-field {
   color: red;
-  font-size: .8rem;
+  font-size: 0.8rem;
 }
 
 .expected-date-time {
   display: flex;
   flex-flow: row nowrap;
   gap: 1rem;
-
 }
 
 .expected-date-time > input:last-of-type {
@@ -713,7 +775,7 @@ input[type="file"] {
 .location-div {
   display: flex;
   flex-flow: row nowrap;
-  gap: .5rem;
+  gap: 0.5rem;
 }
 
 .location-div > input {
@@ -735,32 +797,37 @@ video {
   display: none;
 }
 /* Notifications and Chat */
-#notificationList, #chatList {
+#notificationList,
+#chatList {
   display: flex;
   flex-flow: column nowrap;
 }
 
-#notificationList li, #chatList li {
+#notificationList li,
+#chatList li {
   display: flex;
   flex-flow: row nowrap;
-  gap: .5rem;
+  gap: 0.5rem;
   padding: 1rem;
   border-bottom: 1px solid lightgray;
 }
 
-#notificationList li img, #chatList li img {
+#notificationList li img,
+#chatList li img {
   max-height: 50px;
   width: auto;
   border-radius: 50%;
 }
 
-#notificationList li > div, #chatList li > div {
+#notificationList li > div,
+#chatList li > div {
   display: flex;
   flex-flow: column nowrap;
-  gap: .25rem;
+  gap: 0.25rem;
 }
 
-#notificationList li > div > p:first-of-type, #chatList li > div > p:first-of-type {
+#notificationList li > div > p:first-of-type,
+#chatList li > div > p:first-of-type {
   font-weight: 600;
 }
 
@@ -768,17 +835,19 @@ video {
   color: #737373;
 }
 
-#notificationList li > p:last-of-type, #chatList li > span {
+#notificationList li > p:last-of-type,
+#chatList li > span {
   flex-grow: 1;
   text-align: right;
   min-width: 12%;
   color: #737373;
-  font-size: .9rem;
+  font-size: 0.9rem;
 }
 
-#notificationList li:hover, #chatList li:hover {
+#notificationList li:hover,
+#chatList li:hover {
   cursor: pointer;
-  background-color: #E5E5E5;
+  background-color: #e5e5e5;
 }
 
 /* Profile */
@@ -797,17 +866,17 @@ video {
   font-size: inherit;
   display: flex;
   flex-flow: row nowrap;
-  gap: .25rem;
+  gap: 0.25rem;
   align-items: center;
   color: #737373;
-  transition: all .15s ease-in;
+  transition: all 0.15s ease-in;
   border: 1px solid gray;
 }
 
 #profileBody button img {
   transform: scale(1.25);
-  padding: .1rem;
-  margin-right: .2rem;
+  padding: 0.1rem;
+  margin-right: 0.2rem;
 }
 
 #profileInfo {
@@ -836,7 +905,7 @@ video {
 }
 
 #profileInfo > p:nth-of-type(2) {
-  font-size: .9rem;
+  font-size: 0.9rem;
   color: #737373;
 }
 
@@ -848,18 +917,18 @@ video {
 }
 
 #postList li {
-  padding: 1rem 1.5rem .75rem .75rem;
+  padding: 1rem 1.5rem 0.75rem 0.75rem;
   border-radius: 10px;
 
   display: flex;
   flex-flow: row nowrap;
-  gap: .5rem;
+  gap: 0.5rem;
 }
 
 .post-div {
   display: flex;
   flex-flow: column nowrap;
-  gap: .5rem;
+  gap: 0.5rem;
 
   flex-grow: 1;
 }
@@ -886,7 +955,7 @@ video {
   display: flex;
   flex-flow: row nowrap;
   align-items: flex-end;
-  gap: .25rem;
+  gap: 0.25rem;
 }
 
 .name-distance-time > p:first-of-type {
@@ -902,20 +971,21 @@ video {
 .buttons {
   display: flex;
   flex-flow: row nowrap;
-  gap: .35rem;
-  margin-top: .5rem;
+  gap: 0.35rem;
+  margin-top: 0.5rem;
 }
 
-#categoryDiv, #dateTimeDiv {
+#categoryDiv,
+#dateTimeDiv {
   display: flex;
   flex-flow: row nowrap;
-  gap: .5rem;
+  gap: 0.5rem;
   color: #737373;
 }
 
 #categoryDiv img {
   transform: scale(1.35);
-  margin: 0rem .35rem;
+  margin: 0rem 0.35rem;
 }
 
 #dateTimeDiv img {
@@ -929,21 +999,21 @@ video {
   font-size: inherit;
   display: flex;
   flex-flow: row nowrap;
-  gap: .25rem;
+  gap: 0.25rem;
   align-items: center;
   color: #737373;
-  transition: all .15s ease-in;
+  transition: all 0.15s ease-in;
 }
 
 .buttons button img {
   transform: scale(1.25);
   border-radius: 50%;
-  padding: .1rem;
-  margin-right: .2rem;
+  padding: 0.1rem;
+  margin-right: 0.2rem;
 }
 
 .buttons .active img {
-  background-color: #FA812A;
+  background-color: #fa812a;
 }
 
 .buttons .active span {

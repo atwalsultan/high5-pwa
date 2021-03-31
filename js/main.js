@@ -1241,6 +1241,17 @@ sidebar.querySelectorAll('.category-filters li').forEach((category) => {
     category.addEventListener('click', () => {
         category.classList.toggle('active-category');
 
+        let icon = category.querySelector('button img');
+        let url = icon.src.split('.svg')[0];
+        if(url.includes('active')) {
+            let newUrl = url.split('-active')[0] + '.svg';
+            icon.src = newUrl;
+        }
+        else {
+            let newUrl = url + '-active.svg';
+            icon.src = newUrl;
+        }
+
         let checked = sidebar.querySelectorAll('.active-category');
 
         if(checked.length === 0) {
