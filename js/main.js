@@ -289,6 +289,7 @@ const createChatListener = (chat) => {
 
                 let time = document.createElement('span');
                 let dt = new Date(change.doc.data().timestamp * 1000);
+
                 let hours = ('0' + dt.getHours()).slice(-2);
                 let minutes = ('0' + dt.getMinutes()).slice(-2);
                 time.textContent = hours + ': ' + minutes;
@@ -312,6 +313,14 @@ const createChatListener = (chat) => {
                     message.style.opacity = '1';
                     message.style.marginTop = '0';
                 }, 200);
+            }
+
+            if (change.type === 'modified') {
+                let lastMessageTime = previousMessages.querySelector('li:last-of-type > span:last-of-type');
+                let dt = new Date(change.doc.data().timestamp * 1000);
+                let hours = ('0' + dt.getHours()).slice(-2);
+                let minutes = ('0' + dt.getMinutes()).slice(-2);
+                lastMessageTime.textContent = hours + ': ' + minutes;
             }
         })
 
