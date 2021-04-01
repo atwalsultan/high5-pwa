@@ -616,7 +616,6 @@ const updatePost = (event) => {
     db.collection('posts').doc(updateId).update(updateObj)
         .then(() => {
             if (file) {
-
                 db.collection('posts').doc(updateId).get()
                     .then((post) => {
                         photoURL = post.data().photoURL;
@@ -633,7 +632,7 @@ const updatePost = (event) => {
                                 task
                                     .then(snapshot => {
                                         snapshot.ref.getDownloadURL()
-                                            .then(url => {
+                                            .then((url) => {
                                                 updateObj = {
                                                     photoURL: url,
                                                 }
@@ -992,7 +991,7 @@ const renderChat = (doc, uids) => {
 };
 
 // On file input field change
-const newFileImage = () => {
+const newFileImage = (e) => {
     // Remove live image blob if it was created previously
     blobToUpload = null;
 
@@ -1003,7 +1002,7 @@ const newFileImage = () => {
         image.src = fr.result;
     }
 
-    if (createOverlay.style.display !== 'none') {
+    if (e.target.id === 'postImage') {
         // Get image url
         fr.readAsDataURL(postImage.files[0]);
 
@@ -1011,7 +1010,7 @@ const newFileImage = () => {
         uploadPhoto.innerHTML = ``;
         uploadPhoto.append(image);
     }
-    else if (updateOverlay.style.display !== 'none') {
+    else if (e.target.id === 'updatePostImage') {
         // Get image url
         fr.readAsDataURL(updatePostImage.files[0]);
 
