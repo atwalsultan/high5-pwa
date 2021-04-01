@@ -121,11 +121,11 @@ const createPost = (event) => {
     userPos ? longitude = userPos.coords.longitude : longitude = 0; // longitude = '' if the user position is not available
     createObj.coordinates = new firebase.firestore.GeoPoint(latitude, longitude);
 
+    let file = postForm.postImage.files[0];
+
     // Add post as document to collection
     db.collection('posts').add(createObj)
         .then((post) => {
-            let file = postForm.postImage.files[0];
-
             if (file) {
                 let name = new Date() + '-' + file.name;
                 let metaData = {
@@ -610,11 +610,11 @@ const updatePost = (event) => {
     }
     updateObj.updated = new firebase.firestore.Timestamp.fromDate(new Date());
 
+    let file = updateForm.updatePostImage.files[0];
 
     // Updating document in collection
     db.collection('posts').doc(updateId).update(updateObj)
         .then(() => {
-            let file = updateForm.updatePostImage.files[0];
             if (file) {
 
                 db.collection('posts').doc(updateId).get()
