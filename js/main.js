@@ -80,6 +80,8 @@ const newUpdateImageBtn = document.getElementById('newUpdateImage');
 
 const profileInfo = document.getElementById('profileInfo');
 
+const updateUploadPhoto = document.getElementById('updateUploadPhoto');
+
 //**************************************************************
 //      Function Declarations
 //**************************************************************
@@ -684,6 +686,7 @@ const closeModal = (overlay) => {
     switch (overlay) {
         case updateOverlay:
             updateForm.reset(); // Reset form in modal
+            updateUploadPhoto.innerHTML = ``; // Remove previosly added photo from modal
             updateOverlay.style.display = 'none';  // Close modal
             break;
 
@@ -693,6 +696,7 @@ const closeModal = (overlay) => {
 
         case createOverlay:
             postForm.reset(); // Reset form in modal
+            uploadPhoto.innerHTML = ``; // Remove previosly added photo from modal
             createOverlay.style.display = 'none'; // Close modal
             break;
 
