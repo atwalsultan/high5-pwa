@@ -80,6 +80,8 @@ const newUpdateImageBtn = document.getElementById('newUpdateImage');
 
 const profileInfo = document.getElementById('profileInfo');
 
+const updateUploadPhoto = document.getElementById('updateUploadPhoto');
+
 //**************************************************************
 //      Function Declarations
 //**************************************************************
@@ -113,17 +115,17 @@ const createPost = (event) => {
     createObj.description = postForm.activityDesc.value;
     createObj.category = postForm.activityCategory.value;
     createObj.uid = auth.currentUser.uid;
-    createObj.timestamp = new firebase.firestore.FieldValue.serverTimestamp();
-    createObj.updated = new firebase.firestore.FieldValue.serverTimestamp();
+    createObj.timestamp = new firebase.firestore.Timestamp.fromDate(new Date());
+    createObj.updated = new firebase.firestore.Timestamp.fromDate(new Date());
     userPos ? latitude = userPos.coords.latitude : latitude = 0; // latitude = '' if the user position is not available
     userPos ? longitude = userPos.coords.longitude : longitude = 0; // longitude = '' if the user position is not available
     createObj.coordinates = new firebase.firestore.GeoPoint(latitude, longitude);
 
+    let file = postForm.postImage.files[0];
+
     // Add post as document to collection
     db.collection('posts').add(createObj)
         .then((post) => {
-            let file = postForm.postImage.files[0];
-
             if (file) {
                 let name = new Date() + '-' + file.name;
                 let metaData = {
@@ -263,7 +265,7 @@ const createChatForm = (chat) => {
         let messageObj = {
             content: message,
             sender: auth.currentUser.uid,
-            timestamp: new firebase.firestore.FieldValue.serverTimestamp(),
+            timestamp: new firebase.firestore.Timestamp.fromDate(new Date()),
         }
 
         // Store object
@@ -289,6 +291,8 @@ const createChatListener = (chat) => {
 
                 let time = document.createElement('span');
                 let dt = new Date(change.doc.data().timestamp * 1000);
+                console.log(change.doc.data());
+
                 let hours = ('0' + dt.getHours()).slice(-2);
                 let minutes = ('0' + dt.getMinutes()).slice(-2);
                 time.textContent = hours + ': ' + minutes;
@@ -391,7 +395,8 @@ const renderPost = (doc) => {
 
     // Time since creation
     let timeCreated = document.createElement('p');
-    timeCreated.textContent = '2d';
+    let elapsedDays = Math.floor((new Date() - new Date(doc.data().timestamp.seconds * 1000)) / (1000 * 60 * 60 * 24));
+    timeCreated.textContent = `${elapsedDays}d`;
     nameDistanceTime.appendChild(timeCreated);
 
     // Description
@@ -420,7 +425,11 @@ const renderPost = (doc) => {
     category.setAttribute('class', 'category');
     category.textContent = `Category: ${doc.data().category}`;
     categoryDiv.appendChild(category);
-    postDiv.appendChild(categoryDiv); // Append to container
+
+    // Check if category has been provided
+    if (doc.data().category !== 'Unspecified') {
+        postDiv.appendChild(categoryDiv); // Append to container
+    }
 
     // Container for expected date and time
     let dateTimeDiv = document.createElement('div');
@@ -599,13 +608,13 @@ const updatePost = (event) => {
     if (userPos && updateForm.updateLocation.checked) {// If user position is available and user has chosen to update it
         updateObj.coordinates = new firebase.firestore.GeoPoint(userPos.coords.latitude, userPos.coords.longitude)
     }
-    updateObj.updated = new firebase.firestore.FieldValue.serverTimestamp();
+    updateObj.updated = new firebase.firestore.Timestamp.fromDate(new Date());
 
+    let file = updateForm.updatePostImage.files[0];
 
     // Updating document in collection
     db.collection('posts').doc(updateId).update(updateObj)
         .then(() => {
-            let file = updateForm.updatePostImage.files[0];
             if (file) {
 
                 db.collection('posts').doc(updateId).get()
@@ -677,6 +686,7 @@ const closeModal = (overlay) => {
     switch (overlay) {
         case updateOverlay:
             updateForm.reset(); // Reset form in modal
+            updateUploadPhoto.innerHTML = ``; // Remove previosly added photo from modal
             updateOverlay.style.display = 'none';  // Close modal
             break;
 
@@ -686,6 +696,7 @@ const closeModal = (overlay) => {
 
         case createOverlay:
             postForm.reset(); // Reset form in modal
+            uploadPhoto.innerHTML = ``; // Remove previosly added photo from modal
             createOverlay.style.display = 'none'; // Close modal
             break;
 

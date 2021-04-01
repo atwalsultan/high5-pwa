@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
-  
+
 <head>
 	<meta charset="UTF-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
 	<!-- Favicon -->
-	<link rel="icon" type="image/png" href="../images/favicon.jpeg"/>
+	<link rel="icon" type="image/png" href="../images/favicon.jpeg" />
 
 	<!-- External CSS file -->
 	<link rel="stylesheet" href="../css/styles.css" />
@@ -51,7 +51,7 @@
 							<label for="categoryA">Art & Craft</label>
 						</button>
 					</li>
-		
+
 					<li class="category">
 						<button>
 							<input type="checkbox" id="Board Games" value="Board Games">
@@ -59,7 +59,7 @@
 							<label for="categoryB">Board Games</label>
 						</button>
 					</li>
-		
+
 					<li class="category">
 						<button>
 							<input type="checkbox" id="Buying / Selling" value="Buying / Selling">
@@ -67,7 +67,7 @@
 							<label for="categoryC">Buying / Selling</label>
 						</button>
 					</li>
-		
+
 					<li class="category">
 						<button>
 							<input type="checkbox" id="Cooking" value="Cooking">
@@ -75,7 +75,7 @@
 							<label for="categoryD">Cooking</label>
 						</button>
 					</li>
-		
+
 					<li class="category">
 						<button>
 							<input type="checkbox" id="Dance" value="Dance">
@@ -83,7 +83,7 @@
 							<label for="categoryD">Dance</label>
 						</button>
 					</li>
-		
+
 					<li class="category">
 						<button>
 							<input type="checkbox" id="Learning" value="Learning">
@@ -91,7 +91,7 @@
 							<label for="categoryD">Learning</label>
 						</button>
 					</li>
-		
+
 					<li class="category">
 						<button>
 							<input type="checkbox" id="Movies" value="Movies">
@@ -99,7 +99,7 @@
 							<label for="categoryD">Movies</label>
 						</button>
 					</li>
-		
+
 					<li class="category">
 						<button>
 							<input type="checkbox" id="Music" value="Music">
@@ -107,7 +107,7 @@
 							<label for="categoryD">Music</label>
 						</button>
 					</li>
-		
+
 					<li class="category">
 						<button>
 							<input type="checkbox" id="Outdoor & Adventure" value="Outdoor & Adventure">
@@ -115,7 +115,7 @@
 							<label for="categoryD">Outdoor & Adventure</label>
 						</button>
 					</li>
-		
+
 					<li class="category">
 						<button>
 							<input type="checkbox" id="Reading" value="Reading">
@@ -123,7 +123,7 @@
 							<label for="categoryD">Reading</label>
 						</button>
 					</li>
-		
+
 					<li class="category">
 						<button>
 							<input type="checkbox" id="Renting" value="Renting">
@@ -131,7 +131,7 @@
 							<label for="categoryD">Renting</label>
 						</button>
 					</li>
-		
+
 					<li class="category">
 						<button>
 							<input type="checkbox" id="Sports & Fitness" value="Sports & Fitness">
@@ -139,7 +139,7 @@
 							<label for="categoryD">Sports & Fitness</label>
 						</button>
 					</li>
-		
+
 					<li class="category">
 						<button>
 							<input type="checkbox" id="Virtual Games" value="Virtual Games">
@@ -153,7 +153,7 @@
 					<img src="../images/down-icon.svg" alt="Scroll Down Icon">
 				</div>
 			</div>
-			
+
 			<!-- Distance -->
 			<div class="distance-wrapper">
 				<h3>Show Posts Within <span>(kms)</span></h3>
@@ -161,7 +161,7 @@
 					<input type="number" min="0" id="distance" placeholder="Type only number eg. 5">
 					<button type="submit">APPLY</button>
 				</form>
-			</div>	
+			</div>
 		</aside>
 	</div>
 
@@ -176,9 +176,10 @@
 			<!-- Form to create a new post -->
 			<form id="postForm">
 
-				<div class = "description-div">
+				<div class="description-div">
 					<label for="activityDesc">Post Description <span class="required-field">*</span></label>
-					<textarea id="activityDesc" placeholder="Enter the post description" maxlength="300" required></textarea>
+					<textarea id="activityDesc" placeholder="Enter the post description" maxlength="300"
+						required></textarea>
 				</div>
 
 				<div class="location-div">
@@ -189,14 +190,15 @@
 				<label>
 					Expectected Date & Time
 					<div class="expected-date-time">
-						<input type="date" id="activityDate"/>
-						<input type="time" id="activityTime"/>
+						<input type="date" id="activityDate" />
+						<input type="time" id="activityTime" />
 					</div>
 				</label>
 
 				<div class="category-div">
 					<label for="activityCategory">Post Category</label>
 					<select name="activityCategory" id="activityCategory">
+						<option value="Unspecified" selected disabled hidden>Select A Category</option>
 						<option value="Art & Craft">Art & Craft</option>
 						<option value="Board Games">Board Games</option>
 						<option value="Buying / Selling">Buying / Selling</option>
@@ -250,14 +252,15 @@
 				<label>
 					Expected Date & Time
 					<div class="expected-date-time">
-						<input type="date" id="updateDate"/>
-						<input type="time" id="updateTime"/>						
+						<input type="date" id="updateDate" />
+						<input type="time" id="updateTime" />
 					</div>
 				</label>
 
 				<div class="category-div">
 					<label for="updateCategory">Category</label>
 					<select name="updateCategory" id="updateCategory">
+						<option value="Unspecified" selected disabled hidden>Select A Category</option>
 						<option value="Art & Craft">Art & Craft</option>
 						<option value="Board Games">Board Games</option>
 						<option value="Buying / Selling">Buying / Selling</option>
@@ -317,49 +320,49 @@
 			</div>
 		</div>
 	</div>
-      
-  <!-- Logout confirmation modal -->
-  <div id="logoutOverlay">
-    <div class="modal">
-		<div id="logoutHeader">
-			<h2>Log Out?</h2>
-			<span class="closeBtn">&times;</span>
-		</div>
-		<div class="delete-logout-body">
-			<p>
-				You will be navigated to the login screen.
-			</p>
-			<button id="confirmLogout">LOG OUT</button>
-		</div>
-    </div>
-  </div>
 
-  <div id="cameraOverlay">
-	<div class="modal">
-		<video id="video" width="640" height="480" autoplay></video>
-		<canvas id="canvas" width="640" height="480"></canvas>
-		<div id="cameraButtons">
-			<button class="closeBtn">
-				<img src="../images/cancel.svg" alt="Cancel Button">
-			</button>
-
-			<button id="snapButton">
-				<img src="../images/capture.svg" alt="Capture Button">
-			</button>
-
-			<button id="flipButton">
-				<img src="../images/flip.svg" alt="Flip Button">
-			</button>
-			<button id="uploadButton">
-				<img src="../images/confirm.svg" alt="Confirm Button">
-			</button>
+	<!-- Logout confirmation modal -->
+	<div id="logoutOverlay">
+		<div class="modal">
+			<div id="logoutHeader">
+				<h2>Log Out?</h2>
+				<span class="closeBtn">&times;</span>
+			</div>
+			<div class="delete-logout-body">
+				<p>
+					You will be navigated to the login screen.
+				</p>
+				<button id="confirmLogout">LOG OUT</button>
+			</div>
 		</div>
 	</div>
-  </div>
+
+	<div id="cameraOverlay">
+		<div class="modal">
+			<video id="video" width="640" height="480" autoplay></video>
+			<canvas id="canvas" width="640" height="480"></canvas>
+			<div id="cameraButtons">
+				<button class="closeBtn">
+					<img src="../images/cancel.svg" alt="Cancel Button">
+				</button>
+
+				<button id="snapButton">
+					<img src="../images/capture.svg" alt="Capture Button">
+				</button>
+
+				<button id="flipButton">
+					<img src="../images/flip.svg" alt="Flip Button">
+				</button>
+				<button id="uploadButton">
+					<img src="../images/confirm.svg" alt="Confirm Button">
+				</button>
+			</div>
+		</div>
+	</div>
 
 
 	<main id="home-main">
-		
+
 		<!-- Posts -->
 		<section id="posts">
 			<header>
@@ -372,7 +375,7 @@
 								<span class="visually-hidden">Open Side Menu</span>
 							</button>
 						</li>
-		
+
 						<!-- New Post Button -->
 						<li>
 							<button id="createBtn">
@@ -396,7 +399,7 @@
 			<ul id="notificationList">
 				<li>
 					<img src="../images/logo.jpeg" alt="Profile Picture">
-					
+
 					<div>
 						<p>Rocky High5'ed your post</p>
 						<p>Appreciation received from Rocky on your "Renting Drone" post</p>
@@ -437,8 +440,8 @@
 
 					<p>28m</p>
 				</li>
-			
-					
+
+
 				<li>
 					<img src="../images/logo.jpeg" alt="Profile Picture">
 
@@ -479,7 +482,7 @@
 			<header>
 				<h2>Chats</h2>
 			</header>
-			
+
 			<ul id="chatList"></ul>
 		</section>
 
@@ -488,7 +491,7 @@
 			<header>
 				<h2>My Profile</h2>
 			</header>
-			
+
 			<div id="profileBody">
 				<div id="profileInfo"></div>
 				<button id="logoutBtn">

@@ -1,7 +1,14 @@
 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M6 11H18V21H6V11Z" stroke="white" stroke-width="2"/>
-<circle cx="19" cy="13" r="2" fill="white"/>
-<circle cx="5" cy="13" r="2" fill="white"/>
-<line x1="1" y1="-1" x2="3.02304" y2="-1" transform="matrix(0.977288 -0.211914 0.182239 0.983254 9.97717 6.94688)" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-<line x1="4.79047" y1="8.0222" x2="18.7905" y2="5.0222" stroke="white" stroke-width="2"/>
+<g clip-path="url(#clip0)">
+<path d="M4.41666 8.83334H19.5833V20.8333C19.5833 21.3856 19.1356 21.8333 18.5833 21.8333H5.41667C4.86438 21.8333 4.41666 21.3856 4.41666 20.8333V8.83334Z" fill="white"/>
+<ellipse cx="19.5833" cy="12.0833" rx="2.16667" ry="2.16667" fill="white"/>
+<ellipse cx="4.41667" cy="12.0833" rx="2.16667" ry="2.16667" fill="white"/>
+<line x1="1" y1="-1" x2="3.35829" y2="-1" transform="matrix(0.977288 -0.211914 0.182239 0.983254 9.8086 5.52579)" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+<line x1="4.20714" y1="6.7722" x2="19.3738" y2="3.5222" stroke="white" stroke-width="2"/>
+</g>
+<defs>
+<clipPath id="clip0">
+<rect width="24" height="24" fill="white"/>
+</clipPath>
+</defs>
 </svg>

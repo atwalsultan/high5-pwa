@@ -393,6 +393,8 @@ footer {
   bottom: 0;
   left: 0;
   width: 100%;
+  z-index: 60;
+  background-color: #fbfbfb;
 }
 
 footer nav {
@@ -1009,6 +1011,10 @@ video {
   align-items: center;
   color: #737373;
   transition: all 0.15s ease-in;
+}
+
+.buttons button:first-of-type {
+  padding-left: 0;
 }
 
 .buttons button img {
