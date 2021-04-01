@@ -112,10 +112,9 @@ const createPost = (event) => {
     postForm.activityTime.value === "" ? createObj.time = "Unspecified" : createObj.time = postForm.activityTime.value; // time = 'Unspedified' if user leaves it empty
     createObj.description = postForm.activityDesc.value;
     createObj.category = postForm.activityCategory.value;
-    console.log(postForm.activityCategory.value);
     createObj.uid = auth.currentUser.uid;
-    createObj.timestamp = new firebase.firestore.FieldValue.serverTimestamp();
-    createObj.updated = new firebase.firestore.FieldValue.serverTimestamp();
+    createObj.timestamp = new firebase.firestore.Timestamp.fromDate(new Date());
+    createObj.updated = new firebase.firestore.Timestamp.fromDate(new Date());
     userPos ? latitude = userPos.coords.latitude : latitude = 0; // latitude = '' if the user position is not available
     userPos ? longitude = userPos.coords.longitude : longitude = 0; // longitude = '' if the user position is not available
     createObj.coordinates = new firebase.firestore.GeoPoint(latitude, longitude);
@@ -264,7 +263,7 @@ const createChatForm = (chat) => {
         let messageObj = {
             content: message,
             sender: auth.currentUser.uid,
-            timestamp: new firebase.firestore.FieldValue.serverTimestamp(),
+            timestamp: new firebase.firestore.Timestamp.fromDate(new Date()),
         }
 
         // Store object
@@ -290,6 +289,7 @@ const createChatListener = (chat) => {
 
                 let time = document.createElement('span');
                 let dt = new Date(change.doc.data().timestamp * 1000);
+                console.log(change.doc.data());
 
                 let hours = ('0' + dt.getHours()).slice(-2);
                 let minutes = ('0' + dt.getMinutes()).slice(-2);
@@ -314,14 +314,6 @@ const createChatListener = (chat) => {
                     message.style.opacity = '1';
                     message.style.marginTop = '0';
                 }, 200);
-            }
-
-            if (change.type === 'modified') {
-                let lastMessageTime = previousMessages.querySelector('li:last-of-type > span:last-of-type');
-                let dt = new Date(change.doc.data().timestamp * 1000);
-                let hours = ('0' + dt.getHours()).slice(-2);
-                let minutes = ('0' + dt.getMinutes()).slice(-2);
-                lastMessageTime.textContent = hours + ': ' + minutes;
             }
         })
 
@@ -401,7 +393,8 @@ const renderPost = (doc) => {
 
     // Time since creation
     let timeCreated = document.createElement('p');
-    timeCreated.textContent = '2d';
+    let elapsedDays = Math.floor((new Date() - new Date(doc.data().timestamp.seconds * 1000)) / (1000 * 60 * 60 * 24));
+    timeCreated.textContent = `${elapsedDays}d`;
     nameDistanceTime.appendChild(timeCreated);
 
     // Description
@@ -613,7 +606,7 @@ const updatePost = (event) => {
     if (userPos && updateForm.updateLocation.checked) {// If user position is available and user has chosen to update it
         updateObj.coordinates = new firebase.firestore.GeoPoint(userPos.coords.latitude, userPos.coords.longitude)
     }
-    updateObj.updated = new firebase.firestore.FieldValue.serverTimestamp();
+    updateObj.updated = new firebase.firestore.Timestamp.fromDate(new Date());
 
 
     // Updating document in collection
