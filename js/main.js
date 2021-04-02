@@ -1136,11 +1136,7 @@ const renderProfile = () => {
 }
 
 const splashScreen = () => {
-    splashOverlay.style.opacity = '0';
-
-    setTimeout(() => {
-        splashOverlay.style.display = 'none';
-    }, 750);
+    splashOverlay.style.display = 'none';
 }
 
 //**************************************************************

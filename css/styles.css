@@ -445,7 +445,6 @@ footer button img {
   height: 100%;
   z-index: 90;
   background-color: white;
-  transition: all .75s ease-in-out;
 }
 
 #alerts {

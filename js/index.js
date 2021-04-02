@@ -55,16 +55,25 @@ const showAlert = (content, type) => {
     }, 3500);
 };
 
+const splashScreen = () => {
+    splashOverlay.style.display = 'none';
+}
 
 //**************************************************************
 //      Event Listeners
 //**************************************************************
 
+document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(() => {
+        splashScreen();
+    }, 2800);
+});
+
 // Login form submit
 loginForm.addEventListener('submit', (e) => {
     // Prevent form from actually submitting
     e.preventDefault();
-    
+
     // Get email and password from DOM
     let email = loginForm.loginEmail.value;
     let password = loginForm.loginPassword.value;

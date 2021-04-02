@@ -2,548 +2,548 @@
 <html lang="en">
 
 <head>
-	<meta charset="UTF-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-	<!-- Favicon -->
-	<link rel="icon" type="image/png" href="../images/favicon.jpeg" />
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="../images/favicon.jpeg" />
 
-	<!-- External CSS file -->
-	<link rel="stylesheet" href="../css/styles.css" />
+    <!-- External CSS file -->
+    <link rel="stylesheet" href="../css/styles.css" />
 
-	<!-- Firebase -->
-	<!-- The core Firebase JS SDK is always required and must be listed first -->
-	<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
+    <!-- Firebase -->
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
 
-	<!-- TODO: Add SDKs for Firebase products that you want to use https://firebase.google.com/docs/web/setup#available-libraries -->
-	<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-analytics.js"></script>
-	<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-firestore.js"></script>
-	<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-storage.js"></script>
-	<script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-auth.js"></script>
+    <!-- TODO: Add SDKs for Firebase products that you want to use https://firebase.google.com/docs/web/setup#available-libraries -->
+    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-analytics.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-firestore.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-storage.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-auth.js"></script>
 
-	<!-- External JS file -->
-	<script src="../js/auth.js"></script>
-	<script src="../js/main.js" defer></script>
+    <!-- External JS file -->
+    <script src="../js/auth.js"></script>
+    <script src="../js/main.js" defer></script>
 
-	<title>High5!</title>
+    <title>High5!</title>
 </head>
 
 <body>
 
-	<!-- Alerts -->
-	<div id="alerts"></div>
-
-	<!-- Splash Overlay -->
-	<div id="splashOverlay">
-		<video autoplay muted>
-			<source type="video/mp4" src="../videos/animation-splash.mp4">
-		</video>
-	</div>
-
-	<!-- Filters Sidebar -->
-	<div id="sidebarOverlay">
-		<aside id="sidebar" class="sidebar-hidden">
-			<div id="sidebarHeader">
-				<h2>FILTERS LIST</h2>
-				<span class="closeBtn">&times;</span>
-			</div>
-
-			<!-- Category -->
-			<div class="category-wrapper">
-				<h3>Categories</h3>
-				<ul class="category-filters">
-					<li class="category">
-						<button>
-							<input type="checkbox" id="Art & Craft" value="Art & Craft">
-							<img src="../images/art-icon.svg" alt="Art & Craft Icon">
-							<label for="categoryA">Art & Craft</label>
-						</button>
-					</li>
-
-					<li class="category">
-						<button>
-							<input type="checkbox" id="Board Games" value="Board Games">
-							<img src="../images/board-game-icon.svg" alt="Board Games Icon">
-							<label for="categoryB">Board Games</label>
-						</button>
-					</li>
-
-					<li class="category">
-						<button>
-							<input type="checkbox" id="Buying / Selling" value="Buying / Selling">
-							<img src="../images/selling-icon.svg" alt="Buying / Selling Icon">
-							<label for="categoryC">Buying / Selling</label>
-						</button>
-					</li>
-
-					<li class="category">
-						<button>
-							<input type="checkbox" id="Cooking" value="Cooking">
-							<img src="../images/cooking-icon.svg" alt="Cooking Icon">
-							<label for="categoryD">Cooking</label>
-						</button>
-					</li>
-
-					<li class="category">
-						<button>
-							<input type="checkbox" id="Dance" value="Dance">
-							<img src="../images/dance-icon.svg" alt="Dance Icon">
-							<label for="categoryD">Dance</label>
-						</button>
-					</li>
-
-					<li class="category">
-						<button>
-							<input type="checkbox" id="Learning" value="Learning">
-							<img src="../images/learning-icon.svg" alt="Learning Icon">
-							<label for="categoryD">Learning</label>
-						</button>
-					</li>
-
-					<li class="category">
-						<button>
-							<input type="checkbox" id="Movies" value="Movies">
-							<img src="../images/movie-icon.svg" alt="Movies Icon">
-							<label for="categoryD">Movies</label>
-						</button>
-					</li>
-
-					<li class="category">
-						<button>
-							<input type="checkbox" id="Music" value="Music">
-							<img src="../images/music-icon.svg" alt="Music Icon">
-							<label for="categoryD">Music</label>
-						</button>
-					</li>
-
-					<li class="category">
-						<button>
-							<input type="checkbox" id="Outdoor & Adventure" value="Outdoor & Adventure">
-							<img src="../images/hiking-icon.svg" alt="Outdoor & Adventure Icon">
-							<label for="categoryD">Outdoor & Adventure</label>
-						</button>
-					</li>
-
-					<li class="category">
-						<button>
-							<input type="checkbox" id="Reading" value="Reading">
-							<img src="../images/read-icon.svg" alt="Reading Icon">
-							<label for="categoryD">Reading</label>
-						</button>
-					</li>
-
-					<li class="category">
-						<button>
-							<input type="checkbox" id="Renting" value="Renting">
-							<img src="../images/renting-icon.svg" alt="Renting Icon">
-							<label for="categoryD">Renting</label>
-						</button>
-					</li>
-
-					<li class="category">
-						<button>
-							<input type="checkbox" id="Sports & Fitness" value="Sports & Fitness">
-							<img src="../images/sports-icon.svg" alt="Sports & Fitness Icon">
-							<label for="categoryD">Sports & Fitness</label>
-						</button>
-					</li>
-
-					<li class="category">
-						<button>
-							<input type="checkbox" id="Virtual Games" value="Virtual Games">
-							<img src="../images/virtual-game-icon.svg" alt="Virtual Games Icon">
-							<label for="categoryD">Virtual Games</label>
-						</button>
-					</li>
-				</ul>
-				<div class="scroll-for-more">
-					<p>Scroll down to see more categories</p>
-					<img src="../images/down-icon.svg" alt="Scroll Down Icon">
-				</div>
-			</div>
-
-			<!-- Distance -->
-			<div class="distance-wrapper">
-				<h3>Show Posts Within <span>(kms)</span></h3>
-				<form id="filter-form">
-					<input type="number" min="0" id="distance" placeholder="Type only number eg. 5">
-					<button type="submit">APPLY</button>
-				</form>
-			</div>
-		</aside>
-	</div>
-
-	<!-- Create markup  -->
-	<div id="createOverlay">
-		<div class="modal">
-			<div id="createHeader">
-				<h2>Create New Post</h2>
-				<span class="closeBtn">&times;</span>
-			</div>
-
-			<!-- Form to create a new post -->
-			<form id="postForm">
-
-				<div class="description-div">
-					<label for="activityDesc">Post Description <span class="required-field">*</span></label>
-					<textarea id="activityDesc" placeholder="Enter the post description" maxlength="300"
-						required></textarea>
-				</div>
-
-				<div class="location-div">
-					<label for="addLocation">Add my location</label>
-					<input type="checkbox" id="addLocation">
-				</div>
-
-				<label>
-					Expectected Date & Time
-					<div class="expected-date-time">
-						<input type="date" id="activityDate" />
-						<input type="time" id="activityTime" />
-					</div>
-				</label>
-
-				<div class="category-div">
-					<label for="activityCategory">Post Category</label>
-					<select name="activityCategory" id="activityCategory">
-						<option value="Unspecified" selected disabled hidden>Select A Category</option>
-						<option value="Art & Craft">Art & Craft</option>
-						<option value="Board Games">Board Games</option>
-						<option value="Buying / Selling">Buying / Selling</option>
-						<option value="Cooking">Cooking</option>
-						<option value="Dance">Dance</option>
-						<option value="Learning">Learning</option>
-						<option value="Movies">Movies</option>
-						<option value="Music">Music</option>
-						<option value="Outdoor & Adventure">Outdoor & Adventure</option>
-						<option value="Reading">Reading</option>
-						<option value="Renting">Renting</option>
-						<option value="Sports & Fitness">Sports & Fitness</option>
-						<option value="Virtual Games">Virtual Games</option>
-					</select>
-				</div>
-
-				<label for="postImage">Image
-					<div class="image-div">
-						<input type="file" id="postImage">
-						<button id="newPostImage">Camera</button>
-					</div>
-				</label>
-
-				<div id="uploadPhoto"></div>
-
-				<button type="submit">POST</button>
-			</form>
-		</div>
-	</div>
-
-	<!-- Update markup -->
-	<div id="updateOverlay">
-		<div class="modal">
-			<div id="updateHeader">
-				<h2>Update Post</h2>
-				<span class="closeBtn">&times;</span>
-			</div>
-
-			<form id="updateForm">
-
-				<div class="description-div">
-					<label for="updateDesc">Description</label>
-					<textarea id="updateDesc" placeholder="Description" maxlength="300"></textarea>
-				</div>
-
-				<div class="location-div">
-					<label for="updateLocation">Update my location</label>
-					<input type="checkbox" id="updateLocation">
-				</div>
-
-				<label>
-					Expected Date & Time
-					<div class="expected-date-time">
-						<input type="date" id="updateDate" />
-						<input type="time" id="updateTime" />
-					</div>
-				</label>
-
-				<div class="category-div">
-					<label for="updateCategory">Category</label>
-					<select name="updateCategory" id="updateCategory">
-						<option value="Unspecified" selected disabled hidden>Select A Category</option>
-						<option value="Art & Craft">Art & Craft</option>
-						<option value="Board Games">Board Games</option>
-						<option value="Buying / Selling">Buying / Selling</option>
-						<option value="Cooking">Cooking</option>
-						<option value="Dance">Dance</option>
-						<option value="Learning">Learning</option>
-						<option value="Movies">Movies</option>
-						<option value="Music">Music</option>
-						<option value="Outdoor & Adventure">Outdoor & Adventure</option>
-						<option value="Reading">Reading</option>
-						<option value="Renting">Renting</option>
-						<option value="Sports & Fitness">Sports & Fitness</option>
-						<option value="Virtual Games">Virtual Games</option>
-					</select>
-				</div>
-
-				<label for="updatePostImage">Image
-					<div class="image-div">
-						<input type="file" id="updatePostImage">
-						<button id="newUpdateImage">Camera</button>
-					</div>
-				</label>
-
-				<div id="updateUploadPhoto"></div>
-
-				<button type="submit">UPDATE</button>
-			</form>
-		</div>
-	</div>
-
-	<!-- Delete markup -->
-	<div id="deleteOverlay">
-		<div class="modal">
-			<div id="deleteHeader">
-				<h2>Delete This Post?</h2>
-				<span class="closeBtn">&times;</span>
-			</div>
-			<div class="delete-logout-body">
-				<p>
-					It will be gone forever.
-				</p>
-				<button id="confirmDelete">DELETE</button>
-			</div>
-		</div>
-	</div>
-
-	<!-- Chat modal -->
-	<div id="chatOverlay">
-		<div class="modal">
-			<div id="chatHeader">
-				<h2 id="chatUserName"></h2>
-				<span class="closeBtn">&times;</span>
-			</div>
-			<ul id="previousMessages"></ul>
-			<div id="chatFooter">
-				<div id="newMessage"></div>
-			</div>
-		</div>
-	</div>
-
-	<!-- Logout confirmation modal -->
-	<div id="logoutOverlay">
-		<div class="modal">
-			<div id="logoutHeader">
-				<h2>Log Out?</h2>
-				<span class="closeBtn">&times;</span>
-			</div>
-			<div class="delete-logout-body">
-				<p>
-					You will be navigated to the login screen.
-				</p>
-				<button id="confirmLogout">LOG OUT</button>
-			</div>
-		</div>
-	</div>
-
-	<div id="cameraOverlay">
-		<div class="modal">
-			<video id="video" width="640" height="480" autoplay></video>
-			<canvas id="canvas" width="640" height="480"></canvas>
-			<div id="cameraButtons">
-				<button class="closeBtn">
-					<img src="../images/cancel.svg" alt="Cancel Button">
-				</button>
-
-				<button id="snapButton">
-					<img src="../images/capture.svg" alt="Capture Button">
-				</button>
-
-				<button id="flipButton">
-					<img src="../images/flip.svg" alt="Flip Button">
-				</button>
-				<button id="uploadButton">
-					<img src="../images/confirm.svg" alt="Confirm Button">
-				</button>
-			</div>
-		</div>
-	</div>
-
-
-	<main id="home-main">
-
-		<!-- Posts -->
-		<section id="posts">
-			<header>
-				<nav>
-					<ul>
-						<!-- Side Menu Button -->
-						<li>
-							<button id="sidebar-btn">
-								<img src="../images/filter-icon.svg" alt="Filter Icon">
-								<span class="visually-hidden">Open Side Menu</span>
-							</button>
-						</li>
-
-						<!-- New Post Button -->
-						<li>
-							<button id="createBtn">
-								<img src="../images/create-icon.svg" alt="Create Post Icon">
-								<span class="visually-hidden">Create New Post</span>
-							</button>
-						</li>
-					</ul>
-				</nav>
-			</header>
-
-			<ul id="postList"></ul>
-		</section>
-
-		<!-- Notifications -->
-		<section id="notification" class="section-hidden">
-			<header>
-				<h2>Notifications</h2>
-			</header>
-
-			<ul id="notificationList">
-				<li>
-					<img src="../images/logo.jpeg" alt="Profile Picture">
-
-					<div>
-						<p>Rocky High5'ed your post</p>
-						<p>Appreciation received from Rocky on your "Renting Drone" post</p>
-					</div>
-
-					<p>12m</p>
-				</li>
-
-				<li>
-					<img src="../images/logo.jpeg" alt="Profile Picture">
-
-					<div>
-						<p>Chris added their first post</p>
-						<p>Click to view Chris' new post. Show your appreciation by High5'ing!</p>
-					</div>
-
-					<p>15m</p>
-				</li>
-
-				<li>
-					<img src="../images/logo.jpeg" alt="Profile Picture">
-
-					<div>
-						<p>Pauli High5'ed your post</p>
-						<p>Appreciation received from Pauli on your "Renting Drone" post</p>
-					</div>
-
-					<p>25m</p>
-				</li>
-
-				<li>
-					<img src="../images/logo.jpeg" alt="Profile Picture">
-
-					<div>
-						<p>Marshall added their first post</p>
-						<p>Click to view Marshall's new post. Show your appreciation by High5'ing!</p>
-					</div>
-
-					<p>28m</p>
-				</li>
-
-
-				<li>
-					<img src="../images/logo.jpeg" alt="Profile Picture">
-
-					<div>
-						<p>Jane High5'ed your post</p>
-						<p>Appreciation received from Jane on your "Hiking on Fraser" post</p>
-					</div>
-
-					<p>30m</p>
-				</li>
-
-				<li>
-					<img src="../images/logo.jpeg" alt="Profile Picture">
-
-					<div>
-						<p>John added their first post</p>
-						<p>Click to view John's new post. Show your appreciation by High5'ing!</p>
-					</div>
-
-					<p>35m</p>
-				</li>
-
-				<li>
-					<img src="../images/logo.jpeg" alt="Profile Picture">
-
-					<div>
-						<p>Amy High5'ed your post</p>
-						<p>Appreciation received from Amy on your "Hiking on Fraser River Trail" post</p>
-					</div>
-
-					<p>35m</p>
-				</li>
-			</ul>
-		</section>
-
-		<!-- Chats -->
-		<section id="chats" class="section-hidden">
-			<header>
-				<h2>Chats</h2>
-			</header>
-
-			<ul id="chatList"></ul>
-		</section>
-
-		<!-- Profile -->
-		<section id="profile" class="section-hidden">
-			<header>
-				<h2>My Profile</h2>
-			</header>
-
-			<div id="profileBody">
-				<div id="profileInfo"></div>
-				<button id="logoutBtn">
-					<img src="../images/logout-icon.svg" alt="Logout Icon">
-					<span>LOG OUT</span>
-				</button>
-			</div>
-		</section>
-	</main>
-
-	<footer>
-		<nav>
-			<ul>
-				<!-- Home Button -->
-				<li>
-					<button class="footer-btn-active">
-						<img src="../images/home-icon-active.svg" alt="Home Icon">
-						<span class="visually-hidden">Home</span>
-					</button>
-				</li>
-				<!-- Notifications Button -->
-				<li>
-					<button>
-						<img src="../images/notification-icon.svg" alt="Notification Icon">
-						<span class="visually-hidden">Notifications</span>
-					</button>
-				</li>
-				<!-- Messages Button -->
-				<li>
-					<button>
-						<img src="../images/message-icon.svg" alt="Message Icon">
-						<span class="visually-hidden">Messages</span>
-					</button>
-				</li>
-				<!-- Profile Button -->
-				<li>
-					<button>
-						<img src="../images/profile-icon.svg" alt="Profile Icon">
-						<span class="visually-hidden">My Profile</span>
-					</button>
-				</li>
-			</ul>
-		</nav>
-	</footer>
+    <!-- Alerts -->
+    <div id="alerts"></div>
+
+    <!-- Splash Overlay -->
+    <div id="splashOverlay">
+        <video autoplay muted>
+            <source type="video/mp4" src="../videos/animation-splash.mp4">
+        </video>
+    </div>
+
+    <!-- Filters Sidebar -->
+    <div id="sidebarOverlay">
+        <aside id="sidebar" class="sidebar-hidden">
+            <div id="sidebarHeader">
+                <h2>FILTERS LIST</h2>
+                <span class="closeBtn">&times;</span>
+            </div>
+
+            <!-- Category -->
+            <div class="category-wrapper">
+                <h3>Categories</h3>
+                <ul class="category-filters">
+                    <li class="category">
+                        <button>
+                            <input type="checkbox" id="Art & Craft" value="Art & Craft">
+                            <img src="../images/art-icon.svg" alt="Art & Craft Icon">
+                            <label for="categoryA">Art & Craft</label>
+                        </button>
+                    </li>
+
+                    <li class="category">
+                        <button>
+                            <input type="checkbox" id="Board Games" value="Board Games">
+                            <img src="../images/board-game-icon.svg" alt="Board Games Icon">
+                            <label for="categoryB">Board Games</label>
+                        </button>
+                    </li>
+
+                    <li class="category">
+                        <button>
+                            <input type="checkbox" id="Buying / Selling" value="Buying / Selling">
+                            <img src="../images/selling-icon.svg" alt="Buying / Selling Icon">
+                            <label for="categoryC">Buying / Selling</label>
+                        </button>
+                    </li>
+
+                    <li class="category">
+                        <button>
+                            <input type="checkbox" id="Cooking" value="Cooking">
+                            <img src="../images/cooking-icon.svg" alt="Cooking Icon">
+                            <label for="categoryD">Cooking</label>
+                        </button>
+                    </li>
+
+                    <li class="category">
+                        <button>
+                            <input type="checkbox" id="Dance" value="Dance">
+                            <img src="../images/dance-icon.svg" alt="Dance Icon">
+                            <label for="categoryD">Dance</label>
+                        </button>
+                    </li>
+
+                    <li class="category">
+                        <button>
+                            <input type="checkbox" id="Learning" value="Learning">
+                            <img src="../images/learning-icon.svg" alt="Learning Icon">
+                            <label for="categoryD">Learning</label>
+                        </button>
+                    </li>
+
+                    <li class="category">
+                        <button>
+                            <input type="checkbox" id="Movies" value="Movies">
+                            <img src="../images/movie-icon.svg" alt="Movies Icon">
+                            <label for="categoryD">Movies</label>
+                        </button>
+                    </li>
+
+                    <li class="category">
+                        <button>
+                            <input type="checkbox" id="Music" value="Music">
+                            <img src="../images/music-icon.svg" alt="Music Icon">
+                            <label for="categoryD">Music</label>
+                        </button>
+                    </li>
+
+                    <li class="category">
+                        <button>
+                            <input type="checkbox" id="Outdoor & Adventure" value="Outdoor & Adventure">
+                            <img src="../images/hiking-icon.svg" alt="Outdoor & Adventure Icon">
+                            <label for="categoryD">Outdoor & Adventure</label>
+                        </button>
+                    </li>
+
+                    <li class="category">
+                        <button>
+                            <input type="checkbox" id="Reading" value="Reading">
+                            <img src="../images/read-icon.svg" alt="Reading Icon">
+                            <label for="categoryD">Reading</label>
+                        </button>
+                    </li>
+
+                    <li class="category">
+                        <button>
+                            <input type="checkbox" id="Renting" value="Renting">
+                            <img src="../images/renting-icon.svg" alt="Renting Icon">
+                            <label for="categoryD">Renting</label>
+                        </button>
+                    </li>
+
+                    <li class="category">
+                        <button>
+                            <input type="checkbox" id="Sports & Fitness" value="Sports & Fitness">
+                            <img src="../images/sports-icon.svg" alt="Sports & Fitness Icon">
+                            <label for="categoryD">Sports & Fitness</label>
+                        </button>
+                    </li>
+
+                    <li class="category">
+                        <button>
+                            <input type="checkbox" id="Virtual Games" value="Virtual Games">
+                            <img src="../images/virtual-game-icon.svg" alt="Virtual Games Icon">
+                            <label for="categoryD">Virtual Games</label>
+                        </button>
+                    </li>
+                </ul>
+                <div class="scroll-for-more">
+                    <p>Scroll down to see more categories</p>
+                    <img src="../images/down-icon.svg" alt="Scroll Down Icon">
+                </div>
+            </div>
+
+            <!-- Distance -->
+            <div class="distance-wrapper">
+                <h3>Show Posts Within <span>(kms)</span></h3>
+                <form id="filter-form">
+                    <input type="number" min="0" id="distance" placeholder="Type only number eg. 5">
+                    <button type="submit">APPLY</button>
+                </form>
+            </div>
+        </aside>
+    </div>
+
+    <!-- Create markup  -->
+    <div id="createOverlay">
+        <div class="modal">
+            <div id="createHeader">
+                <h2>Create New Post</h2>
+                <span class="closeBtn">&times;</span>
+            </div>
+
+            <!-- Form to create a new post -->
+            <form id="postForm">
+
+                <div class="description-div">
+                    <label for="activityDesc">Post Description <span class="required-field">*</span></label>
+                    <textarea id="activityDesc" placeholder="Enter the post description" maxlength="300"
+                        required></textarea>
+                </div>
+
+                <div class="location-div">
+                    <label for="addLocation">Add my location</label>
+                    <input type="checkbox" id="addLocation">
+                </div>
+
+                <label>
+                    Expectected Date & Time
+                    <div class="expected-date-time">
+                        <input type="date" id="activityDate" />
+                        <input type="time" id="activityTime" />
+                    </div>
+                </label>
+
+                <div class="category-div">
+                    <label for="activityCategory">Post Category</label>
+                    <select name="activityCategory" id="activityCategory">
+                        <option value="Unspecified" selected disabled hidden>Select A Category</option>
+                        <option value="Art & Craft">Art & Craft</option>
+                        <option value="Board Games">Board Games</option>
+                        <option value="Buying / Selling">Buying / Selling</option>
+                        <option value="Cooking">Cooking</option>
+                        <option value="Dance">Dance</option>
+                        <option value="Learning">Learning</option>
+                        <option value="Movies">Movies</option>
+                        <option value="Music">Music</option>
+                        <option value="Outdoor & Adventure">Outdoor & Adventure</option>
+                        <option value="Reading">Reading</option>
+                        <option value="Renting">Renting</option>
+                        <option value="Sports & Fitness">Sports & Fitness</option>
+                        <option value="Virtual Games">Virtual Games</option>
+                    </select>
+                </div>
+
+                <label for="postImage">Image
+                    <div class="image-div">
+                        <input type="file" id="postImage">
+                        <button id="newPostImage">Camera</button>
+                    </div>
+                </label>
+
+                <div id="uploadPhoto"></div>
+
+                <button type="submit">POST</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Update markup -->
+    <div id="updateOverlay">
+        <div class="modal">
+            <div id="updateHeader">
+                <h2>Update Post</h2>
+                <span class="closeBtn">&times;</span>
+            </div>
+
+            <form id="updateForm">
+
+                <div class="description-div">
+                    <label for="updateDesc">Description</label>
+                    <textarea id="updateDesc" placeholder="Description" maxlength="300"></textarea>
+                </div>
+
+                <div class="location-div">
+                    <label for="updateLocation">Update my location</label>
+                    <input type="checkbox" id="updateLocation">
+                </div>
+
+                <label>
+                    Expected Date & Time
+                    <div class="expected-date-time">
+                        <input type="date" id="updateDate" />
+                        <input type="time" id="updateTime" />
+                    </div>
+                </label>
+
+                <div class="category-div">
+                    <label for="updateCategory">Category</label>
+                    <select name="updateCategory" id="updateCategory">
+                        <option value="Unspecified" selected disabled hidden>Select A Category</option>
+                        <option value="Art & Craft">Art & Craft</option>
+                        <option value="Board Games">Board Games</option>
+                        <option value="Buying / Selling">Buying / Selling</option>
+                        <option value="Cooking">Cooking</option>
+                        <option value="Dance">Dance</option>
+                        <option value="Learning">Learning</option>
+                        <option value="Movies">Movies</option>
+                        <option value="Music">Music</option>
+                        <option value="Outdoor & Adventure">Outdoor & Adventure</option>
+                        <option value="Reading">Reading</option>
+                        <option value="Renting">Renting</option>
+                        <option value="Sports & Fitness">Sports & Fitness</option>
+                        <option value="Virtual Games">Virtual Games</option>
+                    </select>
+                </div>
+
+                <label for="updatePostImage">Image
+                    <div class="image-div">
+                        <input type="file" id="updatePostImage">
+                        <button id="newUpdateImage">Camera</button>
+                    </div>
+                </label>
+
+                <div id="updateUploadPhoto"></div>
+
+                <button type="submit">UPDATE</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Delete markup -->
+    <div id="deleteOverlay">
+        <div class="modal">
+            <div id="deleteHeader">
+                <h2>Delete This Post?</h2>
+                <span class="closeBtn">&times;</span>
+            </div>
+            <div class="delete-logout-body">
+                <p>
+                    It will be gone forever.
+                </p>
+                <button id="confirmDelete">DELETE</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Chat modal -->
+    <div id="chatOverlay">
+        <div class="modal">
+            <div id="chatHeader">
+                <h2 id="chatUserName"></h2>
+                <span class="closeBtn">&times;</span>
+            </div>
+            <ul id="previousMessages"></ul>
+            <div id="chatFooter">
+                <div id="newMessage"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Logout confirmation modal -->
+    <div id="logoutOverlay">
+        <div class="modal">
+            <div id="logoutHeader">
+                <h2>Log Out?</h2>
+                <span class="closeBtn">&times;</span>
+            </div>
+            <div class="delete-logout-body">
+                <p>
+                    You will be navigated to the login screen.
+                </p>
+                <button id="confirmLogout">LOG OUT</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="cameraOverlay">
+        <div class="modal">
+            <video id="video" width="640" height="480" autoplay></video>
+            <canvas id="canvas" width="640" height="480"></canvas>
+            <div id="cameraButtons">
+                <button class="closeBtn">
+                    <img src="../images/cancel.svg" alt="Cancel Button">
+                </button>
+
+                <button id="snapButton">
+                    <img src="../images/capture.svg" alt="Capture Button">
+                </button>
+
+                <button id="flipButton">
+                    <img src="../images/flip.svg" alt="Flip Button">
+                </button>
+                <button id="uploadButton">
+                    <img src="../images/confirm.svg" alt="Confirm Button">
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <main id="home-main">
+
+        <!-- Posts -->
+        <section id="posts">
+            <header>
+                <nav>
+                    <ul>
+                        <!-- Side Menu Button -->
+                        <li>
+                            <button id="sidebar-btn">
+                                <img src="../images/filter-icon.svg" alt="Filter Icon">
+                                <span class="visually-hidden">Open Side Menu</span>
+                            </button>
+                        </li>
+
+                        <!-- New Post Button -->
+                        <li>
+                            <button id="createBtn">
+                                <img src="../images/create-icon.svg" alt="Create Post Icon">
+                                <span class="visually-hidden">Create New Post</span>
+                            </button>
+                        </li>
+                    </ul>
+                </nav>
+            </header>
+
+            <ul id="postList"></ul>
+        </section>
+
+        <!-- Notifications -->
+        <section id="notification" class="section-hidden">
+            <header>
+                <h2>Notifications</h2>
+            </header>
+
+            <ul id="notificationList">
+                <li>
+                    <img src="../images/logo.jpeg" alt="Profile Picture">
+
+                    <div>
+                        <p>Rocky High5'ed your post</p>
+                        <p>Appreciation received from Rocky on your "Renting Drone" post</p>
+                    </div>
+
+                    <p>12m</p>
+                </li>
+
+                <li>
+                    <img src="../images/logo.jpeg" alt="Profile Picture">
+
+                    <div>
+                        <p>Chris added their first post</p>
+                        <p>Click to view Chris' new post. Show your appreciation by High5'ing!</p>
+                    </div>
+
+                    <p>15m</p>
+                </li>
+
+                <li>
+                    <img src="../images/logo.jpeg" alt="Profile Picture">
+
+                    <div>
+                        <p>Pauli High5'ed your post</p>
+                        <p>Appreciation received from Pauli on your "Renting Drone" post</p>
+                    </div>
+
+                    <p>25m</p>
+                </li>
+
+                <li>
+                    <img src="../images/logo.jpeg" alt="Profile Picture">
+
+                    <div>
+                        <p>Marshall added their first post</p>
+                        <p>Click to view Marshall's new post. Show your appreciation by High5'ing!</p>
+                    </div>
+
+                    <p>28m</p>
+                </li>
+
+
+                <li>
+                    <img src="../images/logo.jpeg" alt="Profile Picture">
+
+                    <div>
+                        <p>Jane High5'ed your post</p>
+                        <p>Appreciation received from Jane on your "Hiking on Fraser" post</p>
+                    </div>
+
+                    <p>30m</p>
+                </li>
+
+                <li>
+                    <img src="../images/logo.jpeg" alt="Profile Picture">
+
+                    <div>
+                        <p>John added their first post</p>
+                        <p>Click to view John's new post. Show your appreciation by High5'ing!</p>
+                    </div>
+
+                    <p>35m</p>
+                </li>
+
+                <li>
+                    <img src="../images/logo.jpeg" alt="Profile Picture">
+
+                    <div>
+                        <p>Amy High5'ed your post</p>
+                        <p>Appreciation received from Amy on your "Hiking on Fraser River Trail" post</p>
+                    </div>
+
+                    <p>35m</p>
+                </li>
+            </ul>
+        </section>
+
+        <!-- Chats -->
+        <section id="chats" class="section-hidden">
+            <header>
+                <h2>Chats</h2>
+            </header>
+
+            <ul id="chatList"></ul>
+        </section>
+
+        <!-- Profile -->
+        <section id="profile" class="section-hidden">
+            <header>
+                <h2>My Profile</h2>
+            </header>
+
+            <div id="profileBody">
+                <div id="profileInfo"></div>
+                <button id="logoutBtn">
+                    <img src="../images/logout-icon.svg" alt="Logout Icon">
+                    <span>LOG OUT</span>
+                </button>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <nav>
+            <ul>
+                <!-- Home Button -->
+                <li>
+                    <button class="footer-btn-active">
+                        <img src="../images/home-icon-active.svg" alt="Home Icon">
+                        <span class="visually-hidden">Home</span>
+                    </button>
+                </li>
+                <!-- Notifications Button -->
+                <li>
+                    <button>
+                        <img src="../images/notification-icon.svg" alt="Notification Icon">
+                        <span class="visually-hidden">Notifications</span>
+                    </button>
+                </li>
+                <!-- Messages Button -->
+                <li>
+                    <button>
+                        <img src="../images/message-icon.svg" alt="Message Icon">
+                        <span class="visually-hidden">Messages</span>
+                    </button>
+                </li>
+                <!-- Profile Button -->
+                <li>
+                    <button>
+                        <img src="../images/profile-icon.svg" alt="Profile Icon">
+                        <span class="visually-hidden">My Profile</span>
+                    </button>
+                </li>
+            </ul>
+        </nav>
+    </footer>
 </body>
 
 </html>

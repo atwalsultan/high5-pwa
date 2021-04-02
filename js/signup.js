@@ -53,9 +53,19 @@ const showAlert = (content, type) => {
     }, 3500);
 };
 
+const splashScreen = () => {
+    splashOverlay.style.display = 'none';
+}
+
 //**************************************************************
 //      Event Listeners
 //**************************************************************
+
+document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(() => {
+        splashScreen();
+    }, 2800);
+});
 
 // Signup form submit
 signupForm.addEventListener('submit', (e) => {
@@ -73,7 +83,7 @@ signupForm.addEventListener('submit', (e) => {
     signupForm.displayName.focus();
 
     // Check if passwords match
-    if(password === confirmPassword) {
+    if (password === confirmPassword) {
         // Sign up the user or show error message
         auth.createUserWithEmailAndPassword(email, password).then(() => {
             // Add display name to user profile
@@ -94,7 +104,7 @@ signupForm.addEventListener('submit', (e) => {
                 setTimeout(() => {
                     window.location.href = `home.html`;
                 }, 3500);
-        
+
             }).catch((err) => {
                 // Delete user account
                 // auth.deleteUser(user.id);
