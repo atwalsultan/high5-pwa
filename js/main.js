@@ -82,6 +82,9 @@ const profileInfo = document.getElementById('profileInfo');
 
 const updateUploadPhoto = document.getElementById('updateUploadPhoto');
 
+const splashOverlay = document.getElementById('splashOverlay');
+const splashVideo = document.querySelector('splashOverlay video');
+
 //**************************************************************
 //      Function Declarations
 //**************************************************************
@@ -1132,6 +1135,14 @@ const renderProfile = () => {
     });
 }
 
+const splashScreen = () => {
+    splashOverlay.style.opacity = '0';
+
+    setTimeout(() => {
+        splashOverlay.style.display = 'none';
+    }, 750);
+}
+
 //**************************************************************
 //      Event Listeners
 //**************************************************************
@@ -1167,6 +1178,7 @@ document.addEventListener('DOMContentLoaded', () => {
         showAlert(err.message, `error`);
     });
 
+    // Real time listener for chats
     db.collection('chats').get().then((querySnapshot) => {
         querySnapshot.docs.forEach((doc) => {
             let members = doc.data().members;
@@ -1191,7 +1203,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     setTimeout(() => {
         renderProfile();
-    }, 2500)
+        splashScreen();
+    }, 2800);
 });
 
 // Create form submission
