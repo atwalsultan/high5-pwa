@@ -1,9 +1,10 @@
-const cacheName='v3';
+const cacheName='v4';
 const urlsToCache=[
     '/',
-   '/fallback.html',
+   '/pages/fallback.html',
    'css/styles.css',
-   'videos/animation-offline.mp4'
+   'videos/animation-offline.mp4',
+   '/images/logo.jpeg'
    
     
 ];
@@ -13,7 +14,6 @@ self.addEventListener('install', (e)=>{
     e.waitUntil(
         caches.open(cacheName)
         .then(cache =>{
-         console.log('caching', cache)
           return  cache.addAll(urlsToCache);
         }).then(()=>{ self.skipWaiting()})
         );
@@ -22,7 +22,6 @@ self.addEventListener('install', (e)=>{
 
 
 self.addEventListener('activate', (e)=>{
-console.log("event fired: ", e.type);
 e.waitUntil(
     caches.keys().then(keyList =>{
         return Promise.all(
@@ -39,11 +38,9 @@ e.waitUntil(
 
 // cache first strategy
 self.addEventListener('fetch', ( event ) => {
-    console.log(event.type)
-    console.log(`SW: Fetch handler`, event.request.url );
 event.respondWith(caches.match( event.request ).then( ( response ) => { 
     return response ||  fetch( event.request ); 
-}).catch(()=> caches.match('fallback.html'))
+}).catch(()=> caches.match('/pages/fallback.html'))
 )
 });
 
