@@ -3,11 +3,21 @@
   "name": "High5",
   "icons": [
     {
-      "src":"images/logo.jpeg", "sizes": "144x144", "purpose": "any", "type": "image/png" 
+      "src":"images/App-icons/android/icon_48.png", "sizes": "48x48", "purpose": "any maskable", "type": "image/png" 
       },
-      {
-        "src":"images/logo.jpeg", "sizes": "512x512", "purpose": "maskable", "type": "image/png" 
-        }
+    {
+        "src":"images/App-icons/android/icon_96.png", "sizes": "96x96", "purpose": "any maskable", "type": "image/png" 
+      },
+    {
+          "src":"images/App-icons/android/icon_144.png", "sizes": "144x144", "purpose": "any maskable", "type": "image/png" 
+      },
+    {
+            "src":"images/App-icons/android/icon_192.png", "sizes": "192x192", "purpose": "any maskable", "type": "image/png" 
+      },
+    {
+              "src":"images/App-icons/android/icon_512.png", "sizes": "512x512", "purpose": "any maskable", "type": "image/png" 
+      }
+      
   ],
   "start_url": "/index.html"  ,
   "background_color": "#Fa802a",
