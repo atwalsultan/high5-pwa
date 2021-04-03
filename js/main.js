@@ -397,10 +397,10 @@ const renderPost = (doc) => {
     }
 
     // Time since creation
-    let timeCreated = document.createElement('p');
-    let elapsedDays = Math.floor((new Date() - new Date(doc.data().timestamp.seconds * 1000)) / (1000 * 60 * 60 * 24));
-    timeCreated.textContent = `${elapsedDays}d`;
-    nameDistanceTime.appendChild(timeCreated);
+    let timeUpdated = document.createElement('p');
+    let elapsedDays = Math.floor((new Date() - new Date(doc.data().updated.seconds * 1000)) / (1000 * 60 * 60 * 24));
+    timeUpdated.textContent = `${elapsedDays}d`;
+    nameDistanceTime.appendChild(timeUpdated);
 
     // Description
     let description = document.createElement('p');
