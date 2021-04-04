@@ -1,136 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="../images/favicon.jpeg" />
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- External CSS file -->
-    <link rel="stylesheet" href="../css/styles.css" />
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="../images/favicon.jpeg" />
 
-    <!-- Manifest file     -->
-    <link rel="manifest" href="../app.webmanifest" />
-    <meta name="theme-color" content="#Fa802a" />
-    <link
-      rel="apple-touch-icon"
-      sizes="60x60"
-      href="images/App-icons/ios/ios_60.png"
-    />
-    <link
-      rel="apple-touch-icon"
-      sizes="76x76"
-      href="images/App-icons/ios/ios_76.png"
-    />
-    <link
-      rel="apple-touch-icon"
-      sizes="120x120"
-      href="images/App-icons/ios/ios_120.png"
-    />
-    <link
-      rel="apple-touch-icon"
-      sizes="152x152"
-      href="images/App-icons/ios/ios_152.png"
-    />
-    <link
-      rel="apple-touch-icon"
-      sizes="180x180"
-      href="images/App-icons/ios/ios_180.png"
-    />
+  <!-- External CSS file -->
+  <link rel="stylesheet" href="../css/styles.css" />
 
-    <!-- Firebase -->
-    <!-- The core Firebase JS SDK is always required and must be listed first -->
-    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
+  <!-- Manifest file     -->
+  <link rel="manifest" href="../app.webmanifest" />
+  <meta name="theme-color" content="#Fa802a" />
+  <link rel="apple-touch-icon" sizes="60x60" href="images/App-icons/ios/ios_60.png" />
+  <link rel="apple-touch-icon" sizes="76x76" href="images/App-icons/ios/ios_76.png" />
+  <link rel="apple-touch-icon" sizes="120x120" href="images/App-icons/ios/ios_120.png" />
+  <link rel="apple-touch-icon" sizes="152x152" href="images/App-icons/ios/ios_152.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="images/App-icons/ios/ios_180.png" />
 
-    <!-- TODO: Add SDKs for Firebase products that you want to use https://firebase.google.com/docs/web/setup#available-libraries -->
-    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-analytics.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-firestore.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-storage.js"></script>
+  <!-- Firebase -->
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
 
-    <!-- External JS file -->
-    <script src="../js/auth.js" defer></script>
-    <script src="../js/signup.js" defer></script>
+  <!-- TODO: Add SDKs for Firebase products that you want to use https://firebase.google.com/docs/web/setup#available-libraries -->
+  <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-analytics.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-storage.js"></script>
 
-    <title>High5! | Sign Up</title>
-  </head>
+  <!-- External JS file -->
+  <script src="../js/auth.js" defer></script>
+  <script src="../js/signup.js" defer></script>
 
-  <body>
-    <div id="alerts"></div>
+  <title>High5! | Sign Up</title>
+</head>
 
-    <!-- Splash Overlay -->
-    <div id="splashOverlay">
-      <video autoplay muted>
-        <source type="video/mp4" src="../videos/animation-splash.mp4" />
-      </video>
-    </div>
+<body>
+  <div id="alerts"></div>
 
-    <main id="signup-main">
-      <div class="form-wrapper">
-        <div class="logo">
-          <img src="../images/logo.jpeg" alt="High5 Logo" />
-        </div>
+  <!-- Splash Overlay -->
+  <div id="splashOverlay">
+    <video autoplay muted>
+      <source type="video/mp4" src="../videos/animation-splash.mp4" />
+    </video>
+  </div>
 
-        <p>Let's start High5'ing to strangers!</p>
-
-        <form id="signup-form">
-          <div>
-            <label for="displayName"
-              >Display Name <span class="required-field">*</span></label
-            >
-            <input
-              type="text"
-              id="displayName"
-              placeholder="Enter your display name"
-              required
-            />
-          </div>
-
-          <div>
-            <label for="signupEmail"
-              >E-Mail <span class="required-field">*</span></label
-            >
-            <input
-              type="email"
-              id="signupEmail"
-              placeholder="Enter your email"
-              required
-            />
-          </div>
-
-          <div>
-            <label for="signupPassword"
-              >Password <span class="required-field">*</span></label
-            >
-            <input
-              type="password"
-              id="signupPassword"
-              placeholder="Enter your password"
-              required
-            />
-          </div>
-
-          <div>
-            <label for="confirmPassword"
-              >Confirm Password <span class="required-field">*</span></label
-            >
-            <input
-              type="password"
-              id="confirmPassword"
-              placeholder="Confirm your password"
-              required
-            />
-          </div>
-
-          <button type="submit">SIGN UP</button>
-        </form>
-
-        <div class="login">
-          <p>Already have an account? <a href="../index.html">Log In</a></p>
-        </div>
+  <main id="signup-main">
+    <div class="form-wrapper">
+      <div class="logo">
+        <img src="../images/logo.svg" alt="High5 Logo" />
       </div>
-    </main>
-  </body>
+
+      <p>Let's start High5'ing to strangers!</p>
+
+      <form id="signup-form">
+        <div>
+          <label for="displayName">Display Name <span class="required-field">*</span></label>
+          <input type="text" id="displayName" placeholder="Enter your display name" required />
+        </div>
+
+        <div>
+          <label for="signupEmail">E-Mail <span class="required-field">*</span></label>
+          <input type="email" id="signupEmail" placeholder="Enter your email" required />
+        </div>
+
+        <div>
+          <label for="signupPassword">Password <span class="required-field">*</span></label>
+          <input type="password" id="signupPassword" placeholder="Enter your password" required />
+        </div>
+
+        <div>
+          <label for="confirmPassword">Confirm Password <span class="required-field">*</span></label>
+          <input type="password" id="confirmPassword" placeholder="Confirm your password" required />
+        </div>
+
+        <button type="submit">SIGN UP</button>
+      </form>
+
+      <div class="login">
+        <p>Already have an account? <a href="../index.html">Log In</a></p>
+      </div>
+    </div>
+  </main>
+</body>
+
 </html>
