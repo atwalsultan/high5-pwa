@@ -1,47 +1,47 @@
-const cacheName='v4';
-const urlsToCache=[
+const cacheName = 'v1';
+const urlsToCache = [
     '/',
-   '/pages/fallback.html',
-   'css/styles.css',
-   'videos/animation-offline.mp4',
-   '/images/logo.jpeg'
-   
-    
+    '/pages/fallback.html',
+    'css/styles.css',
+    'videos/animation-offline.mp4',
+    '/images/logo.svg'
+
+
 ];
 
-self.addEventListener('install', (e)=>{
+self.addEventListener('install', (e) => {
     console.log('install done');
     e.waitUntil(
         caches.open(cacheName)
-        .then(cache =>{
-          return  cache.addAll(urlsToCache);
-        }).then(()=>{ self.skipWaiting()})
-        );
+            .then(cache => {
+                return cache.addAll(urlsToCache);
+            }).then(() => { self.skipWaiting() })
+    );
 });
 
 
 
-self.addEventListener('activate', (e)=>{
-e.waitUntil(
-    caches.keys().then(keyList =>{
-        return Promise.all(
-            keyList.map(cache=>{
-           if(cache !== cacheName){
-               return caches.delete(cache)
-           }
+self.addEventListener('activate', (e) => {
+    e.waitUntil(
+        caches.keys().then(keyList => {
+            return Promise.all(
+                keyList.map(cache => {
+                    if (cache !== cacheName) {
+                        return caches.delete(cache)
+                    }
+                })
+            );
         })
-        );
-    })
     );
-  });
-  
+});
+
 
 // cache first strategy
-self.addEventListener('fetch', ( event ) => {
-event.respondWith(caches.match( event.request ).then( ( response ) => { 
-    return response ||  fetch( event.request ); 
-}).catch(()=> caches.match('/pages/fallback.html'))
-)
+self.addEventListener('fetch', (event) => {
+    event.respondWith(caches.match(event.request).then((response) => {
+        return response || fetch(event.request);
+    }).catch(() => caches.match('/pages/fallback.html'))
+    )
 });
 
 

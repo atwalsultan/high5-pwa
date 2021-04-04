@@ -354,8 +354,6 @@ const createChatListener = (chat) => {
 // Create elements and render post
 const renderPost = (doc) => {
 
-    // Create elements to be rendered
-
     // Outermost container for the post
     let li = document.createElement('li');
     li.setAttribute('id', doc.id);
@@ -409,9 +407,9 @@ const renderPost = (doc) => {
         distance.setAttribute('class', 'distance');
         distance.textContent = `${km} km`;
 
+        // Append to containers
         distanceSpan.appendChild(icon);
         distanceSpan.appendChild(distance);
-
         nameDistanceTime.appendChild(distanceSpan);
     }
 
@@ -508,7 +506,7 @@ const renderPost = (doc) => {
         likeBtn.classList.toggle('active'); // Add active class
         let url = likeBtn.querySelector('img').src.split('/images/')[1]; // Get url of current icon
 
-        // Toggle icon
+        // Toggle icon on click
         if (url === "high5-icon.svg") {
             likeBtn.querySelector('img').src = `../images/high5-icon-active.svg`;
         }
@@ -519,6 +517,7 @@ const renderPost = (doc) => {
 
     // Add 'Update' and 'Delete' buttons only for posts owned by the user
     if (auth.currentUser.uid === doc.data().uid) {
+        // Update button
         let updateBtn = document.createElement('button');
         let updateIcon = document.createElement('img');
         updateIcon.setAttribute('src', '../images/update-icon.svg');
@@ -527,6 +526,7 @@ const renderPost = (doc) => {
         updateBtn.append(updateIcon)
         updateBtn.append(updateText);
 
+        // Delete button
         let deleteBtn = document.createElement('button');
         let deleteIcon = document.createElement('img');
         deleteIcon.setAttribute('src', '../images/delete-icon.svg');
@@ -538,10 +538,12 @@ const renderPost = (doc) => {
         // Add event listeners to buttons
         addButtonListeners(updateBtn, deleteBtn, doc);
 
+        // Append to container
         buttons.appendChild(updateBtn);
         buttons.appendChild(deleteBtn);
     }
-    else {
+    else { // Add chat button to post if not owned by the logged in user
+        // Chat button
         let chatBtn = document.createElement('button');
         let chatIcon = document.createElement('img');
         chatIcon.setAttribute('src', '../images/send-message-icon-2.svg');
@@ -550,6 +552,7 @@ const renderPost = (doc) => {
         chatBtn.appendChild(chatIcon);
         chatBtn.appendChild(chatText);
 
+        // Event listener for chat button
         chatBtn.addEventListener('click', () => {
             // Fetch chat between logged in user and owner of post
             db.collection('chats').where(`members.${auth.currentUser.uid}`, '==', true).where(`members.${doc.data().uid}`, '==', true).get()
@@ -608,6 +611,7 @@ const renderPost = (doc) => {
                 });
         });
 
+        // Append to container
         buttons.appendChild(chatBtn);
     }
 
@@ -620,6 +624,7 @@ const updatePost = (event) => {
     // Prevent form from actually submitting
     event.preventDefault();
 
+    // Defining object to send to firestore
     let updateObj = {};
 
     // Populating update object
@@ -632,29 +637,36 @@ const updatePost = (event) => {
     }
     updateObj.updated = new firebase.firestore.Timestamp.fromDate(new Date());
 
+    // File attached (if any)
     let file = updateForm.updatePostImage.files[0];
 
     // Updating document in collection
     db.collection('posts').doc(updateId).update(updateObj)
         .then(() => {
-            if (file) {
+            if (file) { // If user has uploaded a file
+                // Get updated document
                 db.collection('posts').doc(updateId).get()
                     .then((post) => {
+                        // Photo URL of document
                         photoURL = post.data().photoURL;
 
+                        // Delete old photo
                         let httpsReference = firebase.storage().refFromURL(photoURL);
                         httpsReference.delete()
                             .then(() => {
+                                // Set name and metadata for new photo
                                 let name = new Date() + '-' + file.name;
                                 let metaData = {
                                     contentType: file.type,
                                 }
 
+                                // Add new photo
                                 let task = ref.child(name).put(file, metaData);
                                 task
-                                    .then(snapshot => {
+                                    .then((snapshot) => {
                                         snapshot.ref.getDownloadURL()
                                             .then((url) => {
+                                                // Update URL of new photo in post document
                                                 updateObj = {
                                                     photoURL: url,
                                                 }
@@ -668,7 +680,7 @@ const updatePost = (event) => {
                             });
                     });
             }
-            else {
+            else { //If no file is attached
                 // Show message
                 showAlert(`Post updated successfully!`, `success`);
             }
@@ -705,22 +717,27 @@ const deletePost = () => {
 const closeModal = (overlay) => {
 
     switch (overlay) {
+
+        // Update post overlay
         case updateOverlay:
             updateForm.reset(); // Reset form in modal
             updateUploadPhoto.innerHTML = ``; // Remove previosly added photo from modal
             updateOverlay.style.display = 'none';  // Close modal
             break;
 
+        // Delete confirmation overlay
         case deleteOverlay:
             deleteOverlay.style.display = 'none'; // Close modal
             break;
 
+        // New post overlay
         case createOverlay:
             postForm.reset(); // Reset form in modal
             uploadPhoto.innerHTML = ``; // Remove previosly added photo from modal
             createOverlay.style.display = 'none'; // Close modal
             break;
 
+        // Chat overlay
         case chatOverlay:
             chatOverlay.style.display = 'none'; // Close modal
 
@@ -735,10 +752,12 @@ const closeModal = (overlay) => {
             }
             break;
 
+        // Logout confirmation overlay
         case logoutOverlay:
             logoutOverlay.style.display = 'none'; // Close modal
             break;
 
+        // Camera overlay
         case cameraOverlay:
             cameraOverlay.style.display = 'none'; // Close modal
             uploadPhoto.innerHTML = ``; // Clear any photo that might have been selected
@@ -752,13 +771,13 @@ const closeModal = (overlay) => {
             uploadButton.style.display = 'none'; // Hide upload button until photo is captured
             break;
 
+        // Filters sidebar
         case sidebar:
             sidebar.classList.add('sidebar-hidden');
 
             setTimeout(() => {
                 sidebarOverlay.style.display = 'none';
             }, 500);
-
             break;
     }
 }
@@ -814,7 +833,7 @@ const logUserOut = () => {
         });
 };
 
-// Filter by category or distance
+// Filter by distance
 const filter = (event) => {
     // Prevent form from actually submitting
     event.preventDefault();
@@ -822,7 +841,7 @@ const filter = (event) => {
     // Distance
     let distance = parseInt(filterForm.distance.value);
 
-    // Filter by category or distance
+    // Filter by distance
     document.querySelectorAll('#postList li').forEach((post) => {
         // Get category and distance of post
         let postDistance = parseFloat(post.querySelector('.distance').textContent);
@@ -900,6 +919,7 @@ const changeSections = (index) => {
     icons[index].classList.add('footer-btn-active');
     let icon = icons[index].querySelector('img');
 
+    // Set img sources for icons in footer navbar
     switch (index) {
         case 0:
             icons[0].querySelector('img').src = "../images/home-icon-active.svg";
@@ -932,36 +952,42 @@ const changeSections = (index) => {
 };
 
 // Create elements and render chat
-const renderChat = (doc, uids) => {
+const renderChat = (doc, uids) => { // uids: user ids of participants of chat
     uids.forEach((uid) => {
-        if (uid != auth.currentUser.uid) {
+        if (uid != auth.currentUser.uid) { // Not the logged in user
             db.collection('users').doc(uid).get()
                 .then((user) => {
+                    // List item
                     let li = document.createElement('li');
 
+                    // Display picture of user
                     let picture = document.createElement('img');
                     picture.setAttribute('src', user.data().photoURL);
 
-
+                    // User name
                     let contentDiv = document.createElement('div');
                     let userName = document.createElement('p');
-
                     let name = user.data().name;
                     userName.textContent = name;
                     contentDiv.append(userName);
 
+                    // Time last message was sent
                     let time = document.createElement('span');
 
+                    // Last message
                     let lastMessage = document.createElement('p');
                     lastMessage.innerHTML = '<span>No messages yet.</span>';
                     contentDiv.append(lastMessage);
 
+                    // Time and content of last message
                     doc.ref.collection('messages').orderBy("timestamp", "desc").limit(1).get()
                         .then((snapshot) => {
                             snapshot.forEach((message) => {
+                                // Content of last message
                                 lastMessage.textContent = message.data().content;
                                 contentDiv.append(lastMessage);
 
+                                // Format time of last message
                                 let dt = new Date(message.data().timestamp * 1000);
                                 let hours = ('0' + dt.getHours()).slice(-2);
                                 let minutes = ('0' + dt.getMinutes()).slice(-2);
@@ -971,10 +997,13 @@ const renderChat = (doc, uids) => {
 
                     // Set unique ID for each list item
                     li.setAttribute('id', `ch-${doc.id}`);
+
+                    // Append child elements to container
                     li.append(picture);
                     li.append(contentDiv);
                     li.append(time);
 
+                    // Open chat modal on clicking a chat
                     li.addEventListener('click', () => {
                         let userId;
 
@@ -988,6 +1017,7 @@ const renderChat = (doc, uids) => {
                             }
                         });
 
+                        // Set user's name
                         db.collection('users').doc(userId).get()
                             .then((user) => {
                                 chatUserName.innerText = user.data().name;
@@ -1006,6 +1036,7 @@ const renderChat = (doc, uids) => {
                         chatForm.message.focus();
                     })
 
+                    // Append chat list item to container
                     chatList.prepend(li);
                 });
         }
@@ -1024,7 +1055,7 @@ const newFileImage = (e) => {
         image.src = fr.result;
     }
 
-    if (e.target.id === 'postImage') {
+    if (e.target.id === 'postImage') { // If new post is being created
         // Get image url
         fr.readAsDataURL(postImage.files[0]);
 
@@ -1032,7 +1063,7 @@ const newFileImage = (e) => {
         uploadPhoto.innerHTML = ``;
         uploadPhoto.append(image);
     }
-    else if (e.target.id === 'updatePostImage') {
+    else if (e.target.id === 'updatePostImage') { // If old post is being updated
         // Get image url
         fr.readAsDataURL(updatePostImage.files[0]);
 
@@ -1044,6 +1075,8 @@ const newFileImage = (e) => {
 
 // On upload image button click
 const uploadImage = () => {
+
+    // Convert canvas to blob for upload
     canvas.toBlob((blob) => {
         // Create img element to render in DOM
         let image = new Image();
@@ -1096,7 +1129,6 @@ const addNewImage = (e) => {
     e.preventDefault();
 
     if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-
         // Toggle between front and back camera when possible
         let front = false;
         flipButton.addEventListener('click', () => {
@@ -1132,21 +1164,27 @@ const addNewImage = (e) => {
     }
 }
 
-// Render a user's profile
+// Render a user's profile in profile section
 const renderProfile = () => {
+    // Get user's profile from collection
     db.collection('users').doc(auth.currentUser.uid).get().then((user) => {
+        // Display picture
         let profileImg = document.createElement('img');
         profileImg.setAttribute('src', user.data().photoURL);
 
+        // Display name
         let profileDisplayName = document.createElement('p');
         profileDisplayName.textContent = user.data().name;
 
+        // User email
         let profileEmail = document.createElement('p');
         profileEmail.textContent = user.data().email;
 
+        // User Bio
         let profileBio = document.createElement('p');
         profileBio.textContent = `" ${user.data().bio} "`;
 
+        // Append to containers
         profileInfo.append(profileImg);
         profileInfo.append(profileDisplayName);
         profileInfo.append(profileEmail);
@@ -1154,6 +1192,7 @@ const renderProfile = () => {
     });
 }
 
+// Hide splash screen
 const splashScreen = () => {
     splashOverlay.style.display = 'none';
 }
