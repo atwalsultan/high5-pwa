@@ -312,10 +312,8 @@ aside#sidebar.sidebar-hidden {
 }
 
 .logo img {
-  width: 70px;
-  height: 70px;
-  transform: scale(1.25);
-  border-radius: 50%;
+  max-height: 60px;
+  width: auto;
 }
 
 #login-form,
@@ -437,7 +435,7 @@ footer button img {
   display: none;
 }
 
-#splashOverlay {
+#splashOverlay, #offlineAnimation {
   position: fixed;
   top: 0;
   left: 0;

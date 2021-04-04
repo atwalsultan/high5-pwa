@@ -1,127 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="images/favicon.jpeg" />
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <!-- External CSS file -->
-    <link rel="stylesheet" href="css/styles.css" />
-    <!-- Manifest file     -->
-    <link rel="manifest" href="app.webmanifest" />
-    <meta name="theme-color" content="#Fa802a" />
-    <link
-      rel="apple-touch-icon"
-      sizes="60x60"
-      href="images/App-icons/ios/ios_60.png"
-    />
-    <link
-      rel="apple-touch-icon"
-      sizes="76x76"
-      href="images/App-icons/ios/ios_76.png"
-    />
-    <link
-      rel="apple-touch-icon"
-      sizes="120x120"
-      href="images/App-icons/ios/ios_120.png"
-    />
-    <link
-      rel="apple-touch-icon"
-      sizes="152x152"
-      href="images/App-icons/ios/ios_152.png"
-    />
-    <link
-      rel="apple-touch-icon"
-      sizes="180x180"
-      href="images/App-icons/ios/ios_180.png"
-    />
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="images/favicon.jpeg" />
 
-    <!-- Firebase -->
-    <!-- The core Firebase JS SDK is always required and must be listed first -->
-    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
+  <!-- External CSS file -->
+  <link rel="stylesheet" href="css/styles.css" />
+  <!-- Manifest file     -->
+  <link rel="manifest" href="app.webmanifest" />
+  <meta name="theme-color" content="#Fa802a" />
+  <link rel="apple-touch-icon" sizes="60x60" href="images/App-icons/ios/ios_60.png" />
+  <link rel="apple-touch-icon" sizes="76x76" href="images/App-icons/ios/ios_76.png" />
+  <link rel="apple-touch-icon" sizes="120x120" href="images/App-icons/ios/ios_120.png" />
+  <link rel="apple-touch-icon" sizes="152x152" href="images/App-icons/ios/ios_152.png" />
+  <link rel="apple-touch-icon" sizes="180x180" href="images/App-icons/ios/ios_180.png" />
 
-    <!-- TODO: Add SDKs for Firebase products that you want to use https://firebase.google.com/docs/web/setup#available-libraries -->
-    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-analytics.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-firestore.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-auth.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-storage.js"></script>
+  <!-- Firebase -->
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-app.js"></script>
 
-    <!-- External JS file -->
-    <script src="js/auth.js" defer></script>
-    <script src="js/index.js" defer></script>
+  <!-- TODO: Add SDKs for Firebase products that you want to use https://firebase.google.com/docs/web/setup#available-libraries -->
+  <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-analytics.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-firestore.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.2.6/firebase-storage.js"></script>
 
-    <!--  -->
-    <script>
-      if ("serviceWorker" in navigator) {
-        navigator.serviceWorker
-          .register("/sw_cached_pages.js")
+  <!-- External JS file -->
+  <script src="js/auth.js" defer></script>
+  <script src="js/index.js" defer></script>
 
-          .then((registration) => {
-            console.log("registration successfull");
-          })
-          .catch((err) => {
-            console.log("registration failed oh NO!" + err);
-          });
-      }
-    </script>
+  <!--  -->
+  <script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker
+        .register("/sw_cached_pages.js")
 
-    <title>High5! | Log In</title>
-  </head>
+        .then((registration) => {
+          console.log("registration successfull");
+        })
+        .catch((err) => {
+          console.log("registration failed oh NO!" + err);
+        });
+    }
+  </script>
 
-  <body>
-    <div id="alerts"></div>
+  <title>High5! | Log In</title>
+</head>
 
-    <!-- Splash Overlay -->
-    <div id="splashOverlay">
-      <video autoplay muted>
-        <source type="video/mp4" src="../videos/animation-splash.mp4" />
-      </video>
-    </div>
+<body>
+  <div id="alerts"></div>
 
-    <main id="index-main">
-      <div class="form-wrapper">
-        <div class="logo">
-          <img src="images/logo.jpeg" alt="High5 Logo" />
-        </div>
+  <!-- Splash Overlay -->
+  <div id="splashOverlay">
+    <video autoplay muted>
+      <source type="video/mp4" src="../videos/animation-splash.mp4" />
+    </video>
+  </div>
 
-        <p>Great to see you back. Keep High5'ing to strangers!</p>
-
-        <form id="login-form">
-          <div>
-            <label for="loginEmail">E-Mail</label>
-            <input
-              type="email"
-              id="loginEmail"
-              placeholder="Enter your e-mail"
-              required
-            />
-          </div>
-
-          <div>
-            <label for="loginPassword">Password</label>
-            <input
-              type="password"
-              id="loginPassword"
-              placeholder="Enter your password"
-              required
-            />
-          </div>
-
-          <div id="rememberMe">
-            <input type="checkbox" id="rememberMeCheck" />
-            <label for="rememberMeCheck">Remember me</label>
-          </div>
-
-          <button type="submit">LOG IN</button>
-        </form>
-
-        <div class="sign-up">
-          <p>Need a new account? <a href="pages/signup.html">Sign Up!</a></p>
-        </div>
+  <main id="index-main">
+    <div class="form-wrapper">
+      <div class="logo">
+        <img src="images/logo.svg" alt="High5 Logo" />
       </div>
-    </main>
-  </body>
+
+      <p>Great to see you back. Keep High5'ing to strangers!</p>
+
+      <form id="login-form">
+        <div>
+          <label for="loginEmail">E-Mail</label>
+          <input type="email" id="loginEmail" placeholder="Enter your e-mail" required />
+        </div>
+
+        <div>
+          <label for="loginPassword">Password</label>
+          <input type="password" id="loginPassword" placeholder="Enter your password" required />
+        </div>
+
+        <div id="rememberMe">
+          <input type="checkbox" id="rememberMeCheck" />
+          <label for="rememberMeCheck">Remember me</label>
+        </div>
+
+        <button type="submit">LOG IN</button>
+      </form>
+
+      <div class="sign-up">
+        <p>Need a new account? <a href="pages/signup.html">Sign Up!</a></p>
+      </div>
+    </div>
+  </main>
+</body>
+
 </html>

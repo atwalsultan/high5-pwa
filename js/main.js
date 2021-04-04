@@ -12,6 +12,16 @@
 const postForm = document.getElementById("postForm");
 const createBtn = document.getElementById('createBtn');
 const createOverlay = document.getElementById('createOverlay');
+const newPostImage = document.getElementById('newPostImage');
+const canvas = document.querySelector('#canvas');
+const context = canvas.getContext("2d");
+const videoElement = document.querySelector('#video');
+const uploadButton = document.getElementById('uploadButton');
+const flipButton = document.getElementById('flipButton')
+const snapButton = document.getElementById('snapButton');
+const uploadPhoto = document.getElementById('uploadPhoto');
+const cameraOverlay = document.getElementById('cameraOverlay');
+let blobToUpload = null;
 
 // Read functionality
 const postList = document.getElementById('postList');
@@ -20,13 +30,15 @@ const postList = document.getElementById('postList');
 let updateId;
 const updateForm = document.getElementById('updateForm');
 const updateOverlay = document.getElementById('updateOverlay');
+const newUpdateImageBtn = document.getElementById('newUpdateImage');
+const updateUploadPhoto = document.getElementById('updateUploadPhoto');
 
 // Delete functionality
 let deleteId;
 const confirmDelete = document.getElementById('confirmDelete');
 const deleteOverlay = document.getElementById('deleteOverlay');
 
-// logout modal 
+// Logout modal 
 const confirmLogout = document.getElementById('confirmLogout');
 const logoutOverlay = document.getElementById('logoutOverlay');
 
@@ -54,8 +66,9 @@ const sidebarBtn = document.getElementById('sidebar-btn');
 const sidebarOverlay = document.getElementById('sidebarOverlay');
 
 // Sections
-let icons = document.querySelectorAll('footer li button');
-let sections = document.querySelectorAll('main > section');
+const icons = document.querySelectorAll('footer li button');
+const sections = document.querySelectorAll('main > section');
+const profileInfo = document.getElementById('profileInfo');
 
 // Chats
 const chatOverlay = document.getElementById('chatOverlay');
@@ -65,23 +78,7 @@ let chatListener = null;
 const chatUserName = document.getElementById('chatUserName');
 const chatList = document.getElementById('chatList');
 
-const newPostImage = document.getElementById('newPostImage');
-const canvas = document.querySelector('#canvas');
-const context = canvas.getContext("2d");
-const videoElement = document.querySelector('#video');
-const uploadButton = document.getElementById('uploadButton');
-const flipButton = document.getElementById('flipButton')
-const snapButton = document.getElementById('snapButton');
-const uploadPhoto = document.getElementById('uploadPhoto');
-const cameraOverlay = document.getElementById('cameraOverlay');
-let blobToUpload = null;
-
-const newUpdateImageBtn = document.getElementById('newUpdateImage');
-
-const profileInfo = document.getElementById('profileInfo');
-
-const updateUploadPhoto = document.getElementById('updateUploadPhoto');
-
+// Splash screen
 const splashOverlay = document.getElementById('splashOverlay');
 const splashVideo = document.querySelector('splashOverlay video');
 
@@ -124,25 +121,32 @@ const createPost = (event) => {
     userPos ? longitude = userPos.coords.longitude : longitude = 0; // longitude = '' if the user position is not available
     createObj.coordinates = new firebase.firestore.GeoPoint(latitude, longitude);
 
+    // Get file from input field (if any)
     let file = postForm.postImage.files[0];
 
     // Add post as document to collection
     db.collection('posts').add(createObj)
         .then((post) => {
+            // If user has attached file to upload
             if (file) {
+                // Set name and metadata for file
                 let name = new Date() + '-' + file.name;
                 let metaData = {
                     contentType: file.type,
                 };
 
+                // Upload file
                 let task = ref.child(name).put(file, metaData);
                 task
-                    .then(snapshot => {
+                    .then((snapshot) => {
                         snapshot.ref.getDownloadURL()
-                            .then(url => {
+                            .then((url) => {
+                                // Create object to update post created
                                 updateObj = {
                                     photoURL: url,
                                 };
+
+                                // Add photo URL to post created
                                 db.collection('posts').doc(post.id).update(updateObj)
                                     .then(() => {
                                         // Show message
@@ -152,20 +156,26 @@ const createPost = (event) => {
                     });
             }
 
+            // If a user has clicked a new photo to upload
             else if (blobToUpload != null) {
+                // Set name and metadata of file
                 let name = new Date() + '-';
                 let metaData = {
                     contentType: blobToUpload.type,
                 };
 
+                // Upload file
                 let task = ref.child(name).put(blobToUpload, metaData);
                 task
                     .then((snapshot) => {
                         snapshot.ref.getDownloadURL()
                             .then((url) => {
+                                // Create object to update post created
                                 updateObj = {
                                     photoURL: url,
                                 };
+
+                                // Add photo URL to post created
                                 db.collection('posts').doc(post.id).update(updateObj)
                                     .then(() => {
                                         // Show message
@@ -194,7 +204,9 @@ const createPost = (event) => {
 
 // Add event listeners to update and delete buttons
 const addButtonListeners = (updateBtn, deleteBtn, doc) => {
+    // Update button
     updateBtn.addEventListener('click', (event) => {
+
         // Get array index of post to update
         updateId = doc.id;
 
@@ -208,6 +220,7 @@ const addButtonListeners = (updateBtn, deleteBtn, doc) => {
         updateForm.updateCategory.value = doc.data().category;
     })
 
+    // Delete button
     deleteBtn.addEventListener('click', (event) => {
         // Get array index of post to delete
         deleteId = doc.id;
@@ -222,7 +235,7 @@ const toRad = (degrees) => {
     return degrees * (Math.PI / 180);
 }
 
-// Calculate distance between 2 co-ordinates
+// Calculate distance between 2 geographical co-ordinates
 const calculateDistance = (lat1, lon1, lat2, lon2) => {
     let dLat = toRad(lat2 - lat1);
     let dLon = toRad(lon2 - lon1);
@@ -234,8 +247,9 @@ const calculateDistance = (lat1, lon1, lat2, lon2) => {
     return (R * c).toFixed(1);
 };
 
+// Form to send new message in chat
 const createChatForm = (chat) => {
-    // Create chat form
+    // Create form element
     let chatForm = document.createElement('form');
 
     // Create input field 
@@ -274,6 +288,7 @@ const createChatForm = (chat) => {
         // Store object
         db.collection('chats').doc(chat.id).collection('messages').add(messageObj);
 
+        // Reset chat form
         chatForm.reset();
         chatForm.message.focus();
     });
@@ -281,44 +296,48 @@ const createChatForm = (chat) => {
     return chatForm;
 };
 
+// Real time listener for chat messages
 const createChatListener = (chat) => {
+    // Store listener in variable so that it can be shut down when needed
     let listener = db.collection('chats').doc(chat.id).collection('messages').orderBy('timestamp', 'asc').onSnapshot((snapshot) => {
         let changes = snapshot.docChanges();
         changes.forEach((change) => {
-            if (change.type === 'added') {
-                // Create element
+            if (change.type === 'added') { // If new message is added
+                // Create elements
                 let message = document.createElement('li');
+
                 let content = document.createElement('span');
                 content.textContent = `${change.doc.data().content}`;
                 message.append(content);
 
+
+                // Format time to be displayed alongside message
                 let time = document.createElement('span');
                 let dt = new Date(change.doc.data().timestamp * 1000);
-                console.log(change.doc.data());
-
-                let hours = ('0' + dt.getHours()).slice(-2);
-                let minutes = ('0' + dt.getMinutes()).slice(-2);
+                let hours = ('0' + dt.getHours()).slice(-2); // Get hours in format: 01, 02...
+                let minutes = ('0' + dt.getMinutes()).slice(-2); // Get minutes in format: 01, 02...
                 time.textContent = hours + ': ' + minutes;
                 message.append(time);
 
                 // Add class
                 message.classList.add('message');
 
-                message.style.opacity = '0';
-                message.style.marginTop = '4rem';
-
                 // Identify messages sent by logged in user
                 if (change.doc.data().sender === auth.currentUser.uid) {
                     message.classList.add('my-message');
                 }
 
-                // Add to DOM
-                previousMessages.append(message);
+                // Animation on each message
+                message.style.opacity = '0';
+                message.style.marginTop = '4rem';
 
                 setTimeout(() => {
                     message.style.opacity = '1';
                     message.style.marginTop = '0';
-                }, 200);
+                }, 300);
+
+                // Add to DOM
+                previousMessages.append(message);
             }
         })
 
@@ -397,10 +416,10 @@ const renderPost = (doc) => {
     }
 
     // Time since creation
-    let timeCreated = document.createElement('p');
-    let elapsedDays = Math.floor((new Date() - new Date(doc.data().timestamp.seconds * 1000)) / (1000 * 60 * 60 * 24));
-    timeCreated.textContent = `${elapsedDays}d`;
-    nameDistanceTime.appendChild(timeCreated);
+    let timeUpdated = document.createElement('p');
+    let elapsedDays = Math.floor((new Date() - new Date(doc.data().updated.seconds * 1000)) / (1000 * 60 * 60 * 24));
+    timeUpdated.textContent = `${elapsedDays}d`;
+    nameDistanceTime.appendChild(timeUpdated);
 
     // Description
     let description = document.createElement('p');
