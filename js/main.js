@@ -1345,9 +1345,14 @@ sidebar.querySelectorAll('.category-filters li').forEach((category) => {
             });
 
             document.querySelectorAll('#postList li').forEach((post) => {
-                let postCategory = post.querySelector('.category').textContent.split('Category: ')[1];
-                if (checkedCategories.includes(postCategory)) {
-                    post.style.display = 'flex';
+                if (post.querySelector('.category')) {
+                    let postCategory = post.querySelector('.category').textContent.split('Category: ')[1];
+                    if (checkedCategories.includes(postCategory)) {
+                        post.style.display = 'flex';
+                    }
+                    else {
+                        post.style.display = 'none';
+                    }
                 }
                 else {
                     post.style.display = 'none';

@@ -220,7 +220,7 @@ header button:active,
 .category button {
   display: flex;
   flex-flow: row nowrap;
-  gap: .25rem;
+  gap: .75rem;
   color: #737373;
   padding: 0.5rem;
   font-size: 1.15rem;
