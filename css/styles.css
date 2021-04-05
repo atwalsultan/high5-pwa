@@ -121,7 +121,7 @@ header button:active,
   top: 0;
   left: 0;
   height: 100vh;
-  width: 70vw;
+  width: 80vw;
   display: flex;
   flex-flow: column nowrap;
   gap: 1rem;
@@ -358,7 +358,7 @@ aside#sidebar.sidebar-hidden {
   flex-grow: 1;
   display: flex;
   flex-flow: column nowrap;
-  justify-content: flex-end;
+  justify-content: center;
   align-items: center;
 }
 
@@ -510,8 +510,7 @@ footer button img {
 }
 
 #previousMessages {
-  min-height: 10vh;
-  height: 70vh;
+  height: 50vh;
   overflow-y: scroll;
   display: flex;
   flex-flow: column nowrap;
@@ -934,6 +933,10 @@ video {
   display: flex;
   flex-flow: row nowrap;
   gap: 0.5rem;
+}
+
+#postList li:last-of-type {
+  margin-bottom: 2rem;
 }
 
 .post-div {
