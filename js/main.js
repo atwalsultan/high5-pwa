@@ -844,16 +844,21 @@ const filter = (event) => {
     // Filter by distance
     document.querySelectorAll('#postList li').forEach((post) => {
         // Get category and distance of post
-        let postDistance = parseFloat(post.querySelector('.distance').textContent);
+        if (post.querySelector('.distance')) {
+            let postDistance = parseFloat(post.querySelector('.distance').textContent);
 
-        // Hide or show post as necessary
-        if (postDistance > distance) {
-            post.style.display = 'none';
-        }
-        else {
-            post.style.display = 'flex';
+            // Hide or show post as necessary
+            if (postDistance > distance) {
+                post.style.display = 'none';
+            }
+            else {
+                post.style.display = 'flex';
+            }
         }
     });
+
+    // Close sidebar
+    closeModal(sidebar);
 };
 
 // Show alerts

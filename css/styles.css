@@ -279,7 +279,6 @@ aside#sidebar.sidebar-hidden {
   transition: all 0.75s ease-out;
   left: 0;
   z-index: 50;
-  padding-bottom: 1rem;
   height: 90vh;
   overflow-y: scroll;
 }
@@ -954,7 +953,7 @@ video {
 }
 
 .profile-pic-div img {
-  max-height: 50px;
+  max-height: 40px;
   width: auto;
   border-radius: 50%;
 }
