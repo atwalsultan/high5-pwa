@@ -261,7 +261,7 @@ header button:active,
 }
 
 aside#sidebar.sidebar-hidden {
-  left: -75vw;
+  left: -85vw;
 }
 
 /* Main Sections */
@@ -443,6 +443,15 @@ footer button img {
   height: 100%;
   z-index: 90;
   background-color: white;
+}
+
+#splashOverlay video, #offlineAnimation video {
+  transform: scale(1.1);
+}
+
+.video-div {
+  height: 50%;
+  overflow: hidden;
 }
 
 #alerts {
@@ -824,7 +833,7 @@ video {
 
 #notificationList li img,
 #chatList li img {
-  max-height: 50px;
+  max-height: 45px;
   width: auto;
   border-radius: 50%;
 }
@@ -935,7 +944,7 @@ video {
   gap: 0.5rem;
 }
 
-#postList li:last-of-type {
+#postList li:last-of-type, #notificationList li:last-of-type, #chatList li:last-of-type {
   margin-bottom: 2rem;
 }
 
@@ -1041,4 +1050,10 @@ video {
 
 .buttons .active span {
   color: black;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+  video {
+    -webkit-filter: brightness(108.5%);
+  }
 }
