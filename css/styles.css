@@ -863,7 +863,7 @@ video {
 #profileBody {
   display: flex;
   flex-flow: column nowrap;
-  gap: 2rem;
+  gap: 4rem;
   height: 85%;
 }
 
@@ -889,14 +889,11 @@ video {
 }
 
 #profileInfo {
-  padding: 2rem;
+  padding: 2rem 2rem 0 2rem;
   display: flex;
   flex-flow: column nowrap;
   align-items: center;
   gap: 0.4rem;
-  flex-grow: 1;
-
-  /* border-bottom: 1px solid lightgray; */
 }
 
 #profileInfo img {
@@ -935,7 +932,7 @@ video {
 }
 
 #postList li:last-of-type, #notificationList li:last-of-type, #chatList li:last-of-type {
-  margin-bottom: 2rem;
+  margin-bottom: 4rem;
 }
 
 .post-div {
@@ -989,7 +986,7 @@ video {
 .buttons {
   display: flex;
   flex-flow: row nowrap;
-  gap: 0.35rem;
+  gap: 0.25rem;
   margin-top: 0.5rem;
 }
 
@@ -1017,7 +1014,7 @@ video {
   font-size: inherit;
   display: flex;
   flex-flow: row nowrap;
-  gap: 0.25rem;
+  gap: 1px;
   align-items: center;
   color: #737373;
   transition: all 0.15s ease-in;
