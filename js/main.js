@@ -465,19 +465,19 @@ const renderPost = (doc) => {
 
     // Check if any values have not been provided
     if (doc.data().date === "Unspecified" && doc.data().time !== "Unspecified") {
-        dateTime.textContent = `Expected Date & Time: ${doc.data().time}`;
+        dateTime.textContent = `Expected On: ${doc.data().time}`;
         dateTimeDiv.appendChild(dateTime); // Append to container
         postDiv.appendChild(dateTimeDiv); // Append to container
 
     }
     else if (doc.data().date !== "Unspecified" && doc.data().time === "Unspecified") {
-        dateTime.textContent = `Expected Date & Time: ${doc.data().date}`;
+        dateTime.textContent = `Expected On: ${doc.data().date}`;
         dateTimeDiv.appendChild(dateTime); // Append to container
         postDiv.appendChild(dateTimeDiv); // Append to container
 
     }
     else if (doc.data().date !== "Unspecified" && doc.data().time !== "Unspecified") {
-        dateTime.textContent = `Expected Date & Time: ${doc.data().date} | ${doc.data().time}`;
+        dateTime.textContent = `Expected On: ${doc.data().date} | ${doc.data().time}`;
         dateTimeDiv.appendChild(dateTime); // Append to container
         postDiv.appendChild(dateTimeDiv); // Append to container
     }
