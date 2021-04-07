@@ -3,36 +3,42 @@
   "name": "High5",
   "icons": [
     {
-      "src":"images/App-icons/android/icon_48.png", "sizes": "48x48", "purpose": "any maskable", "type": "image/png" 
-      },
+      "src": "images/App-icons/android/icon_48.png",
+      "sizes": "48x48",
+      "purpose": "any maskable",
+      "type": "image/png"
+    },
     {
-        "src":"images/App-icons/android/icon_96.png", "sizes": "96x96", "purpose": "any maskable", "type": "image/png" 
-      },
+      "src": "images/App-icons/android/icon_96.png",
+      "sizes": "96x96",
+      "purpose": "any maskable",
+      "type": "image/png"
+    },
     {
-          "src":"images/App-icons/android/icon_144.png", "sizes": "144x144", "purpose": "any maskable", "type": "image/png" 
-      },
+      "src": "images/App-icons/android/icon_144.png",
+      "sizes": "144x144",
+      "purpose": "any maskable",
+      "type": "image/png"
+    },
     {
-            "src":"images/App-icons/android/icon_192.png", "sizes": "192x192", "purpose": "any maskable", "type": "image/png" 
-      },
+      "src": "images/App-icons/android/icon_192.png",
+      "sizes": "192x192",
+      "purpose": "any maskable",
+      "type": "image/png"
+    },
     {
-              "src":"images/App-icons/android/icon_512.png", "sizes": "512x512", "purpose": "any maskable", "type": "image/png" 
-      }
-      
+      "src": "images/App-icons/android/icon_512.png",
+      "sizes": "512x512",
+      "purpose": "any maskable",
+      "type": "image/png"
+    }
   ],
-  "start_url": "/index.html"  ,
-  "background_color": "#Fa802a",
+  "start_url": "/index.html",
+  "background_color": "#FFFFFF",
   "display": "standalone",
-  "orientation":"portrait-primary",
-  "scope": ".", 
-  "lang":"en-US",
-  "theme_color": "#Fa802a",
-  
-  "description": "High-five to strangers!",
-  "screenshots": [
-   
-      
-  ]
+  "orientation": "portrait-primary",
+  "scope": ".",
+  "lang": "en-US",
+  "theme_color": "#FFFFFF",
+  "description": "High-five to strangers!"
 }
-
-
-

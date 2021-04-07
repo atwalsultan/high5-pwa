@@ -91,7 +91,6 @@ footer button:active,
 header button:active,
 #newMessage button:active,
 #cameraButtons button:active,
-.buttons button:active,
 #profileBody button:active,
 #postForm button:active,
 #updateForm button:active,
@@ -99,6 +98,10 @@ header button:active,
 .category button:active,
 #filter-form button:active {
   transform: scale(0.8);
+}
+
+.buttons button:active {
+  transform: scale(0.6);
 }
 
 /* Sidebar */
@@ -445,14 +448,17 @@ footer button img {
   height: 100%;
   z-index: 90;
   background-color: white;
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: center;
 }
 
 #splashOverlay video, #offlineAnimation video {
-  transform: scale(1.1);
+  transform: scale(1.05);
 }
 
 .video-div {
-  height: 50%;
   overflow: hidden;
 }
 
@@ -822,7 +828,7 @@ video {
 
 #notificationList li img,
 #chatList li img {
-  max-height: 45px;
+  max-height: 40px;
   width: auto;
   border-radius: 50%;
 }
@@ -903,6 +909,7 @@ video {
 
 #profileInfo > p:last-of-type {
   padding-top: 2rem;
+  text-align: center;
 }
 
 #profileInfo > p:first-of-type {
@@ -986,7 +993,7 @@ video {
   display: flex;
   flex-flow: row nowrap;
   gap: 0.25rem;
-  margin-top: 0.5rem;
+  /* margin-top: 0.2rem; */
 }
 
 #categoryDiv,
@@ -1013,7 +1020,7 @@ video {
   font-size: inherit;
   display: flex;
   flex-flow: row nowrap;
-  gap: 1px;
+  gap: 2px;
   align-items: center;
   color: #737373;
   transition: all 0.15s ease-in;
