@@ -949,11 +949,6 @@ video {
   flex-grow: 1;
 }
 
-.post-div > img {
-  max-height: 313px;
-  width: auto;
-}
-
 .profile-pic-div {
   min-width: 40px;
   min-height: 40px;
