@@ -112,7 +112,6 @@ header button:active,
   height: 100%;
   z-index: 150;
   background-color: white;
-  display: none;
 
   display: flex;
   flex-flow: row nowrap;
@@ -123,11 +122,18 @@ header button:active,
 .cover-content {
   max-width: 500px;
   padding: 1.5rem;
+  text-align: justify;
 }
 
 @media screen and (min-width: 500px) {
   #coverOverlay {
     display: flex;
+  }
+}
+
+@media screen and (max-width: 500px) {
+  #coverOverlay {
+    display: none;
   }
 }
 
