@@ -68,6 +68,11 @@ header button {
   background-color: transparent;
 }
 
+header li > img {
+  width: 40px;
+  height: auto;
+}
+
 #createBtn {
   background-color: #fa812a;
   border-radius: 50%;
@@ -991,6 +996,7 @@ video {
   max-height: 40px;
   width: auto;
   border-radius: 50%;
+  object-fit: cover;
 }
 
 .name-distance-time {
