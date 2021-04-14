@@ -1069,9 +1069,9 @@ video {
   padding: 0.1rem;
 }
 
-.buttons .active img {
+/* .buttons .active img {
   background-color: #fa812a;
-}
+} */
 
 .buttons .active span {
   color: black;

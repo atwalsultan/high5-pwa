@@ -493,7 +493,7 @@ const renderPost = (doc) => {
 
     // Icon
     let likeIcon = document.createElement('img');
-    likeIcon.setAttribute('src', '../images/high5-icon.svg');
+    likeIcon.setAttribute('src', '../images/high5-icon-2.svg');
     likeBtn.appendChild(likeIcon);
 
     // Text
@@ -507,11 +507,11 @@ const renderPost = (doc) => {
         let url = likeBtn.querySelector('img').src.split('/images/')[1]; // Get url of current icon
 
         // Toggle icon on click
-        if (url === "high5-icon.svg") {
-            likeBtn.querySelector('img').src = `../images/high5-icon-active.svg`;
+        if (url === "high5-icon-2.svg") {
+            likeBtn.querySelector('img').src = `../images/high5-icon-2-active.svg`;
         }
-        else if (url === "high5-icon-active.svg") {
-            likeBtn.querySelector('img').src = `../images/high5-icon.svg`;
+        else if (url === "high5-icon-2-active.svg") {
+            likeBtn.querySelector('img').src = `../images/high5-icon-2.svg`;
         }
     });
 
