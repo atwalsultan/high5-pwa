@@ -80,7 +80,6 @@ const chatList = document.getElementById('chatList');
 
 // Splash screen
 const splashOverlay = document.getElementById('splashOverlay');
-const splashVideo = document.querySelector('splashOverlay video');
 
 //**************************************************************
 //      Function Declarations
@@ -142,7 +141,7 @@ const createPost = (event) => {
                         snapshot.ref.getDownloadURL()
                             .then((url) => {
                                 // Create object to update post created
-                                updateObj = {
+                                let updateObj = {
                                     photoURL: url,
                                 };
 
@@ -171,7 +170,7 @@ const createPost = (event) => {
                         snapshot.ref.getDownloadURL()
                             .then((url) => {
                                 // Create object to update post created
-                                updateObj = {
+                                let updateObj = {
                                     photoURL: url,
                                 };
 
@@ -667,7 +666,7 @@ const updatePost = (event) => {
                                         snapshot.ref.getDownloadURL()
                                             .then((url) => {
                                                 // Update URL of new photo in post document
-                                                updateObj = {
+                                                let updateObj = {
                                                     photoURL: url,
                                                 }
                                                 db.collection('posts').doc(updateId).update(updateObj)
@@ -1323,32 +1322,38 @@ sidebar.querySelectorAll('.category-filters li').forEach((category) => {
     category.addEventListener('click', () => {
         category.classList.toggle('active-category');
 
+        // Get icon of category
         let icon = category.querySelector('button img');
         let url = icon.src.split('.svg')[0];
-        if (url.includes('active')) {
+
+        // Toggle icon
+        if (url.includes('active')) { // If active category
             let newUrl = url.split('-active')[0] + '.svg';
             icon.src = newUrl;
         }
-        else {
+        else { // If inactive category
             let newUrl = url + '-active.svg';
             icon.src = newUrl;
         }
 
+        // Get selected categories
         let checked = sidebar.querySelectorAll('.active-category');
 
-        if (checked.length === 0) {
+        if (checked.length === 0) { // If no category selected
             // Display all posts
             document.querySelectorAll('#postList li').forEach((post) => {
                 post.style.display = 'flex';
             });
         }
-        else {
+        else { // If atleast one category selected
             let checkedCategories = [];
 
+            // Get all categories selected
             checked.forEach((checkedCategory) => {
                 checkedCategories.push(checkedCategory.querySelector('input[type="checkbox"]').value);
             });
 
+            // Filter posts according to category
             document.querySelectorAll('#postList li').forEach((post) => {
                 if (post.querySelector('.category')) {
                     let postCategory = post.querySelector('.category').textContent.split('Category: ')[1];
