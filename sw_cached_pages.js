@@ -3,7 +3,8 @@ const urlsToCache = [
     '/',
     '/pages/fallback.html',
     'css/styles.css',
-    'videos/animation-offline.mp4',
+    'videos/offline-animation.mp4',
+    'videos/cover-screen-animation.mp4',
     '/images/logo.svg',
 ];
 

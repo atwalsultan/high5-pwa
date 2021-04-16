@@ -124,7 +124,8 @@ header button:active,
   align-items: center;
 }
 
-.cover-content {
+.cover-content,
+.video-div {
   max-width: 500px;
   padding: 1.5rem;
   text-align: justify;
@@ -261,7 +262,7 @@ header button:active,
 .category button {
   display: flex;
   flex-flow: row nowrap;
-  gap: .75rem;
+  gap: 0.75rem;
   color: #737373;
   padding: 0.5rem;
   font-size: 1.15rem;
@@ -478,7 +479,8 @@ footer button img {
   display: none;
 }
 
-#splashOverlay, #offlineAnimation {
+#splashOverlay,
+#offlineAnimation {
   position: fixed;
   top: 0;
   left: 0;
@@ -492,7 +494,8 @@ footer button img {
   justify-content: center;
 }
 
-#splashOverlay video, #offlineAnimation video {
+#splashOverlay video,
+#offlineAnimation video {
   transform: scale(1.05);
 }
 
@@ -975,7 +978,9 @@ video {
   gap: 0.5rem;
 }
 
-#postList li:last-of-type, #notificationList li:last-of-type, #chatList li:last-of-type {
+#postList li:last-of-type,
+#notificationList li:last-of-type,
+#chatList li:last-of-type {
   margin-bottom: 4rem;
 }
 
@@ -1003,7 +1008,7 @@ video {
   display: flex;
   flex-flow: row nowrap;
   align-items: flex-end;
-  gap: .5rem;
+  gap: 0.5rem;
 }
 
 .name-distance-time > span {
@@ -1069,15 +1074,25 @@ video {
   padding: 0.1rem;
 }
 
-/* .buttons .active img {
-  background-color: #fa812a;
-} */
-
 .buttons .active span {
-  color: black;
+  color: #fa812a;
+  /* font-weight: 600; */
 }
 
-@media screen and (-webkit-min-device-pixel-ratio:0) {
+.cover-content h2 {
+  font-size: 1.5rem;
+  text-align: center;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+}
+
+.cover-content p,
+.video-div p {
+  font-size: 18px;
+  margin-bottom: 0.25rem;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio: 0) {
   video {
     -webkit-filter: brightness(108.5%);
   }
